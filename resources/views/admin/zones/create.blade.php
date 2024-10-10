@@ -111,34 +111,42 @@
                                                 <input type="text" class="form-control" id="url" name="url"
                                                        placeholder="Enter URL">
                                             </div>
-                                            <div class="col mb-5">
-                                                <label for="ratio" class="form-label">Ratio %</label>
-                                                <input type="number" class="form-control" id="ratio" name="ratio" value="100">
-                                            </div>
-                                            <div class="col mb-5">
-                                                <label for="geo" class="form-label">Geo Targeting</label>
-                                                <select class="form-select select2-search" id="geo" name="geo">
-                                                    <option value="">Select geo targeting</option>
-                                                    <option value="1">Geo 1</option>
-                                                    <option value="2">Geo 2</option>
-                                                    <option value="3">Geo 3</option>
-                                                </select>
-                                            </div>
-                                            <div class="col mb-5">
-                                                <label for="device" class="form-label">Device Targeting</label>
-                                                <select class="form-select select2-search" id="device" name="device">
-                                                    <option value="">Select device targeting</option>
-                                                    <option value="1">Desktop</option>
-                                                    <option value="2">Mobile</option>
-                                                    <option value="3">Tablet</option>
-                                                </select>
-                                            </div>
+{{--                                            <div class="col mb-5">--}}
+{{--                                                <label for="ratio" class="form-label">Ratio %</label>--}}
+{{--                                                <input type="number" class="form-control" id="ratio" name="ratio" value="100">--}}
+{{--                                            </div>--}}
+{{--                                            <div class="col mb-5">--}}
+{{--                                                <label for="geo" class="form-label">Geo Targeting</label>--}}
+{{--                                                <select class="form-select select2-search" id="geo" name="geo">--}}
+{{--                                                    <option value="">Select geo targeting</option>--}}
+{{--                                                    <option value="1">Geo 1</option>--}}
+{{--                                                    <option value="2">Geo 2</option>--}}
+{{--                                                    <option value="3">Geo 3</option>--}}
+{{--                                                </select>--}}
+{{--                                            </div>--}}
+{{--                                            <div class="col mb-5">--}}
+{{--                                                <label for="device" class="form-label">Device Targeting</label>--}}
+{{--                                                <select class="form-select select2-search" id="device" name="device">--}}
+{{--                                                    <option value="">Select device targeting</option>--}}
+{{--                                                    <option value="1">Desktop</option>--}}
+{{--                                                    <option value="2">Mobile</option>--}}
+{{--                                                    <option value="3">Tablet</option>--}}
+{{--                                                </select>--}}
+{{--                                            </div>--}}
                                             <div class="col mb-5">
                                                 <label for="status" class="form-label">Status</label>
                                                 <select class="form-select" id="status" name="status">
                                                     <option value="1">Active</option>
                                                     <option value="0">Inactive</option>
                                                 </select>
+                                            </div>
+                                            <div class="col mb-5">
+                                                <label for="actions" class="form-label">&nbsp;</label>
+                                                <div class="d-flex align-items-center" style="height: 60%">
+                                                    <a href="javascript:void(0);" class="btn-setting-url fs-3" title="Settings">
+                                                        <i class="fas fa-cog fs-3"></i>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -190,49 +198,7 @@
                 });
             });
 
-            $('#add-url-btn').on('click', function() {
-                var newItem = `
-                    <div class="item-url">
-                        <div class="row">
-                            <div class="col-6 mb-5">
-                                <label for="url" class="form-label required">URL</label>
-                                <input type="text" class="form-control" name="url[]" placeholder="Enter URL">
-                            </div>
-                            <div class="col mb-5">
-                                <label for="ratio" class="form-label">Ratio %</label>
-                                <input type="number" class="form-control" name="ratio[]" value="100">
-                            </div>
-                            <div class="col mb-5">
-                                <label for="geo" class="form-label">Geo Targeting</label>
-                                <select class="form-select select2-search" name="geo[]">
-                                    <option value="">Select geo targeting</option>
-                                    <option value="1">Geo 1</option>
-                                    <option value="2">Geo 2</option>
-                                    <option value="3">Geo 3</option>
-                                </select>
-                            </div>
-                            <div class="col mb-5">
-                                <label for="device" class="form-label">Device Targeting</label>
-                                <select class="form-select select2-search" name="device[]">
-                                    <option value="">Select device targeting</option>
-                                    <option value="1">Desktop</option>
-                                    <option value="2">Mobile</option>
-                                    <option value="3">Tablet</option>
-                                </select>
-                            </div>
-                            <div class="col mb-5">
-                                <label for="status" class="form-label">Status</label>
-                                <select class="form-select" name="status[]">
-                                    <option value="1">Active</option>
-                                    <option value="0">Inactive</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                `;
 
-                $('.list-url-targeting').append(newItem);
-            });
 
 
         });

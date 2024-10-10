@@ -42,6 +42,31 @@
                     </span>
                 </a>
             </div>
+            <div class="menu-item">
+                <a class="menu-link
+                    @if(request()->routeIs('admin.campaigns.*')) active @endif" href="{{ route('admin.campaigns.index') }}"
+                   title="Campaigns">
+										<span class="menu-icon">
+											<i class="ki-outline ki-directbox-default fs-3"></i>
+										</span>
+                    <span class="menu-title">
+                        Campaigns
+                    </span>
+                </a>
+            </div>
+
+            <div class="menu-item">
+                <a class="menu-link
+                    @if(request()->routeIs('admin.offers.*')) active @endif" href="{{ route('admin.offers.index') }}"
+                   title="Offers">
+										<span class="menu-icon">
+											<i class="ki-outline bi-gift fs-3"></i>
+										</span>
+                    <span class="menu-title">
+                        Offers
+                    </span>
+                </a>
+            </div>
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion @if(request()->routeIs('admin.zones.*')) show @endif">
                 <span class="menu-link">
 					<span class="menu-icon">

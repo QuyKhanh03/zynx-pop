@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('websites', function (Blueprint $table) {
+        Schema::create('funnel_devices', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('funnel_id')->unsigned();
+            $table->bigInteger('device_id')->unsigned();
+            $table->enum('targeting_type', ['include', 'exclude','none'])->default('none');
             $table->timestamps();
         });
     }
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('websites');
+        Schema::dropIfExists('funnel_devices');
     }
 };

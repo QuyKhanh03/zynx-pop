@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::as('admin.')->group(function () {
     Route::get('/', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
     Route::resource('zones', App\Http\Controllers\ZoneController::class);
+    Route::resource('offers', App\Http\Controllers\OfferController::class);
+    Route::resource('campaigns', App\Http\Controllers\CampaignController::class);
 });
 
 
