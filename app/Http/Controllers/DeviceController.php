@@ -2,20 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Campaign;
+use App\Models\Device;
 use Illuminate\Http\Request;
 
-class CampaignController extends Controller
+class DeviceController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $title = 'Campaigns';
-        $campaigns = Campaign::orDerBy('created_at', 'desc')->paginate(10);
-
-        return view('admin.campaigns.index', compact('title', 'campaigns'));
+        //
     }
 
     /**
@@ -23,8 +20,7 @@ class CampaignController extends Controller
      */
     public function create()
     {
-        $title = 'Create Campaign';
-        return view('admin.campaigns.create', compact('title'));
+        //
     }
 
     /**
@@ -65,5 +61,10 @@ class CampaignController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public static function listDevices()
+    {
+        return response()->json(Device::select('id', 'name')->get());
     }
 }

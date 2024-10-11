@@ -2,6 +2,14 @@
 @section('title')
     {{ $title }}
 @endsection
+@push('styles')
+    <style>
+        textarea::placeholder {
+            color: #6c757d;
+            opacity: 1;
+        }
+    </style>
+@endpush
 @section('content')
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <div class="toolbar" id="kt_toolbar">
@@ -30,8 +38,9 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <form action="{{ route('admin.offers.store') }}" method="POST">
+                            <form action="{{ route('admin.offers.update', $model->id) }}" method="POST">
                                 @csrf
+                                @method('PUT')
                                 <div class="mb-5">
                                     <label for="name" class="form-label required">Offer Name</label>
                                     <input type="text" class="form-control" id="name" name="name" placeholder="Enter offer name" value="{{ $model->name ?? old('name') }}">

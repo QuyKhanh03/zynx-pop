@@ -79,6 +79,13 @@ class OfferController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $model = Offer::findOrFail($id);
+        $model->delete();
+        Toastr::success('Offer deleted successfully');
+        return redirect()->route('admin.offers.index');
+    }
+    public function listOffers()
+    {
+        return response()->json(Offer::select('id', 'name')->get());
     }
 }

@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="mb-5">
                                     <label for="description" class="form-label">Description</label>
-                                    <textarea class="form-control" id="description" name="description" placeholder="Note..." >
+                                    <textarea class="form-control" id="description" name="description" >
                                         {{ old('description') }}
                                     </textarea>
                                 </div>

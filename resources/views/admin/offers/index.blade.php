@@ -32,8 +32,9 @@
                             <thead>
                             <tr class="fw-bolder fs-6 text-gray-800" >
                                 <th>#</th>
-                                <th>Offer Name</th>
-                                <th>Direct Link</th>
+                                <th>Direct Link Name</th>
+                                <th>URL</th>
+                                <th>Partner</th>
                                 <th>Offer Status</th>
                                 <th>Actions</th>
                             </tr>
@@ -48,6 +49,9 @@
                                         </td>
                                         <td>
                                             <a href="{{ $value->direct_link }}" target="_blank">{{ $value->direct_link }}</a>
+                                        </td>
+                                        <td>
+                                            {{ $value->name }}
                                         </td>
                                         <td >
                                             @if($value->status == 'active')
