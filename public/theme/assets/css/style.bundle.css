@@ -4776,7 +4776,7 @@ textarea.form-control-lg {
     --bs-card-title-spacer-y: 0.5rem;
     --bs-card-title-color: var(--bs-gray-900);
     --bs-card-border-width: 1px;
-    --bs-card-border-color: #F1F1F4;
+    --bs-card-border-color: #e6e6e9;
     --bs-card-border-radius: 0rem;
     --bs-card-box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.03);
     --bs-card-inner-border-radius: calc(0rem - 1px);
@@ -33792,7 +33792,7 @@ textarea.form-control-lg {
     --bs-text-gray-700: #4B5675;
     --bs-text-gray-800: #252F4A;
     --bs-text-gray-900: #071437;
-    --bs-border-color: #F1F1F4;
+    --bs-border-color: #e6e6e9;
     --bs-border-dashed-color: #DBDFE9;
     --bs-component-active-color: #ffffff;
     --bs-component-active-bg: #1B84FF;
@@ -33811,7 +33811,7 @@ textarea.form-control-lg {
     --bs-input-solid-bg-focus: var(--bs-gray-200);
     --bs-input-solid-placeholder-color: var(--bs-gray-500);
     --bs-root-card-box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.03);
-    --bs-root-card-border-color: #F1F1F4;
+    --bs-root-card-border-color: #e6e6e9;
     --bs-tooltip-box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.15);
     --bs-table-striped-bg: rgba(var(--bs-gray-100-rgb), 0.75);
     --bs-table-loading-message-box-shadow: 0px 0px 50px 0px rgba(82, 63, 105, 0.15);

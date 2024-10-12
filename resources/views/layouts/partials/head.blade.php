@@ -6,4 +6,4 @@
 <link href="{{ asset('theme/assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet"
       type="text/css"/>
 <link href="{{ asset('theme/assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css"/>
-<link href="{{ asset('theme/assets/css/style.bundle.css?v=1') }}" rel="stylesheet" type="text/css"/>
+<link href="{{ asset('theme/assets/css/style.bundle.css?v=2.2') }}" rel="stylesheet" type="text/css"/>

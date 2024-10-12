@@ -51,7 +51,7 @@
                                             <a href="{{ $value->direct_link }}" target="_blank">{{ $value->direct_link }}</a>
                                         </td>
                                         <td>
-                                            {{ $value->name }}
+                                            {{ $value->partner }}
                                         </td>
                                         <td >
                                             @if($value->status == 'active')

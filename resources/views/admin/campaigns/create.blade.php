@@ -103,120 +103,93 @@
                                         </h3>
                                     </div>
                                     <div class="card-body">
-{{--                                        <div class="list-funnels">--}}
-{{--                                            <div class="item-funnel">--}}
-{{--                                                <div class="card mb-4">--}}
-{{--                                                    <div--}}
-{{--                                                        class="card-header d-flex justify-content-between align-items-center">--}}
-{{--                                                        <h4 class="card-title mb-0">Funnel #1</h4>--}}
-{{--                                                        <div class="d-flex align-items-center">--}}
-{{--                                                        </div>--}}
-{{--                                                    </div>--}}
-{{--                                                    <div class="card-body">--}}
-{{--                                                        <div class="card mb-3">--}}
-{{--                                                            <div class="card-body">--}}
-{{--                                                                <div class="row mb-3">--}}
-{{--                                                                    <div class="col-12">--}}
-{{--                                                                        <h5 class="card-subtitle mb-3">Offers</h5>--}}
-{{--                                                                        <div class="list-offers">--}}
-{{--                                                                            <div class="item-offer">--}}
-{{--                                                                                <div--}}
-{{--                                                                                    class="d-flex justify-content-between align-items-center mb-2">--}}
-{{--                                                                                    <div--}}
-{{--                                                                                        class="d-flex align-items-center flex-grow-1">--}}
-{{--                                                                                        <div class="me-5">--}}
-{{--                                                                                            <label--}}
-{{--                                                                                                class="form-label">&nbsp;</label>--}}
-{{--                                                                                            <div class="fs-3 font-bold">--}}
-{{--                                                                                                1--}}
-{{--                                                                                            </div>--}}
-{{--                                                                                        </div>--}}
-{{--                                                                                        <div class="mx-2 flex-grow-1">--}}
-{{--                                                                                            <label for="offer-select"--}}
-{{--                                                                                                   class="form-label">Offer</label>--}}
-{{--                                                                                            <select--}}
-{{--                                                                                                class="form-select select2-search w-100 offer-select"--}}
-{{--                                                                                                id="offer-select"--}}
-{{--                                                                                                name="offer-1">--}}
-{{--                                                                                            </select>--}}
-{{--                                                                                        </div>--}}
-{{--                                                                                        <div class="mx-2"--}}
-{{--                                                                                             style="width: 150px;">--}}
-{{--                                                                                            <label for="ratio"--}}
-{{--                                                                                                   class="form-label">Ratio</label>--}}
-{{--                                                                                            <input type="number"--}}
-{{--                                                                                                   max="100"--}}
-{{--                                                                                                   min="0" value="100"--}}
-{{--                                                                                                   class="form-control"--}}
-{{--                                                                                                   id="ratio"--}}
-{{--                                                                                                   name="ratio-1"--}}
-{{--                                                                                                   placeholder="Enter ratio">--}}
-{{--                                                                                        </div>--}}
-{{--                                                                                    </div>--}}
-{{--                                                                                    <div class="mt-8">--}}
-{{--                                                                                        <label--}}
-{{--                                                                                            class="form-label">&nbsp;</label>--}}
-{{--                                                                                        <button type="button" disabled title="Need at least one offer"--}}
-{{--                                                                                                class="btn btn-sm disabled btn-outline-secondary rounded">--}}
-{{--                                                                                            <i class="fa fa-times"></i>--}}
-{{--                                                                                        </button>--}}
-{{--                                                                                    </div>--}}
-{{--                                                                                </div>--}}
-{{--                                                                            </div>--}}
-{{--                                                                        </div>--}}
+                                        <div class="list-funnels">
+                                            <div class="item-funnel">
+                                                <div class="card mb-4 funnel-item" data-funnel-id="1">
+                                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                                        <h4 class="card-title mb-0">Funnel #1</h4>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="card mb-3">
+                                                            <div class="card-body">
+                                                                <div class="row mb-3">
+                                                                    <div class="col-12">
+                                                                        <h5 class="card-subtitle mb-3">Offers</h5>
+                                                                        <div class="list-offers">
+                                                                            <div class="item-offer" data-offer-id="1">
+                                                                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                                                                    <div class="d-flex align-items-center flex-grow-1">
+                                                                                        <div class="me-5">
+                                                                                            <label class="form-label">&nbsp;</label>
+                                                                                            <div class="fs-3 font-bold">
+                                                                                                Offer 1
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="mx-2 flex-grow-1">
+                                                                                            <label for="offer-select-1-1" class="form-label">Offer</label>
+                                                                                            <select class="form-select select2-search w-100 offer-select"
+                                                                                                    id="offer-select-1-1"
+                                                                                                    name="offer-1-1">
+                                                                                            </select>
+                                                                                        </div>
+                                                                                        <div class="mx-2" style="width: 150px;">
+                                                                                            <label for="ratio-1-1" class="form-label">Ratio</label>
+                                                                                            <input type="number" max="100" min="0" value="100"
+                                                                                                   class="form-control"
+                                                                                                   id="ratio-1-1"
+                                                                                                   name="ratio-1-1"
+                                                                                                   placeholder="Enter ratio">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mt-8">
+                                                                                        <label class="form-label">&nbsp;</label>
+                                                                                        <button type="button" disabled title="Need at least one offer"
+                                                                                                class="btn btn-sm disabled btn-outline-secondary rounded">
+                                                                                            <i class="fa fa-times"></i>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <button class="btn btn-sm btn-success mt-2 btn-add-offer" title="Add offer" type="button">
+                                                                            <i class="fa fa-plus"></i> Add
+                                                                        </button>
 
-{{--                                                                        <button--}}
-{{--                                                                            class="btn btn-sm btn-success mt-2 btn-add-offer"--}}
-{{--                                                                            title="Add offer" type="button">--}}
-{{--                                                                            <i class="fa fa-plus"></i> Add--}}
-{{--                                                                        </button>--}}
+                                                                        <a class="btn btn-sm btn-primary mt-2" title="Create new offer" target="_blank"
+                                                                           href="{{ route('admin.offers.create') }}">New Offer</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
 
-{{--                                                                        <a class="btn btn-sm btn-primary mt-2"--}}
-{{--                                                                           title="Create new offer"--}}
-{{--                                                                           target="_blank"--}}
-{{--                                                                           href="{{ route('admin.offers.create') }}">New--}}
-{{--                                                                            Offer</a>--}}
-{{--                                                                    </div>--}}
-{{--                                                                </div>--}}
-{{--                                                            </div>--}}
-{{--                                                        </div>--}}
+                                                        <div>
+                                                            <button class="btn btn-sm btn-success btn-add-filters d-flex justify-content-between align-items-center"
+                                                                    title="Add new filters" type="button">
+                                                                Filters (<span class="count-filters" data-count="0">0</span>) &nbsp;
+                                                                <i class="fa fa-chevron-down icon-rotate rotate-up" aria-hidden="true"></i>
+                                                            </button>
+                                                            <div class="filter-container mt-3" style="display:none;">
+                                                                <div class="item-filters">
+                                                                    <div class="col-6">
+                                                                        <label for="add-filter" class="form-label">Add Filter</label>
+                                                                        <select class="form-select select2-search add-filter-select multi-select-filter"
+                                                                                id="add-filter" name="add-filter[]"
+                                                                                multiple="multiple">
+                                                                            <option value="geo">Geo</option>
+                                                                            <option value="device">Device</option>
+                                                                            <option value="browser">Browser</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <hr>
+                                                                <div class="selected-filters mt-3"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
-{{--                                                        <div>--}}
-{{--                                                            <button--}}
-{{--                                                                class="btn btn-sm btn-success btn-add-filters d-flex justify-content-between align-items-center"--}}
-{{--                                                                title="Add new filters" type="button">--}}
-{{--                                                                Filters (--}}
-{{--                                                                <span class="count-filters" data-count="0">0</span>--}}
-{{--                                                                ) &nbsp;--}}
-{{--                                                                <i class="fa fa-chevron-down icon-rotate rotate-up"--}}
-{{--                                                                   aria-hidden="true"></i>--}}
-{{--                                                            </button>--}}
-
-{{--                                                            <div class="filter-container d-none mt-3">--}}
-{{--                                                                <div class="item-filters">--}}
-{{--                                                                    <div class="col-6">--}}
-{{--                                                                        <label for="add-filter" class="form-label">Add--}}
-{{--                                                                            Filter</label>--}}
-{{--                                                                        <select--}}
-{{--                                                                            class="form-select select2-search add-filter-select multi-select-filter"--}}
-{{--                                                                            id="add-filter" name="add-filter[]"--}}
-{{--                                                                            multiple="multiple">--}}
-{{--                                                                            <option value="geo">Geo</option>--}}
-{{--                                                                            <option value="device">Device</option>--}}
-{{--                                                                            <option value="browser">Browser</option>--}}
-{{--                                                                        </select>--}}
-{{--                                                                    </div>--}}
-{{--                                                                </div>--}}
-{{--                                                                <hr>--}}
-{{--                                                                <div class="selected-filters mt-3">--}}
-{{--                                                                </div>--}}
-{{--                                                            </div>--}}
-{{--                                                        </div>--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-                                        @include('components.funnel', ['funnelId' => 1])
+                                            </div>
+                                        </div>
                                         <div>
                                             <button class="btn btn-sm btn-primary mt-2 btn-add-funnel"
                                                     title="Add funnel" type="button">
@@ -243,181 +216,271 @@
 
 @push('scripts')
     <script>
-        $(document).ready(function () {
-            function initializeSelect2ForElement(element) {
-                $(element).select2({
-                    placeholder: "Select an offer",
-                    allowClear: false,
-                    width: '100%',
-                    ajax: {
-                        url: "{{ route('admin.offers.list') }}",
-                        type: "GET",
-                        dataType: "json",
-                        delay: 250,
-                        processResults: function (data) {
-                            return {
-                                results: $.map(data, function (item) {
-                                    return {
-                                        id: item.id,
-                                        text: item.name
-                                    };
-                                })
-                            };
-                        },
-                        cache: true
+        // Khởi tạo Select2 cho tất cả các Filter và Offer trong Funnel
+        function initializeSelect2($funnel) {
+            // Khởi tạo Select2 cho các offer trong funnel
+            $funnel.find('.offer-select').select2({
+                ajax: {
+                    url: '{{ route('admin.offers.list') }}',
+                    dataType: 'json',
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return { id: item.id, text: item.name };
+                            })
+                        };
                     }
-                });
-            }
-            initializeSelect2ForElement('.offer-select');
-            $(document).on('click', '.btn-add-offer', function () {
-                let count = $('.item-offer').length;
-                let html = `
-                    <div class="item-offer">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <div class="d-flex align-items-center flex-grow-1">
-                                <div class="me-5">
-                                    <label class="form-label mb-0">&nbsp;</label>
-                                    <div class="fs-3 font-bold">${count + 1}</div>
-                                </div>
-                                <div class="mx-2 flex-grow-1">
-                                    <label for="offer-select" class="form-label">Offer</label>
-                                    <select class="form-select select2-search w-100 offer-select" id="offer-select-${count + 1}" name="offer-${count + 1}">
-                                    </select>
-                                </div>
-                                <div class="mx-2" style="width: 150px;">
-                                    <label for="ratio" class="form-label">Ratio</label>
-                                    <input type="number" max="100" min="0" value="100" class="form-control" id="ratio" name="ratio-${count + 1}" placeholder="Enter ratio">
-                                </div>
-                            </div>
-                            <div class="mt-8">
-                                <label class="form-label">&nbsp;</label>
-                                <button class="btn btn-sm btn-outline-secondary rounded btn-remove-offer" title="Remove offer" type="button">
-                                    <i class="fa fa-times"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                $('.list-offers').append(html);
-                initializeSelect2ForElement(`#offer-select-${count + 1}`);
+                },
+                placeholder: "Select an offer",
             });
-            $(document).on('click', '.btn-remove-offer', function () {
-                $(this).closest('.item-offer').remove();
-            });
-            $('.multi-select-filter').select2({
+
+            // Khởi tạo Select2 cho các filter trong funnel
+            $funnel.find('.add-filter-select').select2({
                 placeholder: "Select filters",
                 allowClear: true,
-                width: '100%',
-                closeOnSelect: false //
-            });
-            $(document).on('click', '.btn-add-filters', function () {
-                let $filterContainer = $(this).next('.filter-container');
-                let $icon = $(this).find('i');
-                $filterContainer.toggleClass('d-none');
-                $icon.toggleClass('rotate-up rotate-down');
-            });
-
-            $('.multi-select-filter').on('change', function () {
+                multiple: true
+            }).on('change', function () {
                 const selectedValues = $(this).val() || [];
-                const existingFilters = {};
-                $('.selected-filters .filter-item select').each(function () {
-                    const id = $(this).attr('id');
-                    existingFilters[id] = $(this).val();
-                });
-                $.each(selectedValues, function (index, value) {
-                    if (!$(`#${value}-select`).length) {
-                        appendFilterSelect(value);
-                    }
-                });
-                $('.selected-filters .filter-item select.filter-select').each(function () {
-                    const id = $(this).attr('id');
-                    initializeSelect2Dynamic(this);
-                    if (existingFilters[id]) {
-                        $(this).val(existingFilters[id]).trigger('change');
-                    }
-                });
-                updateFilterCount();
-            });
-            function appendFilterSelect(type) {
-                const label = type.charAt(0).toUpperCase() + type.slice(1);
-                const id = `${type}-select`;
-                const url = getFilterUrl(type);
+                const $funnel = $(this).closest('.item-funnel'); // Lấy funnel hiện tại
+                const $selectedFilters = $funnel.find('.selected-filters');
 
-                const newSelectHtml = `
-                    <div class="filter-item mt-2 d-flex align-items-center">
-                        <div class="d-flex align-items-center" style="width: 150px;">
-                            <label for="${id}" class="form-label me-2">${label}</label>
-                        </div>
-                        <div class="me-2" style="width: 120px;">
-                            <select class="form-select target-type-select">
-                                <option value="include" selected>Include</option>
-                                <option value="exclude">Exclude</option>
-                                <option value="none">None</option>
-                            </select>
-                        </div>
-                        <div class="flex-grow-1 me-2">
-                            <select class="form-select select2-search filter-select" id="${id}" name="${id}" data-url="${url}" multiple>
-                            </select>
-                        </div>
-                        <button type="button" class="btn btn-sm btn-outline-secondary btn-remove-filter" title="Remove filter">
-                            <i class="fa fa-times"></i>
+                // Thêm filter mới nếu chưa tồn tại trong funnel hiện tại
+                $.each(selectedValues, function (index, value) {
+                    if (!$(`#${value}-select-${$funnel.data('funnel-id')}`, $selectedFilters).length) {
+                        appendFilterSelect(value, $selectedFilters, $funnel);
+                    }
+                });
+
+                updateFilterCount($funnel);  // Cập nhật số lượng filter trong funnel hiện tại
+            });
+        }
+
+        // Hàm để cập nhật chỉ mục cho các Funnels sau mỗi thay đổi
+        function updateFunnelIndexes() {
+            $('.list-funnels .item-funnel').each(function (index) {
+                $(this).attr('data-funnel-id', index + 1); // Cập nhật data-funnel-id
+                $(this).find('.card-title').text(`Funnel #${index + 1}`); // Cập nhật tiêu đề Funnel
+            });
+        }
+
+        // Tạo HTML cho một Funnel mới
+        function createFunnelHtml(funnelIndex) {
+            return `
+            <div class="item-funnel mb-4" data-funnel-id="${funnelIndex}">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h4 class="card-title mb-0">Funnel #${funnelIndex}</h4>
+                        <button class="btn btn-sm btn-light btn-delete-funnel" type="button" >
+                            <i class="fa fa-times text-gray-500"></i>
                         </button>
                     </div>
-                `;
-                $('.selected-filters').append(newSelectHtml);
+                    <div class="card-body">
+                        <!-- Offers Section -->
+                        <div class="mb-3">
+                            <h5>Offers</h5>
+                            <div class="list-offers">
+                                ${createOfferHtml(funnelIndex, 1)}
+                            </div>
+                            <button class="btn btn-sm btn-success mt-2 btn-add-offer" type="button" title="Add offer">
+                                <i class="fa fa-plus"></i> Add
+                            </button>
+                        </div>
+                        <!-- Filters Section -->
+                        <div>
+                            <button class="btn btn-sm btn-success btn-add-filters" type="button">
+                                Filters (<span class="count-filters">0</span>)
+                                <i class="fa fa-chevron-down"></i>
+                            </button>
+                            <div class="filter-container mt-3" style="display:none;">
+                                <div class="col-6">
+                                    <label for="add-filter-${funnelIndex}" class="form-label">Add Filter</label>
+                                    <select class="form-select select2-search add-filter-select multi-select-filter"
+                                            id="add-filter-${funnelIndex}" name="add-filter-${funnelIndex}[]" multiple>
+                                        <option value="geo">Geo</option>
+                                        <option value="device">Device</option>
+                                        <option value="browser">Browser</option>
+                                    </select>
+                                </div>
+                                <hr>
+                                <div class="selected-filters mt-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        }
+
+        // Tạo HTML cho một Offer mới
+        function createOfferHtml(funnelIndex, offerIndex) {
+            return `
+        <div class="item-offer" data-offer-id="${offerIndex}">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="d-flex align-items-center flex-grow-1">
+                    <div class="me-5">
+                        <label class="form-label">&nbsp;</label>
+                        <div class="fs-3 font-bold offer-number">Offer ${offerIndex}</div>
+                    </div>
+                    <div class="mx-2 flex-grow-1">
+                        <label for="offer-select-${funnelIndex}-${offerIndex}" class="form-label">Offer</label>
+                        <select class="form-select select2-search w-100 offer-select"
+                                id="offer-select-${funnelIndex}-${offerIndex}"
+                                name="offer-${funnelIndex}-${offerIndex}">
+                            <!-- Options cho offer sẽ được thêm vào đây -->
+                        </select>
+                    </div>
+                    <div class="mx-2" style="width: 150px;">
+                        <label for="ratio-${funnelIndex}-${offerIndex}" class="form-label">Ratio</label>
+                        <input type="number" max="100" min="0" value="100"
+                               class="form-control ratio-input"
+                               id="ratio-${funnelIndex}-${offerIndex}"
+                               name="ratio-${funnelIndex}-${offerIndex}"
+                               placeholder="Enter ratio">
+                    </div>
+                </div>
+                <div class="mt-8">
+                    <label class="form-label">&nbsp;</label>
+                    <button type="button" class="btn btn-sm btn-outline-danger rounded btn-delete-offer">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+        }
+
+        // Thêm filter mới vào khu vực selected-filters trong Funnel
+        function appendFilterSelect(type, $selectedFilters, $funnel) {
+            const label = type.charAt(0).toUpperCase() + type.slice(1);
+            const id = `${type}-select-${$funnel.data('funnel-id')}`; // Gán ID duy nhất cho filter
+            const url = getFilterUrl(type);
+
+            const newSelectHtml = `
+        <div class="filter-item mt-2 d-flex align-items-center">
+            <div class="d-flex align-items-center" style="width: 150px;">
+                <label for="${id}" class="form-label me-2">${label}</label>
+            </div>
+            <div class="me-2" style="width: 120px;">
+                <select class="form-select target-type-select">
+                    <option value="include" selected>Include</option>
+                    <option value="exclude">Exclude</option>
+                    <option value="none">None</option>
+                </select>
+            </div>
+            <div class="flex-grow-1 me-2">
+                <select class="form-select select2-search filter-select" id="${id}" name="${id}" data-url="${url}" multiple></select>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-secondary btn-remove-filter" title="Remove filter">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+    `;
+
+            $selectedFilters.append(newSelectHtml); // Thêm filter vào danh sách filter của funnel
+            initializeSelect2Dynamic(`#${id}`, url); // Khởi tạo Select2 cho filter mới
+        }
+
+        // Lấy URL cho các loại filter
+        function getFilterUrl(type) {
+            switch (type) {
+                case 'geo':
+                    return '{{ route('admin.countries.list') }}';
+                case 'device':
+                    return '{{ route('admin.devices.list') }}';
+                case 'browser':
+                    return '{{ route('admin.browsers.list') }}';
+                default:
+                    return '';
             }
-            function getFilterUrl(type) {
-                switch (type) {
-                    case 'geo':
-                        return '{{ route('admin.countries.list') }}';
-                    case 'device':
-                        return '{{ route('admin.devices.list') }}';
-                    case 'browser':
-                        return '{{ route('admin.browsers.list') }}';
-                    default:
-                        return '';
+        }
+
+        // Khởi tạo Select2 cho Filter mới
+        function initializeSelect2Dynamic(selector, url) {
+            $(selector).select2({
+                placeholder: 'Select an option',
+                allowClear: true,
+                width: '100%',
+                multiple: true,
+                ajax: {
+                    url: url,
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return { id: item.id, text: item.name };
+                            })
+                        };
+                    },
+                    cache: true
                 }
-            }
-            function initializeSelect2Dynamic(selectElement) {
-                $(selectElement).select2({
-                    placeholder: 'Select an option',
-                    allowClear: true,
-                    width: '100%',
-                    multiple: true,
-                    ajax: {
-                        url: $(selectElement).data('url'),
-                        dataType: 'json',
-                        delay: 250,
-                        processResults: function (data) {
-                            return {
-                                results: $.map(data, function (item) {
-                                    return {
-                                        id: item.id,
-                                        text: item.name
-                                    };
-                                })
-                            };
-                        },
-                        cache: true
-                    }
-                });
-            }
-            function updateFilterCount() {
-                const filterCount = $('.selected-filters .filter-item').length;
-                $('.count-filters').text(filterCount).data('count', filterCount);
-            }
-            $(document).on('click', '.btn-remove-filter', function () {
-                const filterItem = $(this).closest('.filter-item');
-                const filterLabel = filterItem.find('label').text().trim().toLowerCase();
-
-                let selectedValues = $('.multi-select-filter').val();
-                selectedValues = selectedValues.filter(value => value.toLowerCase() !== filterLabel);
-                $('.multi-select-filter').val(selectedValues).trigger('change');
-
-                filterItem.remove();
-                updateFilterCount();
             });
+        }
+
+        // Cập nhật số lượng filter
+        function updateFilterCount($funnel) {
+            const filterCount = $funnel.find('.selected-filters .filter-item').length;
+            $funnel.find('.count-filters').text(filterCount).data('count', filterCount);
+        }
+
+        // Xử lý khi nhấn nút "Remove Filter"
+        $(document).on('click', '.btn-remove-filter', function () {
+            const filterItem = $(this).closest('.filter-item');
+            filterItem.remove(); // Xóa filter
+            const $funnel = $(this).closest('.item-funnel');
+            updateFilterCount($funnel); // Cập nhật lại số lượng filter
         });
 
+        // Xử lý khi nhấn nút "Delete Offer"
+        $(document).on('click', '.btn-delete-offer', function () {
+            $(this).closest('.item-offer').remove();
+        });
+
+        // Xử lý khi nhấn nút "Delete Funnel"
+        $(document).on('click', '.btn-delete-funnel', function () {
+            $(this).closest('.item-funnel').remove();
+            updateFunnelIndexes();  // Cập nhật lại chỉ mục sau khi xóa
+        });
+
+        // Thêm Funnel mới
+        $(document).on('click', '.btn-add-funnel', function () {
+            const funnelCount = $('.list-funnels .item-funnel').length + 1;
+            const html = createFunnelHtml(funnelCount);
+            const $newFunnel = $(html);
+            $('.list-funnels').append($newFunnel);
+            initializeSelect2($newFunnel); // Khởi tạo Select2 cho funnel mới
+            updateFunnelIndexes();  // Cập nhật chỉ mục cho tất cả các funnels
+        });
+
+        // Thêm Offer mới
+        $(document).on('click', '.btn-add-offer', function () {
+            const $funnel = $(this).closest('.item-funnel');
+            const funnelIndex = $funnel.data('funnel-id');
+            const offerCount = $funnel.find('.list-offers .item-offer').length + 1;
+            const offerHtml = createOfferHtml(funnelIndex, offerCount);
+            $funnel.find('.list-offers').append(offerHtml);
+            initializeSelect2($funnel); // Khởi tạo Select2 cho offer mới
+        });
+
+        // Khởi tạo cho Funnel 1 khi trang tải lần đầu
+        $(document).ready(function() {
+            initializeSelect2($('.item-funnel').first());
+        });
+
+        // Toggle hiển thị bộ lọc khi nhấn nút Filter
+        $(document).on('click', '.btn-add-filters', function () {
+            const $filterContainer = $(this).closest('.item-funnel').find('.filter-container');
+            $filterContainer.toggle();
+        });
     </script>
+
+
+
+
+
+
+
+
+
+
 @endpush

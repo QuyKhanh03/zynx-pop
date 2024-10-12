@@ -43,6 +43,12 @@
                                     <span class="text-danger">{{ $errors->first('direct_link') }}</span>
                                 </div>
                                 <div class="mb-5">
+                                    <label for="partner" class="form-label required">Partner</label>
+                                    <input type="text" class="form-control" id="partner" name="partner" placeholder="Enter partner name" value="{{ old('partner') }}">
+                                    <span class="text-danger">{{ $errors->first('partner') }}</span>
+
+                                </div>
+                                <div class="mb-5">
                                     <label for="status" class="form-label required">Offer Status</label>
                                     <select class="form-select" id="status" name="status" >
                                         <option value="active">Active</option>
@@ -50,6 +56,7 @@
                                     </select>
                                     <span class="text-danger">{{ $errors->first('status') }}</span>
                                 </div>
+
                                 <div class="mb-5">
                                     <label for="description" class="form-label">Description</label>
                                     <textarea class="form-control" id="description" name="description" >

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('direct_link');
             $table->text('description')->nullable();
+            $table->string('partner')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });
