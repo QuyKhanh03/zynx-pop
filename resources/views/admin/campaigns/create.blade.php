@@ -30,6 +30,8 @@
             width: 100%;
         }
 
+
+
     </style>
 @endpush
 @section('content')
@@ -46,7 +48,7 @@
                 <div class="d-flex align-items-center py-1">
                     <div class="me-4">
                     </div>
-                    <a href="{{ route('admin.campaigns.index') }}" class="btn btn-sm btn-primary btn-back"
+                    <a href="javascript:void(0)" class="btn btn-sm btn-primary btn-back"
                        id="kt_toolbar_primary_button"
                        title="Back to Campaigns">
                         <i class="fa fa-arrow-left"></i>
@@ -60,7 +62,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col">
+                            <div class="col-12 col-md-6 mb-4">
                                 <div class="card">
                                     <div class="card-header">
                                         <h3 class="card-title "><b>General</b></h3>
@@ -93,7 +95,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col">
+                            <div class="col-12 col-md-6 mb-4">
                                 <div class="card">
                                     <div class="card-header">
                                         <h3 class="card-title">
@@ -106,7 +108,8 @@
                                         <div class="list-funnels">
                                             <div class="item-funnel">
                                                 <div class="card mb-4 funnel-item" data-funnel-id="1">
-                                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                                    <div
+                                                        class="card-header d-flex justify-content-between align-items-center">
                                                         <h4 class="card-title mb-0">Funnel #1</h4>
                                                     </div>
                                                     <div class="card-body">
@@ -117,64 +120,84 @@
                                                                         <h5 class="card-subtitle mb-3">Offers</h5>
                                                                         <div class="list-offers">
                                                                             <div class="item-offer" data-offer-id="1">
-                                                                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                                                                    <div class="d-flex align-items-center flex-grow-1">
+                                                                                <div
+                                                                                    class="d-flex justify-content-between align-items-center mb-2">
+                                                                                    <div
+                                                                                        class="d-flex align-items-center flex-grow-1">
                                                                                         <div class="me-5">
                                                                                             <label class="form-label">&nbsp;</label>
                                                                                             <div class="fs-3 font-bold">
-                                                                                                Offer 1
+                                                                                                1
                                                                                             </div>
                                                                                         </div>
                                                                                         <div class="mx-2 flex-grow-1">
-                                                                                            <label for="offer-select-1-1" class="form-label">Offer</label>
-                                                                                            <select class="form-select select2-search w-100 offer-select"
-                                                                                                    id="offer-select-1-1"
-                                                                                                    name="offer-1-1">
+                                                                                            <label
+                                                                                                for="offer-select-1-1"
+                                                                                                class="form-label required">Offer</label>
+                                                                                            <select
+                                                                                                class="form-select select2-search w-100 offer-select"
+                                                                                                id="offer-select-1-1"
+                                                                                                name="offer-1-1">
                                                                                             </select>
                                                                                         </div>
-                                                                                        <div class="mx-2" style="width: 150px;">
-                                                                                            <label for="ratio-1-1" class="form-label">Ratio</label>
-                                                                                            <input type="number" max="100" min="0" value="100"
+                                                                                        <div class="mx-2"
+                                                                                             style="width: 150px;">
+                                                                                            <label for="ratio-1-1"
+                                                                                                   class="form-label">Ratio</label>
+                                                                                            <input type="number"
+                                                                                                   max="100" min="0"
+                                                                                                   value="100"
                                                                                                    class="form-control"
                                                                                                    id="ratio-1-1"
                                                                                                    name="ratio-1-1"
                                                                                                    placeholder="Enter ratio">
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="mt-8">
-                                                                                        <label class="form-label">&nbsp;</label>
-                                                                                        <button type="button" disabled title="Need at least one offer"
-                                                                                                class="btn btn-sm disabled btn-outline-secondary rounded">
+                                                                                    <div class="">
+                                                                                        <label
+                                                                                            class="form-label">&nbsp;</label>
+                                                                                        <button type="button" disabled
+                                                                                                title="Need at least one offer"
+                                                                                                class="btn btn-sm disabled  rounded">
                                                                                             <i class="fa fa-times"></i>
                                                                                         </button>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <button class="btn btn-sm btn-success mt-2 btn-add-offer" title="Add offer" type="button">
+                                                                        <button
+                                                                            class="btn btn-sm btn-success mt-2 btn-add-offer"
+                                                                            title="Add offer" type="button">
                                                                             <i class="fa fa-plus"></i> Add
                                                                         </button>
 
-                                                                        <a class="btn btn-sm btn-primary mt-2" title="Create new offer" target="_blank"
-                                                                           href="{{ route('admin.offers.create') }}">New Offer</a>
+                                                                        <a class="btn btn-sm btn-primary mt-2"
+                                                                           title="Create new offer" target="_blank"
+                                                                           href="{{ route('admin.offers.create') }}">New
+                                                                            Offer</a>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
 
                                                         <div>
-                                                            <button class="btn btn-sm btn-success btn-add-filters d-flex justify-content-between align-items-center"
-                                                                    title="Add new filters" type="button">
-                                                                Filters (<span class="count-filters" data-count="0">0</span>) &nbsp;
-                                                                <i class="fa fa-chevron-down icon-rotate rotate-up" aria-hidden="true"></i>
+                                                            <button
+                                                                class="btn btn-sm btn-success btn-add-filters d-flex justify-content-between align-items-center"
+                                                                title="Add new filters" type="button">
+                                                                Filters (<span class="count-filters"
+                                                                               data-count="0">0</span>) &nbsp;
+                                                                <i class="fa fa-chevron-down icon-rotate rotate-up"
+                                                                   aria-hidden="true"></i>
                                                             </button>
                                                             <div class="filter-container mt-3" style="display:none;">
                                                                 <div class="item-filters">
                                                                     <div class="col-6">
-                                                                        <label for="add-filter" class="form-label">Add Filter</label>
-                                                                        <select class="form-select select2-search add-filter-select multi-select-filter"
-                                                                                id="add-filter" name="add-filter[]"
-                                                                                multiple="multiple">
+                                                                        <label for="add-filter" class="form-label">Add
+                                                                            Filter</label>
+                                                                        <select
+                                                                            class="form-select select2-search add-filter-select multi-select-filter"
+                                                                            id="add-filter" name="add-filter[]"
+                                                                            multiple="multiple">
                                                                             <option value="geo">Geo</option>
                                                                             <option value="device">Device</option>
                                                                             <option value="browser">Browser</option>
@@ -203,15 +226,49 @@
                     </div>
                     <div class="card-footer">
                         <div class="d-flex justify-content-start">
-                            <button type="submit" class="btn btn-primary" title="Save Campaign">
-                                <i class="fa fa-save"></i> Save
+                            <button type="submit" class="btn btn-primary btn-save-campaign" title="Save Campaign">
+                                <span class="indicator-label">
+                                    <i class="fa fa-save"></i> Save
+                                </span>
+                                <span class="indicator-progress">Please wait...
+										<span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                </span>
                             </button>
+                            <a class="btn btn-light btn-back" title="Cancel" href="javascript:void(0)">
+                                <i style="color: red" class="fa fa-warning"></i>
+                                Cancel
+                            </a>
                         </div>
                     </div>
                 </div>
             </form>
         </div>
     </div>
+
+
+    <div class="modal fade" id="modalShowCode" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalShowCodeLabel">Modal Title</h5>
+                    <button type="button" class="btn close btn-close-modal" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="fa fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div data-scroll="true" data-height="300">
+                        Show code here
+                        <div>
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @push('scripts')
@@ -226,7 +283,7 @@
                     processResults: function (data) {
                         return {
                             results: $.map(data, function (item) {
-                                return { id: item.id, text: item.name };
+                                return {id: item.id, text: item.name};
                             })
                         };
                     }
@@ -270,7 +327,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h4 class="card-title mb-0">Funnel #${funnelIndex}</h4>
-                        <button class="btn btn-sm btn-light btn-delete-funnel" type="button" >
+                        <button class="btn btn-sm  btn-delete-funnel" type="button" >
                             <i class="fa fa-times text-gray-500"></i>
                         </button>
                     </div>
@@ -313,16 +370,18 @@
 
         // Tạo HTML cho một Offer mới
         function createOfferHtml(funnelIndex, offerIndex) {
+            const disabledAttr = offerIndex === 1 ? 'disabled' : ''; // Nếu là offer đầu tiên, nút xóa bị disable
+
             return `
         <div class="item-offer" data-offer-id="${offerIndex}">
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <div class="d-flex align-items-center flex-grow-1">
                     <div class="me-5">
                         <label class="form-label">&nbsp;</label>
-                        <div class="fs-3 font-bold offer-number">Offer ${offerIndex}</div>
+                        <div class="fs-3 font-bold offer-number ">${offerIndex}</div>
                     </div>
                     <div class="mx-2 flex-grow-1">
-                        <label for="offer-select-${funnelIndex}-${offerIndex}" class="form-label">Offer</label>
+                        <label for="offer-select-${funnelIndex}-${offerIndex}" class="form-label required">Offer</label>
                         <select class="form-select select2-search w-100 offer-select"
                                 id="offer-select-${funnelIndex}-${offerIndex}"
                                 name="offer-${funnelIndex}-${offerIndex}">
@@ -338,9 +397,9 @@
                                placeholder="Enter ratio">
                     </div>
                 </div>
-                <div class="mt-8">
+                <div class="">
                     <label class="form-label">&nbsp;</label>
-                    <button type="button" class="btn btn-sm btn-outline-danger rounded btn-delete-offer">
+                    <button type="button" class="btn btn-sm  rounded btn-delete-offer" ${disabledAttr}>
                         <i class="fa fa-times"></i>
                     </button>
                 </div>
@@ -370,7 +429,7 @@
             <div class="flex-grow-1 me-2">
                 <select class="form-select select2-search filter-select" id="${id}" name="${id}" data-url="${url}" multiple></select>
             </div>
-            <button type="button" class="btn btn-sm btn-outline-secondary btn-remove-filter" title="Remove filter">
+            <button type="button" class="btn btn-sm  btn-remove-filter" title="Remove filter">
                 <i class="fa fa-times"></i>
             </button>
         </div>
@@ -408,7 +467,7 @@
                     processResults: function (data) {
                         return {
                             results: $.map(data, function (item) {
-                                return { id: item.id, text: item.name };
+                                return {id: item.id, text: item.name};
                             })
                         };
                     },
@@ -463,7 +522,7 @@
         });
 
         // Khởi tạo cho Funnel 1 khi trang tải lần đầu
-        $(document).ready(function() {
+        $(document).ready(function () {
             initializeSelect2($('.item-funnel').first());
         });
 
@@ -472,15 +531,68 @@
             const $filterContainer = $(this).closest('.item-funnel').find('.filter-container');
             $filterContainer.toggle();
         });
+
+
+        // Handle for click Cancel button
+        $(document).on('click', '.btn-back', function () {
+            //call sweet alert
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You are leaving this page without saving the campaign!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, cancel it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '{{ route('admin.campaigns.index') }}';
+                }
+            });
+        });
+
+
+        // Handle for click Save button
+        $(document).on('click', '.btn-save-campaign', function (e) {
+            //call sweet alert
+            e.preventDefault();
+            //show loading
+            //remove indicator-label
+            $('.indicator-label').hide();
+            //show indicator-progress
+            $('.indicator-progress').show();
+
+            $(this).prop('disabled', true);
+            //disable button
+            setTimeout(function () {
+                //show indicator-label
+                $('.indicator-label').show();
+                //hide indicator-progress
+                $('.indicator-progress').hide();
+                //enable button
+                $('.btn-save-campaign').prop('disabled', false);
+
+
+            }, 2000);
+
+            //show modal
+            $('#modalShowCode').modal('show');
+
+        });
+
+        // Handle for click Close button in modal
+        $(document).on('click', '.btn-close-modal', function () {
+            $('#modalShowCode').modal('hide');
+            //remove loading
+            //show indicator-label
+            $('.indicator-label').show();
+            //hide indicator-progress
+            $('.indicator-progress').hide();
+            //enable button
+            $('.btn-save-campaign').prop('disabled', false);
+
+        });
+
     </script>
-
-
-
-
-
-
-
-
-
 
 @endpush
