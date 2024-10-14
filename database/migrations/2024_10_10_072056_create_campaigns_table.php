@@ -17,6 +17,10 @@ return new class extends Migration
             $table->float('budget')->default(0);
             $table->text('description')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->integer('delay')->default(0);
+            $table->bigInteger('delay_unit_id')->unsigned();
+            $table->integer('frequency')->default(0);
+            $table->bigInteger('frequency_unit_id')->unsigned();
             $table->timestamps();
         });
     }

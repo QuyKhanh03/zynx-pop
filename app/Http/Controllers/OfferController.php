@@ -38,6 +38,7 @@ class OfferController extends Controller
             'status' => 'required',
         ]);
         Offer::create($request->all());
+        Toastr::success('Offer created successfully');
         return redirect()->route('admin.offers.index');
     }
 
@@ -71,6 +72,7 @@ class OfferController extends Controller
         ]);
         $model = Offer::findOrFail($id);
         $model->update($request->all());
+        Toastr::success('Offer updated successfully');
         return redirect()->route('admin.offers.index');
     }
 

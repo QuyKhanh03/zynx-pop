@@ -31,7 +31,6 @@
         }
 
 
-
     </style>
 @endpush
 @section('content')
@@ -45,22 +44,36 @@
                         {{ $title }}
                     </h3>
                 </div>
-                <div class="d-flex align-items-center py-1">
+                <div class="d-flex align-items-center justify-content-between w-100 w-md-auto py-1">
                     <div class="me-4">
+                        <a href="javascript:void(0)" class="btn btn-sm btn-primary btn-back"
+                           id="kt_toolbar_primary_button"
+                           title="Back to Campaigns">
+                            <i class="fa fa-arrow-left"></i>
+                            Back to Campaigns
+                        </a>
                     </div>
-                    <a href="javascript:void(0)" class="btn btn-sm btn-primary btn-back"
-                       id="kt_toolbar_primary_button"
-                       title="Back to Campaigns">
-                        <i class="fa fa-arrow-left"></i>
-                        Back to Campaigns
-                    </a>
+
+                    <div class="">
+                        <button class="btn btn-sm btn-primary btn-save-campaign d-md-none d-block"
+                                title="Save Campaign">
+                        <span class="indicator-label">
+                            <i class="fa fa-save me-2"></i> Save
+                        </span>
+                            <span class="indicator-progress" style="display: none;">
+                            Please wait...
+                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                        </span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
         <div id="kt_content_container" class="container-xxl">
             <form id="form-campaign">
+                @csrf
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body p-4 p-md-10">
                         <div class="row">
                             <div class="col-12 col-md-6 mb-4">
                                 <div class="card">
@@ -73,6 +86,7 @@
                                                 <label for="name" class="form-label required">Name</label>
                                                 <input type="text" class="form-control" id="name" name="name"
                                                        placeholder="Enter name">
+                                                <span class="text-danger error-text name_error"></span>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -82,14 +96,52 @@
                                                     <option value="active">Active</option>
                                                     <option value="inactive">Inactive</option>
                                                 </select>
+                                                <span class="text-danger error-text status_error"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col mb-5">
+                                                <label for="delay" class="form-label required">Delay</label>
+                                                <input type="number" class="form-control" id="delay" name="delay"
+                                                       placeholder="Enter delay" value="0">
+                                                <span class="text-danger error-text delay_error"></span>
+                                            </div>
+                                            <div class="col mb-5">
+                                                <label for="delay_unit_id" class="form-label required">Delay
+                                                    Unit</label>
+                                                <select class="form-select" id="delay_unit_id" name="delay_unit_id">
+                                                    @foreach($timeUnits as $val)
+                                                        <option value="{{ $val->id }}">{{ $val->name }}</option>
+                                                    @endforeach
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col mb-5">
+                                                <label for="frequency" class="form-label required">Frequency</label>
+                                                <input type="number" class="form-control" id="frequency"
+                                                       name="frequency"
+                                                       placeholder="Enter frequency">
+                                                <span class="text-danger error-text frequency_error"></span>
+                                            </div>
+                                            <div class="col mb-5">
+                                                <label for="frequency_unit_id" class="form-label required">Frequency
+                                                    Unit</label>
+                                                <select class="form-select" id="frequency_unit_id"
+                                                        name="frequency_unit_id">
+                                                    @foreach($timeUnits as $val)
+                                                        <option value="{{ $val->id }}">{{ $val->name }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col mb-5">
                                                 <label for="description" class="form-label">Description</label>
                                                 <textarea class="form-control" id="description" name="description"
-                                                          rows="3"
-                                                          placeholder="Notes about the campaign..."></textarea>
+                                                          rows="3">
+                                                </textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -99,12 +151,10 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <h3 class="card-title">
-                                            <b>
-                                                Funnels
-                                            </b>
+                                            <b>Funnels</b>
                                         </h3>
                                     </div>
-                                    <div class="card-body">
+                                    <div class="card-body p-3 p-md-10">
                                         <div class="list-funnels">
                                             <div class="item-funnel">
                                                 <div class="card mb-4 funnel-item" data-funnel-id="1">
@@ -112,72 +162,59 @@
                                                         class="card-header d-flex justify-content-between align-items-center">
                                                         <h4 class="card-title mb-0">Funnel #1</h4>
                                                     </div>
-                                                    <div class="card-body">
-                                                        <div class="card mb-3">
-                                                            <div class="card-body">
-                                                                <div class="row mb-3">
-                                                                    <div class="col-12">
-                                                                        <h5 class="card-subtitle mb-3">Offers</h5>
-                                                                        <div class="list-offers">
-                                                                            <div class="item-offer" data-offer-id="1">
-                                                                                <div
-                                                                                    class="d-flex justify-content-between align-items-center mb-2">
-                                                                                    <div
-                                                                                        class="d-flex align-items-center flex-grow-1">
-                                                                                        <div class="me-5">
-                                                                                            <label class="form-label">&nbsp;</label>
-                                                                                            <div class="fs-3 font-bold">
-                                                                                                1
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="mx-2 flex-grow-1">
-                                                                                            <label
-                                                                                                for="offer-select-1-1"
-                                                                                                class="form-label required">Offer</label>
-                                                                                            <select
-                                                                                                class="form-select select2-search w-100 offer-select"
-                                                                                                id="offer-select-1-1"
-                                                                                                name="offer-1-1">
-                                                                                            </select>
-                                                                                        </div>
-                                                                                        <div class="mx-2"
-                                                                                             style="width: 150px;">
-                                                                                            <label for="ratio-1-1"
-                                                                                                   class="form-label">Ratio</label>
-                                                                                            <input type="number"
-                                                                                                   max="100" min="0"
-                                                                                                   value="100"
-                                                                                                   class="form-control"
-                                                                                                   id="ratio-1-1"
-                                                                                                   name="ratio-1-1"
-                                                                                                   placeholder="Enter ratio">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="">
-                                                                                        <label
-                                                                                            class="form-label">&nbsp;</label>
-                                                                                        <button type="button" disabled
-                                                                                                title="Need at least one offer"
-                                                                                                class="btn btn-sm disabled  rounded">
-                                                                                            <i class="fa fa-times"></i>
-                                                                                        </button>
-                                                                                    </div>
-                                                                                </div>
+                                                    <div class="card-body p-3 p-md-10">
+                                                        <div class="mb-3">
+                                                            <h5 class="card-subtitle mb-3">Offers</h5>
+                                                            <div class="list-offers">
+                                                                <div class="item-offer" data-offer-id="1">
+                                                                    <div
+                                                                        class="d-flex justify-content-between align-items-center mb-2">
+                                                                        <div
+                                                                            class="d-flex align-items-center flex-grow-1">
+                                                                            <div class="me-3">
+                                                                                <label class="form-label">&nbsp;</label>
+                                                                                <div class="fs-3 font-bold">1</div>
+                                                                            </div>
+                                                                            <div class="mx-2 flex-grow-1">
+                                                                                <label for="offer-select-1-1"
+                                                                                       class="form-label required">Offer</label>
+                                                                                <select
+                                                                                    class="form-select select2-search w-100 offer-select"
+                                                                                    id="offer-select-1-1"
+                                                                                    name="funnels[0][offers][1][offer_id]">
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="mx-0 mx-md-2">
+                                                                                <label for="ratio-1-1"
+                                                                                       class="form-label">Ratio</label>
+                                                                                <input type="number" max="100" min="0"
+                                                                                       value="100"
+                                                                                       class="form-control min-w-60px ratio-input"
+                                                                                       id="ratio-1-1"
+                                                                                       name="funnels[0][offers][1][ratio]"
+                                                                                       placeholder="Enter ratio">
                                                                             </div>
                                                                         </div>
-                                                                        <button
-                                                                            class="btn btn-sm btn-success mt-2 btn-add-offer"
-                                                                            title="Add offer" type="button">
-                                                                            <i class="fa fa-plus"></i> Add
-                                                                        </button>
-
-                                                                        <a class="btn btn-sm btn-primary mt-2"
-                                                                           title="Create new offer" target="_blank"
-                                                                           href="{{ route('admin.offers.create') }}">New
-                                                                            Offer</a>
+                                                                        <div class="">
+                                                                            <label class="form-label">&nbsp;</label>
+                                                                            <button type="button" disabled
+                                                                                    title="Need at least one offer"
+                                                                                    class="btn btn-sm disabled rounded">
+                                                                                <i class="fa fa-times"></i>
+                                                                            </button>
+                                                                        </div>
                                                                     </div>
+                                                                    <span
+                                                                        class="text-danger mx-7 error-text offer_id_error"></span>
                                                                 </div>
                                                             </div>
+                                                            <button class="btn btn-sm btn-success mt-2 btn-add-offer"
+                                                                    title="Add offer" type="button">
+                                                                <i class="fa fa-plus"></i> Add
+                                                            </button>
+                                                            <a class="btn btn-sm btn-primary mt-2"
+                                                               title="Create new offer" target="_blank"
+                                                               href="{{ route('admin.offers.create') }}">New Offer</a>
                                                         </div>
 
                                                         <div>
@@ -196,8 +233,8 @@
                                                                             Filter</label>
                                                                         <select
                                                                             class="form-select select2-search add-filter-select multi-select-filter"
-                                                                            id="add-filter" name="add-filter[]"
-                                                                            multiple="multiple">
+                                                                            id="add-filter" name="funnels[0][filters][]"
+                                                                            multiple>
                                                                             <option value="geo">Geo</option>
                                                                             <option value="device">Device</option>
                                                                             <option value="browser">Browser</option>
@@ -210,9 +247,9 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
+
                                         <div>
                                             <button class="btn btn-sm btn-primary mt-2 btn-add-funnel"
                                                     title="Add funnel" type="button">
@@ -225,7 +262,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <div class="d-flex justify-content-start">
+                        <div class="d-flex justify-content-between">
                             <button type="submit" class="btn btn-primary btn-save-campaign" title="Save Campaign">
                                 <span class="indicator-label">
                                     <i class="fa fa-save"></i> Save
@@ -248,18 +285,52 @@
 
     <div class="modal fade" id="modalShowCode" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop"
          aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalShowCodeLabel">Modal Title</h5>
+                    <h5 class="modal-title" id="modalShowCodeLabel">
+                        Copy and Paste the code below to your website
+                    </h5>
                     <button type="button" class="btn close btn-close-modal" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="fa fa-times"></i>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div data-scroll="true" data-height="300">
-                        Show code here
-                        <div>
+                        <div class="mb-5">
+                            <div class="code-pop-up">
+                                <div class="code-title mb-3">
+                                    <label for="code">Code Pop-Up</label>
+                                </div>
+                                <div class="code-content position-relative">
+                                    <div class="input-group">
+                                        <input id="kt_clipboard_1" type="text" class="form-control"
+                                               placeholder="name@example.com"
+                                               value="{{ '<script src="https://chatpion.id.vn/js/pop.js?zoneId=1"></script>' }}">
+                                        <button class="btn btn-light-primary btn-copy"
+                                                data-clipboard-target="#kt_clipboard_1">Copy
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="mb-3">
+                            <div class="code-pop-under">
+                                <div class="code-title mb-3">
+                                    <label for="code">Code Pop Under</label>
+                                </div>
+                                <div class="code-content position-relative">
+                                    <div class="input-group">
+                                        <input id="kt_clipboard_2" type="text" class="form-control"
+                                               placeholder="name@example.com"
+                                               value="{{ '<script src="https://chatpion.id.vn/js/pop-under.js?zoneId=1"></script>' }}">
+                                        <button class="btn btn-light-primary btn-copy"
+                                                data-clipboard-target="#kt_clipboard_2">Copy
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
                         </div>
@@ -323,92 +394,92 @@
         // Tạo HTML cho một Funnel mới
         function createFunnelHtml(funnelIndex) {
             return `
-            <div class="item-funnel mb-4" data-funnel-id="${funnelIndex}">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h4 class="card-title mb-0">Funnel #${funnelIndex}</h4>
-                        <button class="btn btn-sm  btn-delete-funnel" type="button" >
-                            <i class="fa fa-times text-gray-500"></i>
-                        </button>
-                    </div>
-                    <div class="card-body">
-                        <!-- Offers Section -->
-                        <div class="mb-3">
-                            <h5>Offers</h5>
-                            <div class="list-offers">
-                                ${createOfferHtml(funnelIndex, 1)}
-                            </div>
-                            <button class="btn btn-sm btn-success mt-2 btn-add-offer" type="button" title="Add offer">
-                                <i class="fa fa-plus"></i> Add
+                <div class="item-funnel mb-4" data-funnel-id="${funnelIndex}">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h4 class="card-title mb-0">Funnel #${funnelIndex}</h4>
+                            <button class="btn btn-sm  btn-delete-funnel" type="button" >
+                                <i class="fa fa-times text-gray-500"></i>
                             </button>
                         </div>
-                        <!-- Filters Section -->
-                        <div>
-                            <button class="btn btn-sm btn-success btn-add-filters" type="button">
-                                Filters (<span class="count-filters">0</span>)
-                                <i class="fa fa-chevron-down"></i>
-                            </button>
-                            <div class="filter-container mt-3" style="display:none;">
-                                <div class="col-6">
-                                    <label for="add-filter-${funnelIndex}" class="form-label">Add Filter</label>
-                                    <select class="form-select select2-search add-filter-select multi-select-filter"
-                                            id="add-filter-${funnelIndex}" name="add-filter-${funnelIndex}[]" multiple>
-                                        <option value="geo">Geo</option>
-                                        <option value="device">Device</option>
-                                        <option value="browser">Browser</option>
-                                    </select>
+                        <div class="card-body p-3 p-md-10">
+                            <!-- Offers Section -->
+                            <div class="mb-3">
+                                <h5>Offers</h5>
+                                <div class="list-offers">
+                                    ${createOfferHtml(funnelIndex, 1)}
                                 </div>
-                                <hr>
-                                <div class="selected-filters mt-3"></div>
+                                <button class="btn btn-sm btn-success mt-2 btn-add-offer" type="button" title="Add offer">
+                                    <i class="fa fa-plus"></i> Add
+                                </button>
+                            </div>
+                            <!-- Filters Section -->
+                            <div>
+                                <button class="btn btn-sm btn-success btn-add-filters" type="button">
+                                    Filters (<span class="count-filters">0</span>)
+                                    <i class="fa fa-chevron-down"></i>
+                                </button>
+                                <div class="filter-container mt-3" style="display:none;">
+                                    <div class="col-6">
+                                        <label for="add-filter-${funnelIndex}" class="form-label">Add Filter</label>
+                                        <select class="form-select select2-search add-filter-select multi-select-filter"
+                                                id="add-filter-${funnelIndex}" name="funnels[${funnelIndex}][filters][]" multiple>
+                                            <option value="geo">Geo</option>
+                                            <option value="device">Device</option>
+                                            <option value="browser">Browser</option>
+                                        </select>
+                                    </div>
+                                    <hr>
+                                    <div class="selected-filters mt-3"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        `;
+            `;
         }
+
 
         // Tạo HTML cho một Offer mới
         function createOfferHtml(funnelIndex, offerIndex) {
             const disabledAttr = offerIndex === 1 ? 'disabled' : ''; // Nếu là offer đầu tiên, nút xóa bị disable
-
             return `
-        <div class="item-offer" data-offer-id="${offerIndex}">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-                <div class="d-flex align-items-center flex-grow-1">
-                    <div class="me-5">
-                        <label class="form-label">&nbsp;</label>
-                        <div class="fs-3 font-bold offer-number ">${offerIndex}</div>
+                <div class="item-offer" data-offer-id="${offerIndex}">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div class="d-flex align-items-center flex-grow-1">
+                            <div class="me-3">
+                                <label class="form-label">&nbsp;</label>
+                                <div class="fs-3 font-bold offer-number ">${offerIndex}</div>
+                            </div>
+                            <div class="mx-2 flex-grow-1">
+                                <label for="offer-select-${funnelIndex}-${offerIndex}" class="form-label required">Offer</label>
+                                <select class="form-select select2-search w-100 offer-select"
+                                        id="offer-select-${funnelIndex}-${offerIndex}"
+                                        name="funnels[${funnelIndex}][offers][${offerIndex}][offer_id]">
+                                </select>
+                            </div>
+                            <div class="mx-0 mx-md-2" >
+                                <label for="ratio-${funnelIndex}-${offerIndex}" class="form-label">Ratio</label>
+                                <input type="number" max="100" min="0" value="100"
+                                       class="form-control min-w-60px ratio-input"
+                                       id="ratio-${funnelIndex}-${offerIndex}"
+                                       name="funnels[${funnelIndex}][offers][${offerIndex}][ratio]"
+                                       placeholder="Enter ratio">
+                            </div>
+                        </div>
+
+                        <div class="">
+                            <label class="form-label">&nbsp;</label>
+                            <button type="button" class="btn btn-sm  rounded btn-delete-offer" ${disabledAttr}>
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
                     </div>
-                    <div class="mx-2 flex-grow-1">
-                        <label for="offer-select-${funnelIndex}-${offerIndex}" class="form-label required">Offer</label>
-                        <select class="form-select select2-search w-100 offer-select"
-                                id="offer-select-${funnelIndex}-${offerIndex}"
-                                name="offer-${funnelIndex}-${offerIndex}">
-                            <!-- Options cho offer sẽ được thêm vào đây -->
-                        </select>
-                    </div>
-                    <div class="mx-2" style="width: 150px;">
-                        <label for="ratio-${funnelIndex}-${offerIndex}" class="form-label">Ratio</label>
-                        <input type="number" max="100" min="0" value="100"
-                               class="form-control ratio-input"
-                               id="ratio-${funnelIndex}-${offerIndex}"
-                               name="ratio-${funnelIndex}-${offerIndex}"
-                               placeholder="Enter ratio">
-                    </div>
+                    <span class="text-danger mx-7 error-text offer_id_error"></span>
                 </div>
-                <div class="">
-                    <label class="form-label">&nbsp;</label>
-                    <button type="button" class="btn btn-sm  rounded btn-delete-offer" ${disabledAttr}>
-                        <i class="fa fa-times"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    `;
+            `;
         }
 
-        // Thêm filter mới vào khu vực selected-filters trong Funnel
         function appendFilterSelect(type, $selectedFilters, $funnel) {
             const label = type.charAt(0).toUpperCase() + type.slice(1);
             const id = `${type}-select-${$funnel.data('funnel-id')}`; // Gán ID duy nhất cho filter
@@ -435,11 +506,10 @@
         </div>
     `;
 
-            $selectedFilters.append(newSelectHtml); // Thêm filter vào danh sách filter của funnel
-            initializeSelect2Dynamic(`#${id}`, url); // Khởi tạo Select2 cho filter mới
+            $selectedFilters.append(newSelectHtml); //
+            initializeSelect2Dynamic(`#${id}`, url); //
         }
 
-        // Lấy URL cho các loại filter
         function getFilterUrl(type) {
             switch (type) {
                 case 'geo':
@@ -550,36 +620,6 @@
                 }
             });
         });
-
-
-        // Handle for click Save button
-        $(document).on('click', '.btn-save-campaign', function (e) {
-            //call sweet alert
-            e.preventDefault();
-            //show loading
-            //remove indicator-label
-            $('.indicator-label').hide();
-            //show indicator-progress
-            $('.indicator-progress').show();
-
-            $(this).prop('disabled', true);
-            //disable button
-            setTimeout(function () {
-                //show indicator-label
-                $('.indicator-label').show();
-                //hide indicator-progress
-                $('.indicator-progress').hide();
-                //enable button
-                $('.btn-save-campaign').prop('disabled', false);
-
-
-            }, 2000);
-
-            //show modal
-            $('#modalShowCode').modal('show');
-
-        });
-
         // Handle for click Close button in modal
         $(document).on('click', '.btn-close-modal', function () {
             $('#modalShowCode').modal('hide');
@@ -592,6 +632,97 @@
             $('.btn-save-campaign').prop('disabled', false);
 
         });
+
+        //check if the user is leaving the page
+        // window.onbeforeunload = function () {
+        //     return "Are you sure you want to leave?";
+        // };
+
+        // Handle for click Copy button
+        $(document).on('click', '.btn-copy', function () {
+            const targetId = $(this).attr('data-clipboard-target');  //
+            const $input = $(targetId);  //
+
+            $input.select();  //
+            document.execCommand('copy');  //
+
+            toastr.success('Copied to clipboard!');  //
+        });
+
+        $(document).on('click', '.btn-save-campaign', function (e) {
+            e.preventDefault();
+
+            // Clear any existing error messages
+            $('.error-text').text('');
+
+            $.ajax({
+                url: '{{ route('admin.campaigns.store') }}',
+                type: 'POST',
+                data: $('#form-campaign').serialize(),
+                success: function (response) {
+                    if (response.success) {
+                        toastr.success(response.message);
+                        //show modal
+                        $('#modalShowCode').modal('show');
+                        //hide indicator-label
+                        $('.indicator-label').hide();
+                        //show indicator-progress
+                        $('.indicator-progress').show();
+                        //disable button
+                        $('.btn-save-campaign').prop('disabled', true);
+
+                        //clear form
+                        $('#form-campaign')[0].reset();
+                        $('.list-funnels').html('');
+                        $('.list-funnels').append(createFunnelHtml(1));
+                        initializeSelect2($('.item-funnel').first());
+
+                    }else {
+                        toastr.error(response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    // Enable button and hide progress indicator
+                    $('.btn-save-campaign').prop('disabled', false);
+                    $('.indicator-label').show();
+                    $('.indicator-progress').hide();
+
+                    // Display error message
+                    toastr.error('Please check the form again!');
+
+                    const errors = xhr.responseJSON.errors;
+                    if (errors) {
+                        $.each(errors, function (key, value) {
+                            // Check if the key is nested (like 'funnels.0.offers.1.offer_id')
+                            if (key.includes('funnels')) {
+                                const keys = key.split('.'); // ['funnels', '0', 'offers', '1', 'offer_id']
+                                const funnelIndex = keys[1]; // funnel index (e.g., '0')
+                                const offerIndex = keys[3]; // offer index (e.g., '1')
+                                const fieldName = keys[4]; // actual field name (e.g., 'offer_id')
+
+                                // Display error message for offer_id
+                                $(`[name="funnels[${funnelIndex}][offers][${offerIndex}][${fieldName}]"]`)
+                                    .closest('.item-offer')
+                                    .find(`.${fieldName}_error`)
+                                    .text(value); // Show error under the appropriate input
+                            } else {
+                                // For non-nested errors
+                                $(`.${key}_error`).text(value);
+                            }
+                        });
+                    }
+                }
+            });
+        });
+
+        // Remove error message when a valid selection is made
+        $(document).on('change', '.offer-select', function () {
+            const $offerSelect = $(this);
+            if ($offerSelect.val()) {
+                $offerSelect.closest('.item-offer').find('.offer_id_error').text('');
+            }
+        });
+
 
     </script>
 

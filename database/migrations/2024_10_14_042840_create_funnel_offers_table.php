@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('funnels', function (Blueprint $table) {
+        Schema::create('funnel_offers', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('campaign_id')->unsigned();
-            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->bigInteger('funnel_id')->unsigned();
+            $table->bigInteger('offer_id')->unsigned();
+            $table->integer('ratio')->default(100);
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('funnels');
+        Schema::dropIfExists('funnel_offers');
     }
 };

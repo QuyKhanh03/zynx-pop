@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
             CountrySeeder::class,
             BrowserSeeder::class,
             DeviceSeeder::class,
+            OfferSeeder::class,
+            TimeUnitsSeeder::class,
         ]);
     }
 }
