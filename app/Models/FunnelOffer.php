@@ -20,8 +20,10 @@ class FunnelOffer extends Model
     }
 
     // A funnel offer belongs to an offer
+    // In FunnelOffer.php
     public function offer()
     {
-        return $this->belongsTo(Offer::class);
+        return $this->belongsTo(Offer::class, 'offer_id');
     }
+
 }

@@ -86,8 +86,18 @@ class OfferController extends Controller
         Toastr::success('Offer deleted successfully');
         return redirect()->route('admin.offers.index');
     }
-    public function listOffers()
+    public function listOffers(Request $request)
     {
-        return response()->json(Offer::select('id', 'name')->get());
+        $search = $request->input('search');
+        $limit = $request->input('limit', 10); // Mặc định là 10 bản ghi nếu không có limit
+
+        $offers = Offer::query()
+            ->when($search, function ($query, $search) {
+                return $query->where('name', 'like', "%{$search}%");
+            })
+            ->limit($limit) // Giới hạn số bản ghi trả về
+            ->get();
+
+        return response()->json($offers);
     }
 }

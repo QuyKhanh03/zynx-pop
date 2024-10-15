@@ -13,14 +13,23 @@ return new class extends Migration
     {
         Schema::create('campaigns', function (Blueprint $table) {
             $table->id();
+            $table->string('code')->unique();
             $table->string('name');
             $table->float('budget')->default(0);
             $table->text('description')->nullable();
+            $table->text('content')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
+            //delay
             $table->integer('delay')->default(0);
-            $table->bigInteger('delay_unit_id')->unsigned();
-            $table->integer('frequency')->default(0);
-            $table->bigInteger('frequency_unit_id')->unsigned();
+            $table->string('delay_unit')->default('s');
+            //number of popups
+            $table->integer('number_of_popups')->default(0);
+            $table->integer('every')->default(0);
+            $table->string('every_unit')->default('h');
+
+            //popups interval
+            $table->integer('pop_interval')->default(0);
+            $table->string('interval_unit')->default('s');
             $table->timestamps();
         });
     }

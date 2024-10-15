@@ -80,7 +80,7 @@
                                     <div class="card-header">
                                         <h3 class="card-title "><b>General</b></h3>
                                     </div>
-                                    <div class="card-body">
+                                    <div class="card-body p-3 p-md-10">
                                         <div class="row">
                                             <div class="col mb-5">
                                                 <label for="name" class="form-label required">Name</label>
@@ -107,11 +107,11 @@
                                                 <span class="text-danger error-text delay_error"></span>
                                             </div>
                                             <div class="col mb-5">
-                                                <label for="delay_unit_id" class="form-label required">Delay
+                                                <label for="delay_unit" class="form-label required">Delay
                                                     Unit</label>
-                                                <select class="form-select" id="delay_unit_id" name="delay_unit_id">
+                                                <select class="form-select" id="delay_unit" name="delay_unit">
                                                     @foreach($timeUnits as $val)
-                                                        <option value="{{ $val->id }}">{{ $val->name }}</option>
+                                                        <option value="{{ $val->abbreviation }}">{{ $val->name }}</option>
                                                     @endforeach
                                                 </select>
 
@@ -119,19 +119,45 @@
                                         </div>
                                         <div class="row">
                                             <div class="col mb-5">
-                                                <label for="frequency" class="form-label required">Frequency</label>
-                                                <input type="number" class="form-control" id="frequency"
-                                                       name="frequency"
+                                                <label for="number_of_popups" class="form-label required">No of Pop</label>
+                                                <input type="number" class="form-control" id="number_of_popups"
+                                                       name="number_of_popups"
+                                                       placeholder="Enter number of pop">
+                                                <span class="text-danger error-text number_of_popups_error"></span>
+                                            </div>
+
+                                            <div class="col mb-5">
+                                                <label for="every" class="form-label required">Every</label>
+                                                <input type="number" class="form-control" id="every"
+                                                       name="every"
                                                        placeholder="Enter frequency">
-                                                <span class="text-danger error-text frequency_error"></span>
+                                                <span class="text-danger error-text every_error"></span>
                                             </div>
                                             <div class="col mb-5">
-                                                <label for="frequency_unit_id" class="form-label required">Frequency
-                                                    Unit</label>
-                                                <select class="form-select" id="frequency_unit_id"
-                                                        name="frequency_unit_id">
+                                                <label for="every_unit" class="form-label ">
+                                                    &nbsp;
+                                                </label>
+                                                <select class="form-select" id="every_unit"
+                                                        name="every_unit">
                                                     @foreach($timeUnits as $val)
-                                                        <option value="{{ $val->id }}">{{ $val->name }}</option>
+                                                        <option value="{{ $val->abbreviation }}" {{ $val->abbreviation == 'h' ? 'selected' : '' }}>{{ $val->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col mb-5">
+                                                <label for="pop_interval" class="form-label required">Interval</label>
+                                                <input min="1" type="number" class="form-control" id="pop_interval" name="pop_interval" placeholder="Enter interval">
+                                                <span class="text-danger error-text pop_interval_error"></span>
+                                            </div>
+                                            <div class="col mb-5">
+                                                <label for="interval_unit" class="form-label ">
+                                                    &nbsp;</label>
+                                                <select class="form-select" id="interval_unit"
+                                                        name="interval_unit">
+                                                    @foreach($timeUnits as $val)
+                                                        <option value="{{ $val->abbreviation }}">{{ $val->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -306,7 +332,7 @@
                                     <div class="input-group">
                                         <input id="kt_clipboard_1" type="text" class="form-control"
                                                placeholder="name@example.com"
-                                               value="{{ '<script src="https://chatpion.id.vn/js/pop.js?zoneId=1"></script>' }}">
+                                               value="">
                                         <button class="btn btn-light-primary btn-copy"
                                                 data-clipboard-target="#kt_clipboard_1">Copy
                                         </button>
@@ -324,7 +350,7 @@
                                     <div class="input-group">
                                         <input id="kt_clipboard_2" type="text" class="form-control"
                                                placeholder="name@example.com"
-                                               value="{{ '<script src="https://chatpion.id.vn/js/pop-under.js?zoneId=1"></script>' }}">
+                                               value="">
                                         <button class="btn btn-light-primary btn-copy"
                                                 data-clipboard-target="#kt_clipboard_2">Copy
                                         </button>
@@ -333,6 +359,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
+
                         </div>
                     </div>
                 </div>
@@ -344,25 +371,35 @@
 
 @push('scripts')
     <script>
-        // Khởi tạo Select2 cho tất cả các Filter và Offer trong Funnel
         function initializeSelect2($funnel) {
-            // Khởi tạo Select2 cho các offer trong funnel
             $funnel.find('.offer-select').select2({
                 ajax: {
                     url: '{{ route('admin.offers.list') }}',
                     dataType: 'json',
+                    delay: 0,
+                    data: function (params) {
+                        return {
+                            search: params.term || '',
+                            limit: 10
+                        };
+                    },
                     processResults: function (data) {
                         return {
                             results: $.map(data, function (item) {
-                                return {id: item.id, text: item.name};
+                                return {
+                                    id: item.id,
+                                    text: item.name
+                                };
                             })
                         };
-                    }
+                    },
+                    cache: true
                 },
                 placeholder: "Select an offer",
+                minimumInputLength: 0,
+                allowClear: true
             });
 
-            // Khởi tạo Select2 cho các filter trong funnel
             $funnel.find('.add-filter-select').select2({
                 placeholder: "Select filters",
                 allowClear: true,
@@ -372,18 +409,16 @@
                 const $funnel = $(this).closest('.item-funnel'); // Lấy funnel hiện tại
                 const $selectedFilters = $funnel.find('.selected-filters');
 
-                // Thêm filter mới nếu chưa tồn tại trong funnel hiện tại
                 $.each(selectedValues, function (index, value) {
                     if (!$(`#${value}-select-${$funnel.data('funnel-id')}`, $selectedFilters).length) {
                         appendFilterSelect(value, $selectedFilters, $funnel);
                     }
                 });
 
-                updateFilterCount($funnel);  // Cập nhật số lượng filter trong funnel hiện tại
+                updateFilterCount($funnel);  //
             });
         }
 
-        // Hàm để cập nhật chỉ mục cho các Funnels sau mỗi thay đổi
         function updateFunnelIndexes() {
             $('.list-funnels .item-funnel').each(function (index) {
                 $(this).attr('data-funnel-id', index + 1); // Cập nhật data-funnel-id
@@ -651,10 +686,7 @@
 
         $(document).on('click', '.btn-save-campaign', function (e) {
             e.preventDefault();
-
-            // Clear any existing error messages
             $('.error-text').text('');
-
             $.ajax({
                 url: '{{ route('admin.campaigns.store') }}',
                 type: 'POST',
@@ -663,7 +695,19 @@
                     if (response.success) {
                         toastr.success(response.message);
                         //show modal
+                        var zoneId = response.data;
+                        var backendUrl = "{{ env('URL_BACKEND', 'https://api-pop.diveinthebluesky.biz') }}";
+
+                        // Tạo nội dung script với escape ký tự
+                        var popUpScript = "<script  src='" + backendUrl + "/pop?zoneId=" + zoneId + "'" + "><" + "/script>";
+                        var popUnderScript = "<script  src='" + backendUrl + "/pop-under?zoneId=" + zoneId + "'" + "><" + "/script>";
+
+
+                        $('#kt_clipboard_1').val(popUpScript);
+                        $('#kt_clipboard_2').val(popUnderScript);
                         $('#modalShowCode').modal('show');
+
+
                         //hide indicator-label
                         $('.indicator-label').hide();
                         //show indicator-progress

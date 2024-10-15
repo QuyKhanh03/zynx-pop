@@ -9,21 +9,18 @@ class Campaign extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'budget', 'description', 'status', 'delay', 'delay_unit_id', 'frequency', 'frequency_unit_id',];
+    protected $fillable = ['code','name', 'budget','content', 'description', 'status', 'delay', 'delay_unit', 'number_of_popups', 'every', 'every_unit', 'pop_interval','interval_unit'];
 
     public function funnels()
     {
         return $this->hasMany(Funnel::class);
     }
-
-    public function delayUnit()
+    public static function generateCode()
     {
-        return $this->belongsTo(TimeUnit::class, 'delay_unit_id');
-    }
+        do {
+            $code = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
+        } while (self::where('code', $code)->exists());
 
-    // Relationship with TimeUnit for frequency unit
-    public function frequencyUnit()
-    {
-        return $this->belongsTo(TimeUnit::class, 'frequency_unit_id');
+        return $code;
     }
 }

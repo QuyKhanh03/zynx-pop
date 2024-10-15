@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Website;
 use Illuminate\Http\Request;
 
 class WebsiteController extends Controller
@@ -9,9 +10,11 @@ class WebsiteController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $title = 'Websites';
+        $data = Website::orderBy('id', 'desc')->paginate(10);
+        return view('admin.websites.index', compact('title', 'data'));
     }
 
     /**

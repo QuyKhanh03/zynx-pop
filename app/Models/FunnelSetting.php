@@ -21,4 +21,16 @@ class FunnelSetting extends Model
     {
         return $this->belongsTo(Funnel::class);
     }
+
+    // In FunnelSetting.php
+    public function delayUnit()
+    {
+        return $this->belongsTo(TimeUnit::class, 'delay_unit_id');
+    }
+
+    public function frequencyUnit()
+    {
+        return $this->belongsTo(TimeUnit::class, 'frequency_unit_id');
+    }
+
 }
