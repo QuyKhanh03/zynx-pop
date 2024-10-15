@@ -13,4 +13,29 @@ class Funnel extends Model
         'campaign_id',
         'status',
     ];
+
+    public function campaign()
+    {
+        return $this->belongsTo(Campaign::class);
+    }
+    public function offers()
+    {
+        return $this->hasMany(FunnelOffer::class);
+    }
+
+    public function countries()
+    {
+        return $this->hasMany(FunnelCountry::class);
+    }
+
+    public function devices()
+    {
+        return $this->hasMany(FunnelDevice::class);
+    }
+
+    // A funnel has one setting (delay, frequency, etc.)
+    public function settings()
+    {
+        return $this->hasOne(FunnelSetting::class);
+    }
 }

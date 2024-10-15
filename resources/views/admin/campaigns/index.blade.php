@@ -23,5 +23,24 @@
                 </div>
             </div>
         </div>
+        <div id="kt_content_container" class="container-xxl">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-striped table-row-bordered gy-7 gs-7">
+                        <thead>
+                        <tr class="font-bold">
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

@@ -9,4 +9,6 @@ class Browser extends Model
 {
     use HasFactory;
     protected $fillable = ['name'];
+
+
 }

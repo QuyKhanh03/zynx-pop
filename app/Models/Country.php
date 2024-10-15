@@ -9,4 +9,9 @@ class Country extends Model
 {
     use HasFactory;
     protected $fillable = ['name', 'code'];
+
+    public function funnels()
+    {
+        return $this->hasMany(FunnelCountry::class);
+    }
 }

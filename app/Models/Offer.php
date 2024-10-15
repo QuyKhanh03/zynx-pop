@@ -9,4 +9,9 @@ class Offer extends Model
 {
     use HasFactory;
     protected $fillable = ['name', 'direct_link','partner', 'description', 'status'];
+
+    public function funnels()
+    {
+        return $this->hasMany(FunnelOffer::class);
+    }
 }

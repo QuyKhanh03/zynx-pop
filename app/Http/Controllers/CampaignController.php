@@ -10,7 +10,9 @@ use App\Models\FunnelOffer;
 use App\Models\FunnelSetting;
 use App\Models\TimeUnit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 
 class CampaignController extends Controller
 {
@@ -20,7 +22,8 @@ class CampaignController extends Controller
     public function index()
     {
         $title = 'Campaigns';
-        $campaigns = Campaign::orDerBy('created_at', 'desc')->paginate(10);
+        $campaigns = Campaign::with('funnels', 'funnels.offers', 'funnels.settings', 'funnels.countries', 'funnels.devices')->paginate(10);
+
 
         return view('admin.campaigns.index', compact('title', 'campaigns'));
     }
@@ -56,8 +59,7 @@ class CampaignController extends Controller
             'funnels.*.offers.*.ratio.max' => 'The ratio must not exceed 100.',
         ]);
 
-
-        DB::BeginTransaction();
+        DB::beginTransaction();
         try {
             // Step 1: Create the campaign
             $campaign = Campaign::create([
@@ -109,7 +111,6 @@ class CampaignController extends Controller
                     }
                 }
 
-                // Step 2.5: Add Settings for Funnel (delay, frequency, etc.)
                 FunnelSetting::create([
                     'funnel_id' => $funnel->id,
                     'delay' => $request->input("funnels.$funnelIndex.delay"),
@@ -118,15 +119,24 @@ class CampaignController extends Controller
                     'frequency_unit_id' => $request->input("funnels.$funnelIndex.frequency_unit_id"),
                 ]);
             }
+            $redisKey = "zoneId:{$campaign->id}";
 
-            // Step 3: Commit the transaction
+            $campaignData = [
+                'campaign' => $campaign->toArray(),
+                'funnels' => $campaign->funnels()->with(['offers', 'settings', 'countries', 'devices'])->get()->toArray(),
+            ];
+
+            // Use Redis directly to push the campaign data
+            Redis::lpush($redisKey, json_encode($campaignData));
+
+
             DB::commit();
+
 
             return response()->json([
                 'success' => true,
-                'message' => 'Campaign created successfully.',
+                'message' => 'Campaign created successfully and stored in Redis permanently.',
             ]);
-
 
         } catch (\Exception $e) {
             // If an exception occurs, rollback the transaction
@@ -169,6 +179,41 @@ class CampaignController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+            $campaign = Campaign::findOrFail($id);
+
+            $campaign->funnels()->each(function ($funnel) {
+                $funnel->offers()->delete();
+                $funnel->countries()->delete();
+                $funnel->devices()->delete();
+                $funnel->settings()->delete();
+
+                $funnel->delete();
+            });
+
+            $campaign->delete();
+
+            $redisKey = "zoneId:{$id}";
+            if (Cache::has($redisKey)) {
+                Cache::forget($redisKey);
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Campaign deleted successfully',
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'Error deleting campaign: ' . $e->getMessage(),
+            ], 500);
+        }
     }
+
 }

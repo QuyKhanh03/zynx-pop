@@ -10,4 +10,8 @@ class Device extends Model
     use HasFactory;
 
     protected $fillable = ['name'];
+    public function funnels()
+    {
+        return $this->hasMany(FunnelDevice::class);
+    }
 }

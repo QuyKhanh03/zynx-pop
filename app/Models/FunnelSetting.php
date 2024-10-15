@@ -16,4 +16,9 @@ class FunnelSetting extends Model
         'frequency',
         'frequency_unit_id',
     ];
+
+    public function funnel()
+    {
+        return $this->belongsTo(Funnel::class);
+    }
 }
