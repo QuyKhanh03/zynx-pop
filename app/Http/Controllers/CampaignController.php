@@ -191,8 +191,23 @@ class CampaignController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        // Truy vấn campaign với funnels và các quan hệ liên quan (offers, countries, devices)
+        $campaign = Campaign::with([
+            'funnels',
+            'funnels.offers' => function ($query) {
+                $query->select('offers.id', 'offers.name'); // Lấy thông tin offer từ bảng trung gian
+            },
+            'funnels.countries',
+            'funnels.devices',
+        ])->findOrFail($id);
+
+        $title = 'Edit Campaign - ' . $campaign->name . ' - #' . $campaign->code;
+        $timeUnits = TimeUnit::all(); // Lấy các đơn vị thời gian
+
+        return view('admin.campaigns.edit', compact('title', 'campaign', 'timeUnits'));
     }
+
+
 
     /**
      * Update the specified resource in storage.

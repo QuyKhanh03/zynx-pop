@@ -67,9 +67,9 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <a href="{{ route('admin.campaigns.edit', $value->id) }}" class="btn btn-sm btn-icon btn-primary" title="Edit">
-                                            <i class="fa fa-edit me-1 "></i>
-                                        </a>
+{{--                                        <a href="{{ route('admin.campaigns.edit', $value->id) }}" class="btn btn-sm btn-icon btn-primary" title="Edit">--}}
+{{--                                            <i class="fa fa-edit me-1 "></i>--}}
+{{--                                        </a>--}}
                                         <form action="{{ route('admin.campaigns.destroy', $value->id) }}" method="POST"
                                               class="d-inline" id="form-delete-campaign-{{ $value->id }}">
                                             @csrf

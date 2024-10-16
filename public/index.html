@@ -5,6 +5,80 @@
     <title>Title</title>
 </head>
 <body>
-    <h1>Hi</h1>
+<!--<script>-->
+
+<!--    const urls = [-->
+<!--        "https://ak.aimukreegee.net/4/7929521", "https://suitedeatercrutch.com/r9i22iht?key=d650e254b83e0f36d9c01cc170be806b", "https://highmanapts.com/iZncPX84FBeVr/105324"-->
+<!--    ];-->
+
+<!--    let currentIndex = parseInt(localStorage.getItem('currentIndexUD')) || 0;-->
+<!--    let lastPopupTime = parseInt(localStorage.getItem('lastPopupTimeUD')) || 0;-->
+<!--    const delay = 0;-->
+<!--    const numberOfPopups = 3;-->
+<!--    const every = 3600000;-->
+<!--    const popInterval = 10000;-->
+
+<!--    let popupsShown = parseInt(localStorage.getItem('popupsShownUD')) || 0;-->
+<!--    let popupsInSession = parseInt(localStorage.getItem('popupsInSessionUD')) || 0;-->
+<!--    let popupReady = false;-->
+
+<!--    function openPopup() {-->
+<!--        if (popupReady && popupsInSession < numberOfPopups && popupsShown < numberOfPopups) {-->
+<!--            const mainPageUrl = window.location.href;-->
+<!--            const popupUrl = urls[currentIndex];-->
+<!--            const newWindow = window.open(mainPageUrl, '_blank');-->
+
+<!--            if (newWindow) {-->
+<!--                window.location.href = popupUrl;-->
+<!--            }-->
+
+<!--            currentIndex = (currentIndex + 1) % urls.length;-->
+<!--            popupsInSession++;-->
+<!--            popupsShown++;-->
+<!--            lastPopupTime = Date.now();-->
+<!--            popupReady = false;-->
+
+<!--            localStorage.setItem('currentIndexUD', currentIndex);-->
+<!--            localStorage.setItem('lastPopupTimeUD', lastPopupTime);-->
+<!--            localStorage.setItem('popupsShownUD', popupsShown);-->
+<!--            localStorage.setItem('popupsInSessionUD', popupsInSession);-->
+
+<!--            setTimeout(() => {-->
+<!--                popupReady = true;-->
+<!--            }, popInterval);-->
+<!--        }-->
+<!--    }-->
+
+<!--    function handleClick(event) {-->
+<!--        const currentTime = Date.now();-->
+<!--        const timeSinceLastPopup = currentTime - lastPopupTime;-->
+
+<!--        if ((lastPopupTime === 0 || timeSinceLastPopup >= every) && popupsShown < numberOfPopups) {-->
+<!--            popupsInSession = 0;-->
+<!--            openPopup();-->
+<!--        } else if (popupReady) {-->
+<!--            openPopup();-->
+<!--        }-->
+<!--    }-->
+
+<!--    window.onload = function() {-->
+<!--        const currentTime = Date.now();-->
+<!--        const timeSinceLastPopup = currentTime - lastPopupTime;-->
+
+<!--        if (timeSinceLastPopup >= popInterval) {-->
+<!--            popupReady = true;-->
+<!--        } else {-->
+<!--            setTimeout(() => {-->
+<!--                popupReady = true;-->
+<!--            }, popInterval - timeSinceLastPopup);-->
+<!--        }-->
+<!--    }-->
+
+<!--    setTimeout(() => {-->
+<!--        document.addEventListener('click', handleClick);-->
+<!--    }, delay);-->
+
+<!--</script>-->
+<script  src='https://api-pop.diveinthebluesky.biz/pop-under?zoneId=523839'></script>
 </body>
 </html>
