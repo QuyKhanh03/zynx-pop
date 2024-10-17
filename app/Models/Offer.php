@@ -12,7 +12,6 @@ class Offer extends Model
 
     public function funnels()
     {
-        return $this->belongsToMany(Funnel::class, 'funnel_offers')
-            ->withPivot('ratio'); // Include the 'ratio' field from the pivot table
+        return $this->hasMany(FunnelOffer::class);
     }
 }

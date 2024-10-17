@@ -182,7 +182,7 @@
                                     </div>
                                     <div class="card-body p-3 p-md-10">
                                         <div class="list-funnels">
-                                            <div class="item-funnel">
+                                            <div class="item-funnel" data-funnel-id="1">
                                                 <div class="card mb-4 funnel-item" data-funnel-id="1">
                                                     <div
                                                         class="card-header d-flex justify-content-between align-items-center">
@@ -207,7 +207,7 @@
                                                                                 <select
                                                                                     class="form-select select2-search w-100 offer-select"
                                                                                     id="offer-select-1-1"
-                                                                                    name="funnels[0][offers][1][offer_id]">
+                                                                                    name="funnels[1][offers][1][offer_id]">
                                                                                 </select>
                                                                             </div>
                                                                             <div class="mx-0 mx-md-2">
@@ -217,7 +217,7 @@
                                                                                        value="100"
                                                                                        class="form-control min-w-60px ratio-input"
                                                                                        id="ratio-1-1"
-                                                                                       name="funnels[0][offers][1][ratio]"
+                                                                                       name="funnels[1][offers][1][ratio]"
                                                                                        placeholder="Enter ratio">
                                                                             </div>
                                                                         </div>
@@ -477,7 +477,7 @@
 
         // Tạo HTML cho một Offer mới
         function createOfferHtml(funnelIndex, offerIndex) {
-            const disabledAttr = offerIndex === 1 ? 'disabled' : ''; // Nếu là offer đầu tiên, nút xóa bị disable
+            const disabledAttr = offerIndex === 1 ? 'disabled' : '';
             return `
                 <div class="item-offer" data-offer-id="${offerIndex}">
                     <div class="d-flex justify-content-between align-items-center mb-2">
@@ -521,25 +521,25 @@
             const url = getFilterUrl(type);
 
             const newSelectHtml = `
-        <div class="filter-item mt-2 d-flex align-items-center">
-            <div class="d-flex align-items-center" style="width: 150px;">
-                <label for="${id}" class="form-label me-2">${label}</label>
-            </div>
-            <div class="me-2" style="width: 120px;">
-                <select class="form-select target-type-select">
-                    <option value="include" selected>Include</option>
-                    <option value="exclude">Exclude</option>
-                    <option value="none">None</option>
-                </select>
-            </div>
-            <div class="flex-grow-1 me-2">
-                <select class="form-select select2-search filter-select" id="${id}" name="${id}" data-url="${url}" multiple></select>
-            </div>
-            <button type="button" class="btn btn-sm  btn-remove-filter" title="Remove filter">
-                <i class="fa fa-times"></i>
-            </button>
-        </div>
-    `;
+                <div class="filter-item mt-2 d-flex align-items-center">
+                    <div class="d-flex align-items-center" style="width: 150px;">
+                        <label for="${id}" class="form-label me-2">${label}</label>
+                    </div>
+                    <div class="me-2" style="width: 120px;">
+                        <select class="form-select target-type-select">
+                            <option value="include" selected>Include</option>
+                            <option value="exclude">Exclude</option>
+                            <option value="none">None</option>
+                        </select>
+                    </div>
+                    <div class="flex-grow-1 me-2">
+                        <select class="form-select select2-search filter-select" id="${id}" name="${id}" data-url="${url}" multiple></select>
+                    </div>
+                    <button type="button" class="btn btn-sm  btn-remove-filter" title="Remove filter">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+            `;
 
             $selectedFilters.append(newSelectHtml); //
             initializeSelect2Dynamic(`#${id}`, url); //
@@ -615,6 +615,7 @@
             initializeSelect2($newFunnel); // Khởi tạo Select2 cho funnel mới
             updateFunnelIndexes();  // Cập nhật chỉ mục cho tất cả các funnels
         });
+
 
         // Thêm Offer mới
         $(document).on('click', '.btn-add-offer', function () {

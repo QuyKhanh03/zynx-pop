@@ -65,6 +65,7 @@ class CampaignController extends Controller
             'funnels.*.offers.*.ratio.max' => 'The ratio must not exceed 100.',
         ]);
         DB::beginTransaction();
+
         try {
             // Step 1: Create the campaign
             $campaign = Campaign::create([
@@ -95,56 +96,8 @@ class CampaignController extends Controller
 
 
             // Step 2: Create related funnels, offers, countries, devices, and settings
-            foreach ($request->input('funnels', []) as $funnelIndex => $funnelData) {
-                // Step 2.1: Create Funnel
-                $funnel = Funnel::create([
-                    'campaign_id' => $campaign->id,
-                    'status' => $request->input("funnels.$funnelIndex.status", 'active'),
-                ]);
-                // Step 2.2: Add Offers to the Funnel
-                foreach ($funnelData['offers'] as $offerIndex => $offerData) {
-                    FunnelOffer::create([
-                        'funnel_id' => $funnel->id,
-                        'offer_id' => $offerData['offer_id'],
-                        'ratio' => $offerData['ratio'],
-                    ]);
-                }
-
-                // Step 2.3: Add Countries (if provided)
-                if (isset($funnelData['countries'])) {
-                    foreach ($funnelData['countries'] as $countryId) {
-                        FunnelCountry::create([
-                            'funnel_id' => $funnel->id,
-                            'country_id' => $countryId,
-                            'targeting_type' => $funnelData['country_targeting_type'] ?? 'none', // Default to 'include'
-                        ]);
-                    }
-                }
-
-                // Step 2.4: Add Devices (if provided)
-                if (isset($funnelData['devices'])) {
-                    foreach ($funnelData['devices'] as $deviceId) {
-                        FunnelDevice::create([
-                            'funnel_id' => $funnel->id,
-                            'device_id' => $deviceId,
-                            'targeting_type' => $funnelData['device_targeting_type'] ?? 'none', // Default to 'include'
-                        ]);
-                    }
-                }
-            }
-            // Step 3: Store the campaign in Redis
-            $formattedCampaign = Campaign::with([
-                'funnels',
-                'funnels.offers' => function ($query) {
-                    $query->with('offer:id,direct_link,name'); // Retrieve the related offer details
-                },
-                'funnels.countries',
-                'funnels.devices',
-            ])->where('code', $zoneId)->firstOrFail()->toArray();
-
-            // Step 4: Store the campaign data into Redis permanently
-            $redisKey = "{$campaign->code}";
-            Redis::set($redisKey, json_encode($formattedCampaign));
+            $this->processFunnels($request->input('funnels', []), $campaign->id);
+            $this->storeCampaignInRedis($campaign->code);
 
             DB::commit();
 
@@ -191,31 +144,178 @@ class CampaignController extends Controller
      */
     public function edit(string $id)
     {
-        // Truy vấn campaign với funnels và các quan hệ liên quan (offers, countries, devices)
         $campaign = Campaign::with([
             'funnels',
             'funnels.offers' => function ($query) {
-                $query->select('offers.id', 'offers.name'); // Lấy thông tin offer từ bảng trung gian
+                $query->with('offer:id,direct_link,name'); // Retrieve the related offer details
             },
             'funnels.countries',
             'funnels.devices',
         ])->findOrFail($id);
 
-        $title = 'Edit Campaign - ' . $campaign->name . ' - #' . $campaign->code;
-        $timeUnits = TimeUnit::all(); // Lấy các đơn vị thời gian
+        $title = "Edit Campaign: {$campaign->name}" . " #{$campaign->code}";
+        $timeUnits = TimeUnit::all();
 
         return view('admin.campaigns.edit', compact('title', 'campaign', 'timeUnits'));
     }
 
+    public function test($id)
+    {
+        $formattedCampaign = Campaign::with([
+            'funnels',
+            'funnels.offers' => function ($query) {
+                $query->with('offer:id,direct_link,name'); // Retrieve the related offer details
+            },
+            'funnels.countries',
+            'funnels.devices',
+        ])->findOrFail($id)->toArray();
 
+        return response()->json([
+            'success' => true,
+            'data' => $formattedCampaign,
+        ]);
+    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Add validation for the funnel offers
+        $request->validate([
+            'name' => 'required',
+            'status' => 'required',
+            'delay' => 'required|integer',
+            'delay_unit' => 'required',
+            'number_of_popups' => 'required|integer|min:1',
+            'every' => 'required|integer',
+            'every_unit' => 'required',
+            'pop_interval' => 'required|integer|min:1',
+            'interval_unit' => 'required',
+            'funnels.*.offers.*.offer_id' => 'required|integer|exists:offers,id',
+            'funnels.*.offers.*.ratio' => 'required|integer|min:1|max:100',
+        ], [
+            'funnels.*.offers.*.offer_id.required' => 'Each funnel must have at least one offer.',
+            'funnels.*.offers.*.offer_id.exists' => 'The selected offer does not exist.',
+            'funnels.*.offers.*.ratio.required' => 'Each offer must have a ratio value.',
+            'funnels.*.offers.*.ratio.min' => 'The ratio must be at least 1.',
+            'funnels.*.offers.*.ratio.max' => 'The ratio must not exceed 100.',
+        ]);
+        DB::beginTransaction();
+
+        try {
+            // Step 1: Update the campaign
+            $campaign = Campaign::findOrFail($id);
+
+            $campaign->update([
+                'name' => $request->input('name'),
+                'status' => $request->input('status'),
+                'description' => $request->input('description'),
+                'delay' => $request->input('delay'),
+                'delay_unit' => $request->input('delay_unit'), //
+                'number_of_popups' => $request->input('number_of_popups'), //
+                'every' => $request->input('every'), //
+                'every_unit' => $request->input('every_unit'), //
+                'pop_interval' => $request->input('pop_interval'), //
+                'interval_unit' => $request->input('interval_unit'), //
+            ]);
+
+            $this->deleteExistingFunnels($campaign);
+            $this->processFunnels($request->input('funnels', []), $campaign->id);
+            $this->storeCampaignInRedis($campaign->code);
+
+            DB::commit();
+
+            Toastr::success('Campaign updated successfully.');
+            return response()->json([
+                'success' => true,
+                'message' => 'Campaign updated successfully.',
+            ]);
+
+        } catch (\Exception $e) {
+            // If an exception occurs, rollback the transaction
+            DB::rollback();
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ]);
+        }
+
     }
+
+    private function processFunnels(array $funnelsData, $campaignId)
+    {
+        foreach ($funnelsData as $funnelIndex => $funnelData) {
+            // Tạo Funnel mới
+            $funnel = Funnel::create([
+                'campaign_id' => $campaignId,
+                'status' => $funnelData['status'] ?? 'active',
+            ]);
+
+            // Thêm offers vào Funnel
+            foreach ($funnelData['offers'] as $offerData) {
+                FunnelOffer::create([
+                    'funnel_id' => $funnel->id,
+                    'offer_id' => $offerData['offer_id'],
+                    'ratio' => $offerData['ratio'],
+                ]);
+            }
+
+            // Thêm Countries (nếu có)
+            if (isset($funnelData['countries'])) {
+                foreach ($funnelData['countries'] as $countryId) {
+                    FunnelCountry::create([
+                        'funnel_id' => $funnel->id,
+                        'country_id' => $countryId,
+                        'targeting_type' => $funnelData['country_targeting_type'] ?? 'none', // Default là 'none'
+                    ]);
+                }
+            }
+
+            // Thêm Devices (nếu có)
+            if (isset($funnelData['devices'])) {
+                foreach ($funnelData['devices'] as $deviceId) {
+                    FunnelDevice::create([
+                        'funnel_id' => $funnel->id,
+                        'device_id' => $deviceId,
+                        'targeting_type' => $funnelData['device_targeting_type'] ?? 'none', // Default là 'none'
+                    ]);
+                }
+            }
+        }
+    }
+
+
+    private function deleteExistingFunnels(Campaign $campaign)
+    {
+        foreach ($campaign->funnels as $funnel) {
+            $funnel->offers()->delete();
+            $funnel->countries()->delete();
+            $funnel->devices()->delete();
+            $funnel->settings()->delete();
+            $funnel->delete();
+        }
+    }
+
+
+    private function storeCampaignInRedis($campaignCode)
+    {
+        $formattedCampaign = Campaign::with([
+            'funnels',
+            'funnels.offers' => function ($query) {
+                $query->with('offer:id,direct_link,name'); // Retrieve the related offer details
+            },
+            'funnels.countries',
+            'funnels.devices',
+        ])->where('code', $campaignCode)->firstOrFail()->toArray();
+
+        $redisKey = "{$campaignCode}";
+        Redis::set($redisKey, json_encode($formattedCampaign)); // Ghi đè toàn bộ dữ liệu trong Redis
+    }
+
+
+
 
     /**
      * Remove the specified resource from storage.

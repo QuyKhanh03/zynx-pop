@@ -20,8 +20,7 @@ class Funnel extends Model
     }
     public function offers()
     {
-        return $this->belongsToMany(Offer::class, 'funnel_offers')
-            ->withPivot('ratio'); // Include the 'ratio' field from the pivot table
+        return $this->hasMany(FunnelOffer::class);
     }
 
     public function countries()
