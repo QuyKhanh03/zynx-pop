@@ -73,214 +73,216 @@
             <form id="form-campaign">
                 @csrf
                 <div class="card">
-                    <div class="card-body p-4 p-md-10">
-                        <div class="row">
-                            <div class="col-12 col-md-6 mb-4">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="card-title "><b>General</b></h3>
-                                    </div>
-                                    <div class="card-body p-3 p-md-10">
-                                        <div class="row">
-                                            <div class="col mb-5">
-                                                <label for="name" class="form-label required">Name</label>
-                                                <input type="text" class="form-control" id="name" name="name"
-                                                       placeholder="Enter name">
-                                                <span class="text-danger error-text name_error"></span>
-                                            </div>
+                    <div class="table-resposive">
+                        <div class="card-body p-4 p-md-10">
+                            <div class="row">
+                                <div class="col-12 col-md-6 mb-4">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title "><b>General</b></h3>
                                         </div>
-                                        <div class="row">
-                                            <div class="col mb-5">
-                                                <label for="status" class="form-label required">Status</label>
-                                                <select class="form-select" id="status" name="status">
-                                                    <option value="active">Active</option>
-                                                    <option value="inactive">Inactive</option>
-                                                </select>
-                                                <span class="text-danger error-text status_error"></span>
+                                        <div class="card-body p-3 p-md-10">
+                                            <div class="row">
+                                                <div class="col mb-5">
+                                                    <label for="name" class="form-label required">Name</label>
+                                                    <input type="text" class="form-control" id="name" name="name"
+                                                           placeholder="Enter name">
+                                                    <span class="text-danger error-text name_error"></span>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col mb-5">
-                                                <label for="delay" class="form-label required">Delay</label>
-                                                <input type="number" class="form-control" id="delay" name="delay"
-                                                       placeholder="Enter delay" value="0">
-                                                <span class="text-danger error-text delay_error"></span>
+                                            <div class="row">
+                                                <div class="col mb-5">
+                                                    <label for="status" class="form-label required">Status</label>
+                                                    <select class="form-select" id="status" name="status">
+                                                        <option value="active">Active</option>
+                                                        <option value="inactive">Inactive</option>
+                                                    </select>
+                                                    <span class="text-danger error-text status_error"></span>
+                                                </div>
                                             </div>
-                                            <div class="col mb-5">
-                                                <label for="delay_unit" class="form-label required">Delay
-                                                    Unit</label>
-                                                <select class="form-select" id="delay_unit" name="delay_unit">
-                                                    @foreach($timeUnits as $val)
-                                                        <option value="{{ $val->abbreviation }}">{{ $val->name }}</option>
-                                                    @endforeach
-                                                </select>
+                                            <div class="row">
+                                                <div class="col mb-5">
+                                                    <label for="delay" class="form-label required">Delay</label>
+                                                    <input type="number" class="form-control" id="delay" name="delay"
+                                                           placeholder="Enter delay" value="0">
+                                                    <span class="text-danger error-text delay_error"></span>
+                                                </div>
+                                                <div class="col mb-5">
+                                                    <label for="delay_unit" class="form-label required">Delay
+                                                        Unit</label>
+                                                    <select class="form-select" id="delay_unit" name="delay_unit">
+                                                        @foreach($timeUnits as $val)
+                                                            <option value="{{ $val->abbreviation }}">{{ $val->name }}</option>
+                                                        @endforeach
+                                                    </select>
 
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col mb-5">
-                                                <label for="number_of_popups" class="form-label required">No of Pop</label>
-                                                <input type="number" class="form-control" id="number_of_popups"
-                                                       name="number_of_popups"
-                                                       placeholder="Enter number of pop">
-                                                <span class="text-danger error-text number_of_popups_error"></span>
-                                            </div>
+                                            <div class="row">
+                                                <div class="col mb-5">
+                                                    <label for="number_of_popups" class="form-label required">No of Pop</label>
+                                                    <input type="number" class="form-control" id="number_of_popups"
+                                                           name="number_of_popups"
+                                                           placeholder="Enter number of pop">
+                                                    <span class="text-danger error-text number_of_popups_error"></span>
+                                                </div>
 
-                                            <div class="col mb-5">
-                                                <label for="every" class="form-label required">Every</label>
-                                                <input type="number" class="form-control" id="every"
-                                                       name="every"
-                                                       placeholder="Enter frequency">
-                                                <span class="text-danger error-text every_error"></span>
+                                                <div class="col mb-5">
+                                                    <label for="every" class="form-label required">Every</label>
+                                                    <input type="number" class="form-control" id="every"
+                                                           name="every"
+                                                           placeholder="Enter frequency">
+                                                    <span class="text-danger error-text every_error"></span>
+                                                </div>
+                                                <div class="col mb-5">
+                                                    <label for="every_unit" class="form-label ">
+                                                        &nbsp;
+                                                    </label>
+                                                    <select class="form-select" id="every_unit"
+                                                            name="every_unit">
+                                                        @foreach($timeUnits as $val)
+                                                            <option value="{{ $val->abbreviation }}" {{ $val->abbreviation == 'h' ? 'selected' : '' }}>{{ $val->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
-                                            <div class="col mb-5">
-                                                <label for="every_unit" class="form-label ">
-                                                    &nbsp;
-                                                </label>
-                                                <select class="form-select" id="every_unit"
-                                                        name="every_unit">
-                                                    @foreach($timeUnits as $val)
-                                                        <option value="{{ $val->abbreviation }}" {{ $val->abbreviation == 'h' ? 'selected' : '' }}>{{ $val->name }}</option>
-                                                    @endforeach
-                                                </select>
+                                            <div class="row">
+                                                <div class="col mb-5">
+                                                    <label for="pop_interval" class="form-label required">Interval</label>
+                                                    <input min="1" type="number" class="form-control" id="pop_interval" name="pop_interval" placeholder="Enter interval">
+                                                    <span class="text-danger error-text pop_interval_error"></span>
+                                                </div>
+                                                <div class="col mb-5">
+                                                    <label for="interval_unit" class="form-label ">
+                                                        &nbsp;</label>
+                                                    <select class="form-select" id="interval_unit"
+                                                            name="interval_unit">
+                                                        @foreach($timeUnits as $val)
+                                                            <option value="{{ $val->abbreviation }}">{{ $val->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col mb-5">
-                                                <label for="pop_interval" class="form-label required">Interval</label>
-                                                <input min="1" type="number" class="form-control" id="pop_interval" name="pop_interval" placeholder="Enter interval">
-                                                <span class="text-danger error-text pop_interval_error"></span>
-                                            </div>
-                                            <div class="col mb-5">
-                                                <label for="interval_unit" class="form-label ">
-                                                    &nbsp;</label>
-                                                <select class="form-select" id="interval_unit"
-                                                        name="interval_unit">
-                                                    @foreach($timeUnits as $val)
-                                                        <option value="{{ $val->abbreviation }}">{{ $val->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col mb-5">
-                                                <label for="description" class="form-label">Description</label>
-                                                <textarea class="form-control" id="description" name="description"
-                                                          rows="3">
+                                            <div class="row">
+                                                <div class="col mb-5">
+                                                    <label for="description" class="form-label">Description</label>
+                                                    <textarea class="form-control" id="description" name="description"
+                                                              rows="3">
                                                 </textarea>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-12 col-md-6 mb-4">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="card-title">
-                                            <b>Funnels</b>
-                                        </h3>
-                                    </div>
-                                    <div class="card-body p-3 p-md-10">
-                                        <div class="list-funnels">
-                                            <div class="item-funnel" data-funnel-id="1">
-                                                <div class="card mb-4 funnel-item" data-funnel-id="1">
-                                                    <div
-                                                        class="card-header d-flex justify-content-between align-items-center">
-                                                        <h4 class="card-title mb-0">Funnel #1</h4>
-                                                    </div>
-                                                    <div class="card-body p-3 p-md-10">
-                                                        <div class="mb-3">
-                                                            <h5 class="card-subtitle mb-3">Offers</h5>
-                                                            <div class="list-offers">
-                                                                <div class="item-offer" data-offer-id="1">
-                                                                    <div
-                                                                        class="d-flex justify-content-between align-items-center mb-2">
-                                                                        <div
-                                                                            class="d-flex align-items-center flex-grow-1">
-                                                                            <div class="me-3">
-                                                                                <label class="form-label">&nbsp;</label>
-                                                                                <div class="fs-3 font-bold">1</div>
-                                                                            </div>
-                                                                            <div class="mx-2 flex-grow-1">
-                                                                                <label for="offer-select-1-1"
-                                                                                       class="form-label required">Offer</label>
-                                                                                <select
-                                                                                    class="form-select select2-search w-100 offer-select"
-                                                                                    id="offer-select-1-1"
-                                                                                    name="funnels[1][offers][1][offer_id]">
-                                                                                </select>
-                                                                            </div>
-                                                                            <div class="mx-0 mx-md-2">
-                                                                                <label for="ratio-1-1"
-                                                                                       class="form-label">Ratio</label>
-                                                                                <input type="number" max="100" min="0"
-                                                                                       value="100"
-                                                                                       class="form-control min-w-60px ratio-input"
-                                                                                       id="ratio-1-1"
-                                                                                       name="funnels[1][offers][1][ratio]"
-                                                                                       placeholder="Enter ratio">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="">
-                                                                            <label class="form-label">&nbsp;</label>
-                                                                            <button type="button" disabled
-                                                                                    title="Need at least one offer"
-                                                                                    class="btn btn-sm disabled rounded">
-                                                                                <i class="fa fa-times"></i>
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                    <span
-                                                                        class="text-danger mx-7 error-text offer_id_error"></span>
-                                                                </div>
-                                                            </div>
-                                                            <button class="btn btn-sm btn-success mt-2 btn-add-offer"
-                                                                    title="Add offer" type="button">
-                                                                <i class="fa fa-plus"></i> Add
-                                                            </button>
-                                                            <a class="btn btn-sm btn-primary mt-2"
-                                                               title="Create new offer" target="_blank"
-                                                               href="{{ route('admin.offers.create') }}">New Offer</a>
+                                <div class="col-12 col-md-6 mb-4">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title">
+                                                <b>Funnels</b>
+                                            </h3>
+                                        </div>
+                                        <div class="card-body p-3 p-md-10">
+                                            <div class="list-funnels">
+                                                <div class="item-funnel" data-funnel-id="1">
+                                                    <div class="card mb-4 funnel-item" data-funnel-id="1">
+                                                        <div
+                                                            class="card-header d-flex justify-content-between align-items-center">
+                                                            <h4 class="card-title mb-0">Funnel #1</h4>
                                                         </div>
-
-                                                        <div>
-                                                            <button
-                                                                class="btn btn-sm btn-success btn-add-filters d-flex justify-content-between align-items-center"
-                                                                title="Add new filters" type="button">
-                                                                Filters (<span class="count-filters"
-                                                                               data-count="0">0</span>) &nbsp;
-                                                                <i class="fa fa-chevron-down icon-rotate rotate-up"
-                                                                   aria-hidden="true"></i>
-                                                            </button>
-                                                            <div class="filter-container mt-3" style="display:none;">
-                                                                <div class="item-filters">
-                                                                    <div class="col-6">
-                                                                        <label for="add-filter" class="form-label">Add
-                                                                            Filter</label>
-                                                                        <select
-                                                                            class="form-select select2-search add-filter-select multi-select-filter"
-                                                                            id="add-filter" name="funnels[0][filters][]"
-                                                                            multiple>
-                                                                            <option value="geo">Geo</option>
-                                                                            <option value="device">Device</option>
-                                                                            <option value="browser">Browser</option>
-                                                                        </select>
+                                                        <div class="card-body p-3 p-md-10">
+                                                            <div class="mb-3">
+                                                                <h5 class="card-subtitle mb-3">Offers</h5>
+                                                                <div class="list-offers">
+                                                                    <div class="item-offer" data-offer-id="1">
+                                                                        <div
+                                                                            class="d-flex justify-content-between align-items-center mb-2">
+                                                                            <div
+                                                                                class="d-flex align-items-center flex-grow-1">
+                                                                                <div class="me-3">
+                                                                                    <label class="form-label">&nbsp;</label>
+                                                                                    <div class="fs-3 font-bold">1</div>
+                                                                                </div>
+                                                                                <div class="mx-2 flex-grow-1">
+                                                                                    <label for="offer-select-1-1"
+                                                                                           class="form-label required">Offer</label>
+                                                                                    <select
+                                                                                        class="form-select select2-search w-100 offer-select"
+                                                                                        id="offer-select-1-1"
+                                                                                        name="funnels[1][offers][1][offer_id]">
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="mx-0 mx-md-2">
+                                                                                    <label for="ratio-1-1"
+                                                                                           class="form-label">Ratio</label>
+                                                                                    <input type="number" max="100" min="0"
+                                                                                           value="100"
+                                                                                           class="form-control min-w-70px ratio-input"
+                                                                                           id="ratio-1-1"
+                                                                                           name="funnels[1][offers][1][ratio]"
+                                                                                           placeholder="Enter ratio">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="">
+                                                                                <label class="form-label">&nbsp;</label>
+                                                                                <button type="button" disabled
+                                                                                        title="Need at least one offer"
+                                                                                        class="btn btn-sm disabled rounded">
+                                                                                    <i class="fa fa-times"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                        <span
+                                                                            class="text-danger mx-7 error-text offer_id_error"></span>
                                                                     </div>
                                                                 </div>
-                                                                <hr>
-                                                                <div class="selected-filters mt-3"></div>
+                                                                <button class="btn btn-sm btn-success mt-2 btn-add-offer"
+                                                                        title="Add offer" type="button">
+                                                                    <i class="fa fa-plus"></i> Add
+                                                                </button>
+                                                                <a class="btn btn-sm btn-primary mt-2"
+                                                                   title="Create new offer" target="_blank"
+                                                                   href="{{ route('admin.offers.create') }}">New Offer</a>
+                                                            </div>
+
+                                                            <div>
+                                                                <button
+                                                                    class="btn btn-sm btn-success btn-add-filters d-flex justify-content-between align-items-center"
+                                                                    title="Add new filters" type="button">
+                                                                    Filters (<span class="count-filters"
+                                                                                   data-count="0">0</span>) &nbsp;
+                                                                    <i class="fa fa-chevron-down icon-rotate rotate-up"
+                                                                       aria-hidden="true"></i>
+                                                                </button>
+                                                                <div class="filter-container mt-3" style="display:none;">
+                                                                    <div class="item-filters">
+                                                                        <div class="col-6">
+                                                                            <label for="add-filter" class="form-label">Add
+                                                                                Filter</label>
+                                                                            <select
+                                                                                class="form-select select2-search add-filter-select multi-select-filter"
+                                                                                id="add-filter" name="funnels[0][filters][]"
+                                                                                multiple>
+                                                                                <option value="geo">Geo</option>
+                                                                                <option value="device">Device</option>
+                                                                                <option value="browser">Browser</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <hr>
+                                                                    <div class="selected-filters mt-3"></div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div>
-                                            <button class="btn btn-sm btn-primary mt-2 btn-add-funnel"
-                                                    title="Add funnel" type="button">
-                                                <i class="fa fa-plus me-2"></i> Add Funnel
-                                            </button>
+                                            <div>
+                                                <button class="btn btn-sm btn-primary mt-2 btn-add-funnel"
+                                                        title="Add funnel" type="button">
+                                                    <i class="fa fa-plus me-2"></i> Add Funnel
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -406,7 +408,7 @@
                 multiple: true
             }).on('change', function () {
                 const selectedValues = $(this).val() || [];
-                const $funnel = $(this).closest('.item-funnel'); // Lấy funnel hiện tại
+                const $funnel = $(this).closest('.item-funnel');
                 const $selectedFilters = $funnel.find('.selected-filters');
 
                 $.each(selectedValues, function (index, value) {
@@ -415,7 +417,15 @@
                     }
                 });
 
-                updateFilterCount($funnel);  //
+                updateFilterCount($funnel);
+            }).on('select2:unselect', function (e) {
+                const removedValue = e.params.data.id;
+                const $funnel = $(this).closest('.item-funnel');
+                const $selectedFilters = $funnel.find('.selected-filters');
+
+                $selectedFilters.find(`#${removedValue}-select-${$funnel.data('funnel-id')}`).closest('.filter-item').remove();
+
+                updateFilterCount($funnel);
             });
         }
 
@@ -496,7 +506,7 @@
                             <div class="mx-0 mx-md-2" >
                                 <label for="ratio-${funnelIndex}-${offerIndex}" class="form-label">Ratio</label>
                                 <input type="number" max="100" min="0" value="100"
-                                       class="form-control min-w-60px ratio-input"
+                                       class="form-control min-w-70px ratio-input"
                                        id="ratio-${funnelIndex}-${offerIndex}"
                                        name="funnels[${funnelIndex}][offers][${offerIndex}][ratio]"
                                        placeholder="Enter ratio">
@@ -517,7 +527,7 @@
 
         function appendFilterSelect(type, $selectedFilters, $funnel) {
             const label = type.charAt(0).toUpperCase() + type.slice(1);
-            const id = `${type}-select-${$funnel.data('funnel-id')}`; // Gán ID duy nhất cho filter
+            const id = `${type}-select-${$funnel.data('funnel-id')}`;
             const url = getFilterUrl(type);
 
             const newSelectHtml = `
@@ -529,20 +539,19 @@
                         <select class="form-select target-type-select">
                             <option value="include" selected>Include</option>
                             <option value="exclude">Exclude</option>
-                            <option value="none">None</option>
                         </select>
                     </div>
                     <div class="flex-grow-1 me-2">
                         <select class="form-select select2-search filter-select" id="${id}" name="${id}" data-url="${url}" multiple></select>
                     </div>
-                    <button type="button" class="btn btn-sm  btn-remove-filter" title="Remove filter">
+                    <button type="button" class="btn btn-sm btn-remove-filter" title="Remove filter">
                         <i class="fa fa-times"></i>
                     </button>
                 </div>
             `;
 
-            $selectedFilters.append(newSelectHtml); //
-            initializeSelect2Dynamic(`#${id}`, url); //
+            $selectedFilters.append(newSelectHtml);
+            initializeSelect2Dynamic(`#${id}`, url);  // Khởi tạo Select2 cho filter mới
         }
 
         function getFilterUrl(type) {
@@ -587,12 +596,22 @@
             $funnel.find('.count-filters').text(filterCount).data('count', filterCount);
         }
 
-        // Xử lý khi nhấn nút "Remove Filter"
         $(document).on('click', '.btn-remove-filter', function () {
-            const filterItem = $(this).closest('.filter-item');
-            filterItem.remove(); // Xóa filter
+            const $filterItem = $(this).closest('.filter-item');
+            const filterId = $filterItem.find('.filter-select').attr('id').split('-')[0]; // Lấy loại filter (geo, device, browser)
             const $funnel = $(this).closest('.item-funnel');
-            updateFilterCount($funnel); // Cập nhật lại số lượng filter
+
+            // Tìm và xóa giá trị từ select2
+            const $addFilterSelect = $funnel.find('.add-filter-select');
+            const currentValues = $addFilterSelect.val() || []; // Lấy các giá trị hiện tại trong select2
+            const updatedValues = currentValues.filter(value => value !== filterId); // Loại bỏ filter vừa xóa
+            $addFilterSelect.val(updatedValues).trigger('change'); // Cập nhật lại select2 và kích hoạt sự kiện change
+
+            // Xóa filter khỏi selected-filters
+            $filterItem.remove();
+
+            // Cập nhật lại số lượng filter
+            updateFilterCount($funnel);
         });
 
         // Xử lý khi nhấn nút "Delete Offer"
