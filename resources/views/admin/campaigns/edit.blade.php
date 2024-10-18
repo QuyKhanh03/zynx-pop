@@ -326,20 +326,21 @@
 @push('scripts')
     <script>
         function initializeSelect2($funnel) {
+            // Khởi tạo Select2 cho Offers
             $funnel.find('.offer-select').select2({
                 ajax: {
                     url: '{{ route('admin.offers.list') }}',
                     dataType: 'json',
                     delay: 0,
-                    data: function (params) {
+                    data: function(params) {
                         return {
                             search: params.term || '',
                             limit: 10
                         };
                     },
-                    processResults: function (data) {
+                    processResults: function(data) {
                         return {
-                            results: $.map(data, function (item) {
+                            results: $.map(data, function(item) {
                                 return {
                                     id: item.id,
                                     text: item.name
@@ -354,21 +355,23 @@
                 allowClear: true
             });
 
+            // Khởi tạo Select2 cho Filters
             $funnel.find('.add-filter-select').select2({
                 placeholder: "Select filters",
                 allowClear: true,
                 multiple: true
-            }).on('change', function () {
+            }).on('change', function() {
                 const selectedValues = $(this).val() || [];
-                const $funnel = $(this).closest('.item-funnel'); //
+                const $funnel = $(this).closest('.item-funnel'); // Lấy funnel hiện tại
                 const $selectedFilters = $funnel.find('.selected-filters');
 
-                $.each(selectedValues, function (index, value) {
+                $.each(selectedValues, function(index, value) {
                     if (!$(`#${value}-select-${$funnel.data('funnel-id')}`, $selectedFilters).length) {
                         appendFilterSelect(value, $selectedFilters, $funnel);
                     }
                 });
-                updateFilterCount($funnel);  //
+
+                updateFilterCount($funnel);  // Cập nhật số lượng filter
             });
         }
         function updateFunnelIndexes() {
@@ -491,8 +494,8 @@
                 </div>
             `;
 
-            $selectedFilters.append(newSelectHtml); //
-            initializeSelect2Dynamic(`#${id}`, url); //
+            $selectedFilters.append(newSelectHtml);
+            initializeSelect2Dynamic(`#${id}`, url);  // Khởi tạo Select2 cho filter mới
         }
 
         function getFilterUrl(type) {
@@ -519,10 +522,10 @@
                     url: url,
                     dataType: 'json',
                     delay: 250,
-                    processResults: function (data) {
+                    processResults: function(data) {
                         return {
-                            results: $.map(data, function (item) {
-                                return {id: item.id, text: item.name};
+                            results: $.map(data, function(item) {
+                                return { id: item.id, text: item.name };
                             })
                         };
                     },
@@ -585,8 +588,49 @@
             const $currentFunnel = $(this).closest('.item-funnel');
             $currentFunnel.find('.icon-rotate').toggleClass('rotate-down rotate-up');
             const $filterContainer = $currentFunnel.find('.filter-container');
+
+            // Toggle hiển thị bộ lọc trong funnel hiện tại
             $filterContainer.toggle();
+
+            // Chỉ khởi tạo lại select2 nếu bộ lọc hiện ra
+            if ($filterContainer.is(':visible')) {
+                $filterContainer.find('.add-filter-select').select2({
+                    placeholder: "Select filters",
+                    allowClear: true,
+                    multiple: true
+                });
+
+                // Khởi tạo lại select2 cho tất cả các filter-select bên trong filter-container
+                $filterContainer.find('.filter-select').each(function () {
+                    if (!$(this).data('select2')) { // Chỉ khởi tạo nếu chưa có select2
+                        const url = $(this).data('url');
+                        $(this).select2({
+                            placeholder: 'Select an option',
+                            allowClear: true,
+                            width: '100%',
+                            multiple: true,
+                            ajax: {
+                                url: url, // Lấy URL từ data-url đã gán cho phần tử
+                                dataType: 'json',
+                                delay: 250,
+                                processResults: function (data) {
+                                    return {
+                                        results: $.map(data, function (item) {
+                                            return { id: item.id, text: item.name };
+                                        })
+                                    };
+                                },
+                                cache: true
+                            }
+                        });
+                    }
+                });
+            }
         });
+
+
+
+
 
 
 
