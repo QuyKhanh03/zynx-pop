@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Browser;
 use App\Models\Campaign;
+use App\Models\Country;
+use App\Models\Device;
 use App\Models\Funnel;
 use App\Models\FunnelBrowser;
 use App\Models\FunnelCountry;
@@ -157,8 +160,32 @@ class CampaignController extends Controller
         $title = "Edit Campaign: {$campaign->name}" . " #{$campaign->code}";
         $timeUnits = TimeUnit::all();
 
-        return view('admin.campaigns.edit', compact('title', 'campaign', 'timeUnits'));
+        $countries = Country::all();
+        $devices = Device::all();
+        $browsers = Browser::all();
+
+
+
+
+        return view('admin.campaigns.edit', compact('title', 'campaign', 'timeUnits', 'countries', 'devices', 'browsers'));
     }
+
+    public function getSelectedFilters(string $funnelId)
+    {
+        // Tìm funnel dựa trên ID của funnel được gửi
+        $funnel = Funnel::with(['countries', 'devices'])->findOrFail($funnelId);
+
+        $selectedFilters = [
+            'geo' => $funnel->countries->pluck('id')->toArray(),
+            'device' => $funnel->devices->pluck('id')->toArray()
+        ];
+
+        // Trả về dưới dạng JSON
+        return response()->json($selectedFilters);
+    }
+
+
+
 
     public function test($id)
     {

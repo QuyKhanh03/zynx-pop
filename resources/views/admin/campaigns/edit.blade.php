@@ -270,9 +270,9 @@
                                                                 <!-- Filters Section -->
                                                                 @php
                                                                     $hasFilters = count($funnel->countries) > 0 || count($funnel->devices) > 0 || (isset($funnel->browsers) && count($funnel->browsers) > 0);
-                                                                    $countryCount = count($funnel->countries ?? []);
-                                                                    $deviceCount = count($funnel->devices ?? []);
-                                                                    $browserCount = count($funnel->browsers ?? []);
+                                                                    $countryCount = (count($funnel->countries) > 0) ? 1 : 0;
+                                                                    $deviceCount = (count($funnel->devices) > 0) ? 1 : 0;
+                                                                    $browserCount = (isset($funnel->browsers) && count($funnel->browsers) > 0) ? 1 : 0;
                                                                     $totalFilterCount = $countryCount + $deviceCount + $browserCount;
                                                                     $hasFilters = $totalFilterCount > 0;
                                                                 @endphp
@@ -347,30 +347,29 @@
 
 @push('scripts')
     <script>
+
+
         // Khởi tạo Select2 cho các Offer và Filter
         function initializeSelect2($funnel) {
-            // Initialize Select2 for Offers
             $funnel.find('.offer-select').select2({
                 ajax: {
                     url: '{{ route('admin.offers.list') }}',
                     dataType: 'json',
-                    delay: 250,
+                    delay: 0,
                     data: function (params) {
                         return {
                             search: params.term || '',
-                            limit: 10,
-                            page: params.page || 1
+                            limit: 10
                         };
                     },
-                    processResults: function (data, params) {
-                        params.page = params.page || 1;
+                    processResults: function (data) {
                         return {
-                            results: $.map(data.items, function (item) {
-                                return { id: item.id, text: item.name };
-                            }),
-                            pagination: {
-                                more: (params.page * 10) < data.total_count
-                            }
+                            results: $.map(data, function (item) {
+                                return {
+                                    id: item.id,
+                                    text: item.name
+                                };
+                            })
                         };
                     },
                     cache: true
@@ -380,13 +379,13 @@
                 allowClear: true
             });
 
-            // Initialize Select2 for Filters (Geo, Device, Browser)
             $funnel.find('.add-filter-select').select2({
                 placeholder: "Select filters",
                 allowClear: true,
                 multiple: true
             }).on('change', function () {
                 const selectedValues = $(this).val() || [];
+                const $funnel = $(this).closest('.item-funnel');
                 const $selectedFilters = $funnel.find('.selected-filters');
 
                 $.each(selectedValues, function (index, value) {
@@ -395,103 +394,103 @@
                     }
                 });
 
-                updateFilterCount($funnel);  // Cập nhật số lượng filters
+                updateFilterCount($funnel);
             }).on('select2:unselect', function (e) {
                 const removedValue = e.params.data.id;
+                const $funnel = $(this).closest('.item-funnel');
                 const $selectedFilters = $funnel.find('.selected-filters');
 
-                // Xóa filter từ selected-filters khi unselect
                 $selectedFilters.find(`#${removedValue}-select-${$funnel.data('funnel-id')}`).closest('.filter-item').remove();
 
-                updateFilterCount($funnel);  // Cập nhật lại số lượng filters sau khi xóa
+                updateFilterCount($funnel);
             });
         }
 
         // Tạo HTML cho một Funnel
         function createFunnelHtml(funnelIndex) {
             return `
-        <div class="item-funnel mb-4" data-funnel-id="${funnelIndex}">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h4 class="card-title mb-0">Funnel #${funnelIndex}</h4>
-                    <button class="btn btn-sm  btn-delete-funnel" type="button">
-                        <i class="fa fa-times text-gray-500"></i>
-                    </button>
-                </div>
-                <div class="card-body p-3 p-md-10">
-                    <!-- Offers Section -->
-                    <div class="mb-3">
-                        <h5>Offers</h5>
-                        <div class="list-offers">
-                            ${createOfferHtml(funnelIndex, 1)}
+                <div class="item-funnel mb-4" data-funnel-id="${funnelIndex}">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h4 class="card-title mb-0">Funnel #${funnelIndex}</h4>
+                            <button class="btn btn-sm  btn-delete-funnel" type="button">
+                                <i class="fa fa-times text-gray-500"></i>
+                            </button>
                         </div>
-                        <button class="btn btn-sm btn-success mt-2 btn-add-offer" type="button" title="Add offer">
-                            <i class="fa fa-plus"></i> Add
-                        </button>
-                    </div>
-                    <!-- Filters Section -->
-                    <div>
-                        <button class="btn btn-sm btn-success btn-add-filters" type="button">
-                            Filters (<span class="count-filters">0</span>)
-                            <i class="fa fa-chevron-down"></i>
-                        </button>
-                        <div class="filter-container mt-3" style="display:none;">
-                            <div class="col-6">
-                                <label for="add-filter-${funnelIndex}" class="form-label">Add Filter</label>
-                                <select class="form-select select2-search add-filter-select multi-select-filter"
-                                        id="add-filter-${funnelIndex}" name="funnels[${funnelIndex}][filters][]" multiple>
-                                    <option value="geo">Geo</option>
-                                    <option value="device">Device</option>
-                                    <option value="browser">Browser</option>
-                                </select>
+                        <div class="card-body p-3 p-md-10">
+                            <!-- Offers Section -->
+                            <div class="mb-3">
+                                <h5>Offers</h5>
+                                <div class="list-offers">
+                                    ${createOfferHtml(funnelIndex, 1)}
+                                </div>
+                                <button class="btn btn-sm btn-success mt-2 btn-add-offer" type="button" title="Add offer">
+                                    <i class="fa fa-plus"></i> Add
+                                </button>
                             </div>
-                            <hr>
-                            <div class="selected-filters mt-3"></div>
+                            <!-- Filters Section -->
+                            <div>
+                                <button class="btn btn-sm btn-success btn-add-filters" type="button">
+                                    Filters (<span class="count-filters">0</span>)
+                                    <i class="fa fa-chevron-down"></i>
+                                </button>
+                                <div class="filter-container mt-3" style="display:none;">
+                                    <div class="col-6">
+                                        <label for="add-filter-${funnelIndex}" class="form-label">Add Filter</label>
+                                        <select class="form-select select2-search add-filter-select multi-select-filter"
+                                                id="add-filter-${funnelIndex}" name="funnels[${funnelIndex}][filters][]" multiple>
+                                            <option value="geo">Geo</option>
+                                            <option value="device">Device</option>
+                                            <option value="browser">Browser</option>
+                                        </select>
+                                    </div>
+                                    <hr>
+                                    <div class="selected-filters mt-3"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    `;
+            `;
         }
 
         // Tạo HTML cho một Offer
         function createOfferHtml(funnelIndex, offerIndex) {
             const disabledAttr = offerIndex === 1 ? 'disabled' : '';
             return `
-        <div class="item-offer" data-offer-id="${offerIndex}">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-                <div class="d-flex align-items-center flex-grow-1">
-                    <div class="me-3">
-                        <label class="form-label">&nbsp;</label>
-                        <div class="fs-3 font-bold offer-number">${offerIndex}</div> <!-- Số thứ tự của offer -->
+                <div class="item-offer" data-offer-id="${offerIndex}">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div class="d-flex align-items-center flex-grow-1">
+                            <div class="me-3">
+                                <label class="form-label">&nbsp;</label>
+                                <div class="fs-3 font-bold offer-number">${offerIndex}</div> <!-- Số thứ tự của offer -->
+                            </div>
+                            <div class="mx-2 flex-grow-1 select-0ffers_mob">
+                                <label for="offer-select-${funnelIndex}-${offerIndex}" class="form-label required">Offer</label>
+                                <select class="form-select select2-search w-100 offer-select"
+                                        id="offer-select-${funnelIndex}-${offerIndex}"
+                                        name="funnels[${funnelIndex}][offers][${offerIndex}][offer_id]">
+                                </select>
+                            </div>
+                            <div class="mx-0 mx-md-2">
+                                <label for="ratio-${funnelIndex}-${offerIndex}" class="form-label">Ratio</label>
+                                <input type="number" max="100" min="0" value="100"
+                                       class="form-control min-w-60px ratio-input"
+                                       id="ratio-${funnelIndex}-${offerIndex}"
+                                       name="funnels[${funnelIndex}][offers][${offerIndex}][ratio]"
+                                       placeholder="Enter ratio">
+                            </div>
+                        </div>
+                        <div class="">
+                            <label class="form-label">&nbsp;</label>
+                            <button type="button" class="btn btn-sm rounded btn-delete-offer" ${disabledAttr}>
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
                     </div>
-                    <div class="mx-2 flex-grow-1 select-0ffers_mob">
-                        <label for="offer-select-${funnelIndex}-${offerIndex}" class="form-label required">Offer</label>
-                        <select class="form-select select2-search w-100 offer-select"
-                                id="offer-select-${funnelIndex}-${offerIndex}"
-                                name="funnels[${funnelIndex}][offers][${offerIndex}][offer_id]">
-                        </select>
-                    </div>
-                    <div class="mx-0 mx-md-2">
-                        <label for="ratio-${funnelIndex}-${offerIndex}" class="form-label">Ratio</label>
-                        <input type="number" max="100" min="0" value="100"
-                               class="form-control min-w-60px ratio-input"
-                               id="ratio-${funnelIndex}-${offerIndex}"
-                               name="funnels[${funnelIndex}][offers][${offerIndex}][ratio]"
-                               placeholder="Enter ratio">
-                    </div>
+                    <span class="text-danger mx-7 error-text offer_id_error"></span>
                 </div>
-                <div class="">
-                    <label class="form-label">&nbsp;</label>
-                    <button type="button" class="btn btn-sm rounded btn-delete-offer" ${disabledAttr}>
-                        <i class="fa fa-times"></i>
-                    </button>
-                </div>
-            </div>
-            <span class="text-danger mx-7 error-text offer_id_error"></span>
-        </div>
-    `;
+            `;
         }
 
         // Thêm filter vào funnel
@@ -667,7 +666,6 @@
             const $filterContainer = $currentFunnel.find('.filter-container');
             const $icon = $(this).find('.fa');
 
-            // Ẩn tất cả các container khác ngoài cái đang được click
             $('.filter-container').not($filterContainer).slideUp();
             $('.fa').not($icon).removeClass('rotate-up').addClass('rotate-down');
 
@@ -675,7 +673,6 @@
             $filterContainer.slideToggle();
             $icon.toggleClass('rotate-up rotate-down');
 
-            // Khởi tạo select2 cho add-filter-select nếu chưa được khởi tạo
             const $selectFilter = $currentFunnel.find('.add-filter-select');
             if (!$selectFilter.hasClass("select2-initialized")) {
                 $selectFilter.select2({
@@ -684,10 +681,9 @@
                     multiple: true
                 }).on('change', function () {
                     const selectedValues = $(this).val() || [];
-                    const $selectedFilters = $currentFunnel.find('.selected-filters');
 
+                    const $selectedFilters = $currentFunnel.find('.selected-filters');
                     // Hiển thị các filter đã được chọn
-                    $selectedFilters.empty(); // Làm sạch trước khi thêm lại các filter
                     $.each(selectedValues, function (index, value) {
                         if (!$(`#${value}-select-${$currentFunnel.data('funnel-id')}`, $selectedFilters).length) {
                             appendFilterSelect(value, $selectedFilters, $currentFunnel);
@@ -702,7 +698,8 @@
             const selectedValues = $selectFilter.val() || [];
             const $selectedFilters = $currentFunnel.find('.selected-filters');
 
-            $selectedFilters.empty(); // Làm sạch trước khi hiển thị lại
+
+
             $.each(selectedValues, function (index, value) {
                 if (!$(`#${value}-select-${$currentFunnel.data('funnel-id')}`, $selectedFilters).length) {
                     appendFilterSelect(value, $selectedFilters, $currentFunnel);
