@@ -260,7 +260,7 @@
                                                                                 Filter</label>
                                                                             <select
                                                                                 class="form-select select2-search add-filter-select multi-select-filter"
-                                                                                id="add-filter" name="funnels[0][filters][]"
+                                                                                id="add-filter" name="funnels[1][filters][]"
                                                                                 multiple>
                                                                                 <option value="geo">Geo</option>
                                                                                 <option value="device">Device</option>
@@ -527,8 +527,12 @@
 
         function appendFilterSelect(type, $selectedFilters, $funnel) {
             const label = type.charAt(0).toUpperCase() + type.slice(1);
-            const id = `${type}-select-${$funnel.data('funnel-id')}`;
+            const funnelId = $funnel.data('funnel-id');
+            const id = `${type}-select-${funnelId}`;
             const url = getFilterUrl(type);
+
+            const filterName = `funnels[${funnelId}][filters][${type}][values][]`;
+            const targetingTypeName = `funnels[${funnelId}][filters][${type}][targeting_type]`;
 
             const newSelectHtml = `
                 <div class="filter-item mt-2 d-flex align-items-center">
@@ -536,13 +540,13 @@
                         <label for="${id}" class="form-label me-2">${label}</label>
                     </div>
                     <div class="me-2" style="width: 120px;">
-                        <select class="form-select target-type-select">
+                        <select class="form-select target-type-select" name="${targetingTypeName}">
                             <option value="include" selected>Include</option>
                             <option value="exclude">Exclude</option>
                         </select>
                     </div>
                     <div class="flex-grow-1 me-2">
-                        <select class="form-select select2-search filter-select" id="${id}" name="${id}" data-url="${url}" multiple></select>
+                        <select class="form-select select2-search filter-select" id="${id}" name="${filterName}" data-url="${url}" multiple></select>
                     </div>
                     <button type="button" class="btn btn-sm btn-remove-filter" title="Remove filter">
                         <i class="fa fa-times"></i>
@@ -551,7 +555,7 @@
             `;
 
             $selectedFilters.append(newSelectHtml);
-            initializeSelect2Dynamic(`#${id}`, url);  // Khởi tạo Select2 cho filter mới
+            initializeSelect2Dynamic(`#${id}`, url);
         }
 
         function getFilterUrl(type) {
@@ -567,7 +571,6 @@
             }
         }
 
-        // Khởi tạo Select2 cho Filter mới
         function initializeSelect2Dynamic(selector, url) {
             $(selector).select2({
                 placeholder: 'Select an option',
@@ -577,16 +580,30 @@
                 ajax: {
                     url: url,
                     dataType: 'json',
-                    delay: 250,
-                    processResults: function (data) {
+                    delay: 250, // Add a slight delay to prevent overwhelming the server
+                    data: function (params) {
                         return {
-                            results: $.map(data, function (item) {
-                                return {id: item.id, text: item.name};
-                            })
+                            search: params.term || '', // This sends the search term to the server
+                            limit: 10, // Limit the number of results returned by the server
+                            page: params.page || 1 // Add pagination support
+                        };
+                    },
+                    processResults: function (data, params) {
+                        // Ensure pagination is supported by select2
+                        params.page = params.page || 1;
+
+                        return {
+                            results: $.map(data.items, function (item) {
+                                return { id: item.id, text: item.name };
+                            }),
+                            pagination: {
+                                more: (params.page * 10) < data.total_count // Enable "load more" if there are more results
+                            }
                         };
                     },
                     cache: true
-                }
+                },
+                minimumInputLength: 0, // Users can view the list without entering any search term
             });
         }
 

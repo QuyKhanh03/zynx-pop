@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Campaign;
 use App\Models\Funnel;
+use App\Models\FunnelBrowser;
 use App\Models\FunnelCountry;
 use App\Models\FunnelDevice;
 use App\Models\FunnelOffer;
@@ -192,9 +193,11 @@ class CampaignController extends Controller
             'every_unit' => 'required',
             'pop_interval' => 'required|integer|min:1',
             'interval_unit' => 'required',
+            'funnels.*.offers' => 'required|array|min:1',
             'funnels.*.offers.*.offer_id' => 'required|integer|exists:offers,id',
             'funnels.*.offers.*.ratio' => 'required|integer|min:1|max:100',
         ], [
+            'funnels.*.offers.required' => 'Each funnel must have at least one offer.',
             'funnels.*.offers.*.offer_id.required' => 'Each funnel must have at least one offer.',
             'funnels.*.offers.*.offer_id.exists' => 'The selected offer does not exist.',
             'funnels.*.offers.*.ratio.required' => 'Each offer must have a ratio value.',
@@ -247,44 +250,69 @@ class CampaignController extends Controller
     private function processFunnels(array $funnelsData, $campaignId)
     {
         foreach ($funnelsData as $funnelIndex => $funnelData) {
-            // Tạo Funnel mới
+            // Create a new Funnel
             $funnel = Funnel::create([
                 'campaign_id' => $campaignId,
                 'status' => $funnelData['status'] ?? 'active',
             ]);
 
-            // Thêm offers vào Funnel
-            foreach ($funnelData['offers'] as $offerData) {
-                FunnelOffer::create([
-                    'funnel_id' => $funnel->id,
-                    'offer_id' => $offerData['offer_id'],
-                    'ratio' => $offerData['ratio'],
-                ]);
+            // **Check if offers exist** for the current funnel
+            if (isset($funnelData['offers']) && is_array($funnelData['offers'])) {
+                // Add offers to the Funnel
+                foreach ($funnelData['offers'] as $offerData) {
+                    FunnelOffer::create([
+                        'funnel_id' => $funnel->id,
+                        'offer_id' => $offerData['offer_id'],
+                        'ratio' => $offerData['ratio'],
+                    ]);
+                }
+            } else {
+                // If no offers exist, throw an exception or handle it as needed
+                throw new \Exception('Each funnel must have at least one offer.');
             }
 
-            // Thêm Countries (nếu có)
-            if (isset($funnelData['countries'])) {
-                foreach ($funnelData['countries'] as $countryId) {
-                    FunnelCountry::create([
-                        'funnel_id' => $funnel->id,
-                        'country_id' => $countryId,
-                        'targeting_type' => $funnelData['country_targeting_type'] ?? 'none', // Default là 'none'
-                    ]);
+            // Handle filters (Countries, Devices, Browsers, etc.)
+            if (isset($funnelData['filters'])) {
+                foreach ($funnelData['filters'] as $filterType => $filterDetails) {
+                    // Process Countries (geo)
+                    if ($filterType === 'geo' && isset($filterDetails['values'])) {
+                        foreach ($filterDetails['values'] as $countryId) {
+                            FunnelCountry::create([
+                                'funnel_id' => $funnel->id,
+                                'country_id' => $countryId, // This is now correctly using the country ID
+                                'targeting_type' => $filterDetails['targeting_type'] ?? 'none', // Correct targeting type
+                            ]);
+                        }
+                    }
+
+                    // Process Devices
+                    if ($filterType === 'device' && isset($filterDetails['values'])) {
+                        foreach ($filterDetails['values'] as $deviceId) {
+                            FunnelDevice::create([
+                                'funnel_id' => $funnel->id,
+                                'device_id' => $deviceId, // This is now correctly using the device ID
+                                'targeting_type' => $filterDetails['targeting_type'] ?? 'none',
+                            ]);
+                        }
+                    }
+
+                    // Process Browsers (similar logic can be added)
+                    if ($filterType === 'browser' && isset($filterDetails['values'])) {
+                        foreach ($filterDetails['values'] as $browserId) {
+                            FunnelBrowser::create([
+                                'funnel_id' => $funnel->id,
+                                'browser_id' => $browserId, // This is now correctly using the browser ID
+                                'targeting_type' => $filterDetails['targeting_type'] ?? 'none',
+                            ]);
+                        }
+                    }
                 }
             }
 
-            // Thêm Devices (nếu có)
-            if (isset($funnelData['devices'])) {
-                foreach ($funnelData['devices'] as $deviceId) {
-                    FunnelDevice::create([
-                        'funnel_id' => $funnel->id,
-                        'device_id' => $deviceId,
-                        'targeting_type' => $funnelData['device_targeting_type'] ?? 'none', // Default là 'none'
-                    ]);
-                }
-            }
         }
     }
+
+
 
 
     private function deleteExistingFunnels(Campaign $campaign)
