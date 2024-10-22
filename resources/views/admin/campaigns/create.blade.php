@@ -255,7 +255,7 @@
                                                                 </button>
                                                                 <div class="filter-container mt-3" style="display:none;">
                                                                     <div class="item-filters">
-                                                                        <div class="col-6">
+                                                                        <div class="col-12 col-md-6">
                                                                             <label for="add-filter" class="form-label">Add
                                                                                 Filter</label>
                                                                             <select
@@ -465,7 +465,7 @@
                                     <i class="fa fa-chevron-down"></i>
                                 </button>
                                 <div class="filter-container mt-3" style="display:none;">
-                                    <div class="col-6">
+                                    <div class="col-12 col-md-6">
                                         <label for="add-filter-${funnelIndex}" class="form-label">Add Filter</label>
                                         <select class="form-select select2-search add-filter-select multi-select-filter"
                                                 id="add-filter-${funnelIndex}" name="funnels[${funnelIndex}][filters][]" multiple>
