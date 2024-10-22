@@ -206,13 +206,18 @@
                                         </div>
                                         <div class="card-body p-3 p-md-10">
                                             <div class="list-funnels">
+                                                <!-- Xử lý từng Funnel -->
                                                 @foreach($campaign->funnels as $funnelKey => $funnel)
                                                     <div class="item-funnel" data-funnel-id="{{ $funnelKey + 1 }}">
-                                                        <div class="card mb-4 funnel-item" data-funnel-id="{{ $funnelKey + 1 }}">
-                                                            <div class="card-header d-flex justify-content-between align-items-center">
-                                                                <h4 class="card-title mb-0">Funnel #{{ $funnelKey + 1 }}</h4>
+                                                        <div class="card mb-4 funnel-item"
+                                                             data-funnel-id="{{ $funnelKey + 1 }}">
+                                                            <div
+                                                                class="card-header d-flex justify-content-between align-items-center">
+                                                                <h4 class="card-title mb-0">Funnel
+                                                                    #{{ $funnelKey + 1 }}</h4>
                                                                 @if($funnelKey !== 0)
-                                                                    <button class="btn btn-sm btn-delete-funnel" type="button">
+                                                                    <button class="btn btn-sm btn-delete-funnel"
+                                                                            type="button">
                                                                         <i class="fa fa-times text-gray-500"></i>
                                                                     </button>
                                                                 @endif
@@ -224,24 +229,41 @@
                                                                     <h5 class="card-subtitle mb-3">Offers</h5>
                                                                     <div class="list-offers">
                                                                         @foreach($funnel->offers as $offerKey => $offer)
-                                                                            <div class="item-offer" data-offer-id="{{ $offerKey + 1 }}">
-                                                                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                                                                    <div class="d-flex align-items-center flex-grow-1">
+                                                                            <div class="item-offer"
+                                                                                 data-offer-id="{{ $offerKey + 1 }}">
+                                                                                <!-- Offer Selection -->
+                                                                                <div
+                                                                                    class="d-flex justify-content-between align-items-center mb-2">
+                                                                                    <div
+                                                                                        class="d-flex align-items-center flex-grow-1">
                                                                                         <div class="me-3">
                                                                                             <label class="form-label">&nbsp;</label>
-                                                                                            <div class="fs-3 font-bold offer-number">{{ $offerKey + 1 }}</div>
+                                                                                            <div
+                                                                                                class="fs-3 font-bold offer-number">{{ $offerKey + 1 }}</div>
                                                                                         </div>
-                                                                                        <div class="mx-2 flex-grow-1 select-0ffers_mob">
-                                                                                            <label for="offer-select-{{ $funnelKey + 1 }}-{{ $offerKey + 1 }}" class="form-label required">Offer</label>
-                                                                                            <select class="form-select select2-search w-100 offer-select"
-                                                                                                    id="offer-select-{{ $funnelKey + 1 }}-{{ $offerKey + 1 }}"
-                                                                                                    name="funnels[{{ $funnelKey }}][offers][{{ $offerKey }}][offer_id]">
-                                                                                                <option value="{{ $offer->offer_id }}" selected>{{ $offer->offer->name }}</option>
+                                                                                        <div
+                                                                                            class="mx-2 flex-grow-1 select-0ffers_mob">
+                                                                                            <label
+                                                                                                for="offer-select-{{ $funnelKey + 1 }}-{{ $offerKey + 1 }}"
+                                                                                                class="form-label required">Offer</label>
+                                                                                            <select
+                                                                                                class="form-select select2-search w-100 offer-select"
+                                                                                                id="offer-select-{{ $funnelKey + 1 }}-{{ $offerKey + 1 }}"
+                                                                                                name="funnels[{{ $funnelKey }}][offers][{{ $offerKey }}][offer_id]">
+                                                                                                <option
+                                                                                                    value="{{ $offer->offer_id }}"
+                                                                                                    selected>
+                                                                                                    {{ $offer->offer->name }}
+                                                                                                </option>
                                                                                             </select>
                                                                                         </div>
                                                                                         <div class="mx-0 mx-md-2">
-                                                                                            <label for="ratio-{{ $funnelKey + 1 }}-{{ $offerKey + 1 }}" class="form-label">Ratio</label>
-                                                                                            <input type="number" max="100" min="0" value="{{ $offer->ratio }}"
+                                                                                            <label
+                                                                                                for="ratio-{{ $funnelKey + 1 }}-{{ $offerKey + 1 }}"
+                                                                                                class="form-label">Ratio</label>
+                                                                                            <input type="number"
+                                                                                                   max="100" min="0"
+                                                                                                   value="{{ $offer->ratio }}"
                                                                                                    class="form-control min-w-60px ratio-input"
                                                                                                    id="ratio-{{ $funnelKey + 1 }}-{{ $offerKey + 1 }}"
                                                                                                    name="funnels[{{ $funnelKey }}][offers][{{ $offerKey }}][ratio]"
@@ -249,7 +271,8 @@
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="">
-                                                                                        <label class="form-label">&nbsp;</label>
+                                                                                        <label
+                                                                                            class="form-label">&nbsp;</label>
                                                                                         <button type="button"
                                                                                                 class="btn btn-sm {{ $offerKey === 0 ? 'disabled' : '' }} rounded {{ $offerKey !== 0 ? 'btn-delete-offer' : '' }}"
                                                                                                 {{ $offerKey === 0 ? 'disabled' : '' }} title="Need at least one offer">
@@ -257,47 +280,221 @@
                                                                                         </button>
                                                                                     </div>
                                                                                 </div>
-                                                                                <span class="text-danger mx-7 error-text offer_id_error"></span>
+                                                                                <span
+                                                                                    class="text-danger mx-7 error-text offer_id_error"></span>
                                                                             </div>
                                                                         @endforeach
                                                                     </div>
-                                                                    <button class="btn btn-sm btn-success mt-2 btn-add-offer" title="Add offer" type="button">
+                                                                    <button
+                                                                        class="btn btn-sm btn-success mt-2 btn-add-offer"
+                                                                        title="Add offer" type="button">
                                                                         <i class="fa fa-plus"></i> Add
                                                                     </button>
-                                                                    <a class="btn btn-sm btn-primary mt-2" title="Create new offer" target="_blank" href="{{ route('admin.offers.create') }}">New Offer</a>
+                                                                    <a class="btn btn-sm btn-primary mt-2"
+                                                                       title="Create new offer" target="_blank"
+                                                                       href="{{ route('admin.offers.create') }}">New
+                                                                        Offer</a>
                                                                 </div>
 
                                                                 <!-- Filters Section -->
                                                                 @php
-                                                                    $hasFilters = count($funnel->countries) > 0 || count($funnel->devices) > 0 || (isset($funnel->browsers) && count($funnel->browsers) > 0);
-                                                                    $countryCount = (count($funnel->countries) > 0) ? 1 : 0;
-                                                                    $deviceCount = (count($funnel->devices) > 0) ? 1 : 0;
-                                                                    $browserCount = (isset($funnel->browsers) && count($funnel->browsers) > 0) ? 1 : 0;
-                                                                    $totalFilterCount = $countryCount + $deviceCount + $browserCount;
-                                                                    $hasFilters = $totalFilterCount > 0;
+                                                                    $countDevices = (count($funnel->devices) > 0 ? 1 : 0);
+                                                                    $countCountries = (count($funnel->countries) > 0 ? 1 : 0);
+                                                                    $countBrowsers = (count($funnel->browsers) > 0 ? 1 : 0);
+                                                                    $totalFilterCount = $countDevices + $countCountries + $countBrowsers;
                                                                 @endphp
                                                                 <div>
-                                                                    <button class="btn btn-sm btn-success btn-add-filters d-flex justify-content-between align-items-center" title="Add new filters" type="button">
-                                                                        Filters (<span class="count-filters" data-count="{{ $totalFilterCount }}">{{ $totalFilterCount }}</span>) &nbsp;
+                                                                    <button
+                                                                        class="btn btn-sm btn-success btn-add-filters d-flex justify-content-between align-items-center"
+                                                                        title="Add new filters" type="button">
+                                                                        Filters (<span
+                                                                            class="count-filters">{{ $totalFilterCount }}</span>)
+                                                                        &nbsp;
                                                                         <i class="fa fa-chevron-down icon-rotate rotate-down"></i>
                                                                     </button>
 
-                                                                    <div class="filter-container mt-3" style="display: none">
+                                                                    <div class="filter-container mt-3"
+                                                                         style="display: none">
                                                                         <div class="item-filters">
                                                                             <div class="col-6">
-                                                                                <label for="add-filter-{{ $funnelKey+1 }}" class="form-label">Add Filter</label>
-                                                                                <select class="form-select select2-search add-filter-select multi-select-filter"
-                                                                                        id="add-filter-{{ $funnelKey+1 }}"
-                                                                                        name="funnels[{{ $funnelKey+1 }}][filters][]" multiple>
-                                                                                    <option value="geo" {{ count($funnel->countries) ? 'selected' : '' }}>Geo</option>
-                                                                                    <option value="device" {{ count($funnel->devices) ? 'selected' : '' }}>Device</option>
-                                                                                    <option value="browser" {{ count($funnel->browsers ?? []) ? 'selected' : '' }}>Browser</option>
+                                                                                <label
+                                                                                    for="add-filter-{{ $funnelKey+1 }}"
+                                                                                    class="form-label">Add
+                                                                                    Filter</label>
+                                                                                <select
+                                                                                    class="form-select select2-search add-filter-select multi-select-filter"
+                                                                                    id="add-filter-{{ $funnelKey+1 }}"
+                                                                                    name="funnels[{{ $funnelKey+1 }}][filters][]"
+                                                                                    multiple>
+                                                                                    <option
+                                                                                        value="geo" {{ count($funnel->countries) ? 'selected' : '' }}>
+                                                                                        Geo
+                                                                                    </option>
+                                                                                    <option
+                                                                                        value="device" {{ count($funnel->devices) ? 'selected' : '' }}>
+                                                                                        Device
+                                                                                    </option>
+                                                                                    <option
+                                                                                        value="browser" {{ count($funnel->browsers ?? []) ? 'selected' : '' }}>
+                                                                                        Browser
+                                                                                    </option>
                                                                                 </select>
                                                                             </div>
                                                                         </div>
                                                                         <hr>
                                                                         <div class="selected-filters mt-3">
+                                                                            @if(count($funnel->countries) > 0)
+                                                                                @php
+                                                                                    $selectedCountries = $funnel->countries->pluck('country_id')->toArray();
+                                                                                    $countryTargetingType = $funnel->countries->pluck('targeting_type')->first() ?? 'include'; // Assuming one targeting type per filter
+                                                                                @endphp
+                                                                                <div
+                                                                                    class="filter-item mt-2 d-flex align-items-center">
+                                                                                    <div
+                                                                                        class="d-flex align-items-center"
+                                                                                        style="width: 150px;">
+                                                                                        <label
+                                                                                            for="geo-select-{{ $funnelKey+1 }}"
+                                                                                            class="form-label me-2">Geo</label>
+                                                                                    </div>
+                                                                                    <div class="me-2"
+                                                                                         style="width: 120px;">
+                                                                                        <select
+                                                                                            class="form-select target-type-select"
+                                                                                            name="funnels[{{ $funnelKey+1 }}][filters][geo][targeting_type]">
+                                                                                            <option
+                                                                                                value="include" {{ $countryTargetingType == 'include' ? 'selected' : '' }}>
+                                                                                                Include
+                                                                                            </option>
+                                                                                            <option
+                                                                                                value="exclude" {{ $countryTargetingType == 'exclude' ? 'selected' : '' }}>
+                                                                                                Exclude
+                                                                                            </option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                    <div class="flex-grow-1 me-2">
+                                                                                        <select
+                                                                                            class="form-select select2-search select2-search-filter-select filter-select"
+                                                                                            id="geo-select-{{ $funnelKey+1 }}"
+                                                                                            name="funnels[{{ $funnelKey+1 }}][filters][geo][values][]"
+                                                                                            multiple>
+                                                                                            @foreach($countries as $country)
+                                                                                                <option
+                                                                                                    value="{{ $country->id }}" {{ in_array($country->id, $selectedCountries) ? 'selected' : '' }}>
+                                                                                                    {{ $country->name }}
+                                                                                                </option>
+                                                                                            @endforeach
+                                                                                        </select>
+                                                                                    </div>
+                                                                                    <button type="button"
+                                                                                            class="btn btn-sm btn-remove-filter"
+                                                                                            title="Remove filter">
+                                                                                        <i class="fa fa-times"></i>
+                                                                                    </button>
+                                                                                </div>
+                                                                            @endif
 
+                                                                            <!-- Device Filter (Devices Multi-Select) -->
+                                                                            @if(count($funnel->devices)>0)
+                                                                                @php
+                                                                                    $selectedDevices = $funnel->devices->pluck('device_id')->toArray();
+                                                                                    $deviceTargetingType = $funnel->devices->pluck('targeting_type')->first() ?? 'include';
+                                                                                @endphp
+                                                                                <div
+                                                                                    class="filter-item mt-2 d-flex align-items-center">
+                                                                                    <div
+                                                                                        class="d-flex align-items-center"
+                                                                                        style="width: 150px;">
+                                                                                        <label
+                                                                                            for="device-select-{{ $funnelKey+1 }}"
+                                                                                            class="form-label me-2">Device</label>
+                                                                                    </div>
+                                                                                    <div class="me-2"
+                                                                                         style="width: 120px;">
+                                                                                        <select
+                                                                                            class="form-select target-type-select"
+                                                                                            name="funnels[{{ $funnelKey+1 }}][filters][device][targeting_type]">
+                                                                                            <option
+                                                                                                value="include" {{ $deviceTargetingType == 'include' ? 'selected' : '' }}>
+                                                                                                Include
+                                                                                            </option>
+                                                                                            <option
+                                                                                                value="exclude" {{ $deviceTargetingType == 'exclude' ? 'selected' : '' }}>
+                                                                                                Exclude
+                                                                                            </option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                    <div class="flex-grow-1 me-2">
+                                                                                        <select
+                                                                                            class="form-select select2-search select2-search-filter-select filter-select"
+                                                                                            id="device-select-{{ $funnelKey+1 }}"
+                                                                                            name="funnels[{{ $funnelKey+1 }}][filters][device][values][]"
+                                                                                            multiple>
+                                                                                            @foreach($devices as $device)
+                                                                                                <option
+                                                                                                    value="{{ $device->id }}" {{ in_array($device->id, $selectedDevices) ? 'selected' : '' }}>
+                                                                                                    {{ $device->name }}
+                                                                                                </option>
+                                                                                            @endforeach
+                                                                                        </select>
+                                                                                    </div>
+                                                                                    <button type="button"
+                                                                                            class="btn btn-sm btn-remove-filter"
+                                                                                            title="Remove filter">
+                                                                                        <i class="fa fa-times"></i>
+                                                                                    </button>
+                                                                                </div>
+                                                                            @endif
+
+                                                                            @if(count($funnel->browsers) > 0)
+                                                                                    <!-- Browser Filter (Browsers Multi-Select) -->
+                                                                                    @php
+                                                                                        $selectedBrowsers = $funnel->browsers->pluck('browser_id')->toArray();
+                                                                                        $browserTargetingType = $funnel->browsers->pluck('targeting_type')->first() ?? 'include';
+                                                                                    @endphp
+                                                                                    <div
+                                                                                        class="filter-item mt-2 d-flex align-items-center">
+                                                                                        <div class="d-flex align-items-center"
+                                                                                             style="width: 150px;">
+                                                                                            <label
+                                                                                                for="browser-select-{{ $funnelKey+1 }}"
+                                                                                                class="form-label me-2">Browser</label>
+                                                                                        </div>
+                                                                                        <div class="me-2" style="width: 120px;">
+                                                                                            <select
+                                                                                                class="form-select target-type-select"
+                                                                                                name="funnels[{{ $funnelKey+1 }}][filters][browser][targeting_type]">
+                                                                                                <option
+                                                                                                    value="include" {{ $browserTargetingType == 'include' ? 'selected' : '' }}>
+                                                                                                    Include
+                                                                                                </option>
+                                                                                                <option
+                                                                                                    value="exclude" {{ $browserTargetingType == 'exclude' ? 'selected' : '' }}>
+                                                                                                    Exclude
+                                                                                                </option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                        <div class="flex-grow-1 me-2">
+                                                                                            <select
+                                                                                                class="form-select select2-search select2-search-filter-select filter-select"
+                                                                                                id="browser-select-{{ $funnelKey+1 }}"
+                                                                                                name="funnels[{{ $funnelKey+1 }}][filters][browser][values][]"
+                                                                                                multiple>
+                                                                                                @foreach($browsers as $browser)
+                                                                                                    <option
+                                                                                                        value="{{ $browser->id }}" {{ in_array($browser->id, $selectedBrowsers) ? 'selected' : '' }}>
+                                                                                                        {{ $browser->name }}
+                                                                                                    </option>
+                                                                                                @endforeach
+                                                                                            </select>
+                                                                                        </div>
+                                                                                        <button type="button"
+                                                                                                class="btn btn-sm btn-remove-filter"
+                                                                                                title="Remove filter">
+                                                                                            <i class="fa fa-times"></i>
+                                                                                        </button>
+                                                                                    </div>
+                                                                            @endif
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -306,9 +503,7 @@
                                                     </div>
                                                 @endforeach
 
-
                                             </div>
-
                                             <div>
                                                 <button class="btn btn-sm btn-primary mt-2 btn-add-funnel"
                                                         title="Add funnel" type="button">
@@ -318,7 +513,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -349,7 +543,6 @@
     <script>
 
 
-        // Khởi tạo Select2 cho các Offer và Filter
         function initializeSelect2($funnel) {
             $funnel.find('.offer-select').select2({
                 ajax: {
@@ -406,14 +599,21 @@
             });
         }
 
-        // Tạo HTML cho một Funnel
+        function updateFunnelIndexes() {
+            $('.list-funnels .item-funnel').each(function (index) {
+                $(this).attr('data-funnel-id', index + 1); // Cập nhật data-funnel-id
+                $(this).find('.card-title').text(`Funnel #${index + 1}`); // Cập nhật tiêu đề Funnel
+            });
+        }
+
+        // Tạo HTML cho một Funnel mới
         function createFunnelHtml(funnelIndex) {
             return `
                 <div class="item-funnel mb-4" data-funnel-id="${funnelIndex}">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h4 class="card-title mb-0">Funnel #${funnelIndex}</h4>
-                            <button class="btn btn-sm  btn-delete-funnel" type="button">
+                            <button class="btn btn-sm  btn-delete-funnel" type="button" >
                                 <i class="fa fa-times text-gray-500"></i>
                             </button>
                         </div>
@@ -439,7 +639,7 @@
                                         <label for="add-filter-${funnelIndex}" class="form-label">Add Filter</label>
                                         <select class="form-select select2-search add-filter-select multi-select-filter"
                                                 id="add-filter-${funnelIndex}" name="funnels[${funnelIndex}][filters][]" multiple>
-                                            <option value="geo">Geo</option>
+                                            <option value="geo" >Geo</option>
                                             <option value="device">Device</option>
                                             <option value="browser">Browser</option>
                                         </select>
@@ -454,7 +654,8 @@
             `;
         }
 
-        // Tạo HTML cho một Offer
+
+        // Tạo HTML cho một Offer mới
         function createOfferHtml(funnelIndex, offerIndex) {
             const disabledAttr = offerIndex === 1 ? 'disabled' : '';
             return `
@@ -463,27 +664,28 @@
                         <div class="d-flex align-items-center flex-grow-1">
                             <div class="me-3">
                                 <label class="form-label">&nbsp;</label>
-                                <div class="fs-3 font-bold offer-number">${offerIndex}</div> <!-- Số thứ tự của offer -->
+                                <div class="fs-3 font-bold offer-number ">${offerIndex}</div>
                             </div>
-                            <div class="mx-2 flex-grow-1 select-0ffers_mob">
+                            <div class="mx-2 flex-grow-1">
                                 <label for="offer-select-${funnelIndex}-${offerIndex}" class="form-label required">Offer</label>
                                 <select class="form-select select2-search w-100 offer-select"
                                         id="offer-select-${funnelIndex}-${offerIndex}"
                                         name="funnels[${funnelIndex}][offers][${offerIndex}][offer_id]">
                                 </select>
                             </div>
-                            <div class="mx-0 mx-md-2">
+                            <div class="mx-0 mx-md-2" >
                                 <label for="ratio-${funnelIndex}-${offerIndex}" class="form-label">Ratio</label>
                                 <input type="number" max="100" min="0" value="100"
-                                       class="form-control min-w-60px ratio-input"
+                                       class="form-control min-w-70px ratio-input"
                                        id="ratio-${funnelIndex}-${offerIndex}"
                                        name="funnels[${funnelIndex}][offers][${offerIndex}][ratio]"
                                        placeholder="Enter ratio">
                             </div>
                         </div>
+
                         <div class="">
                             <label class="form-label">&nbsp;</label>
-                            <button type="button" class="btn btn-sm rounded btn-delete-offer" ${disabledAttr}>
+                            <button type="button" class="btn btn-sm  rounded btn-delete-offer" ${disabledAttr}>
                                 <i class="fa fa-times"></i>
                             </button>
                         </div>
@@ -493,7 +695,6 @@
             `;
         }
 
-        // Thêm filter vào funnel
         function appendFilterSelect(type, $selectedFilters, $funnel) {
             const label = type.charAt(0).toUpperCase() + type.slice(1);
             const funnelId = $funnel.data('funnel-id');
@@ -527,7 +728,6 @@
             initializeSelect2Dynamic(`#${id}`, url);
         }
 
-        // Lấy URL cho từng loại filter
         function getFilterUrl(type) {
             switch (type) {
                 case 'geo':
@@ -541,7 +741,6 @@
             }
         }
 
-        // Khởi tạo Select2 cho filter với AJAX
         function initializeSelect2Dynamic(selector, url) {
             $(selector).select2({
                 placeholder: 'Select an option',
@@ -551,91 +750,66 @@
                 ajax: {
                     url: url,
                     dataType: 'json',
-                    delay: 250,
+                    delay: 250, // Add a slight delay to prevent overwhelming the server
                     data: function (params) {
                         return {
-                            search: params.term || '',
-                            limit: 10,
-                            page: params.page || 1
+                            search: params.term || '', // This sends the search term to the server
+                            limit: 10, // Limit the number of results returned by the server
+                            page: params.page || 1 // Add pagination support
                         };
                     },
                     processResults: function (data, params) {
+                        // Ensure pagination is supported by select2
                         params.page = params.page || 1;
+
                         return {
                             results: $.map(data.items, function (item) {
-                                return { id: item.id, text: item.name };
+                                return {id: item.id, text: item.name};
                             }),
                             pagination: {
-                                more: (params.page * 10) < data.total_count
+                                more: (params.page * 10) < data.total_count // Enable "load more" if there are more results
                             }
                         };
                     },
                     cache: true
                 },
-                minimumInputLength: 0
+                minimumInputLength: 0, // Users can view the list without entering any search term
             });
         }
 
-        // Cập nhật số lượng filters đã chọn
+        // Cập nhật số lượng filter
         function updateFilterCount($funnel) {
             const filterCount = $funnel.find('.selected-filters .filter-item').length;
             $funnel.find('.count-filters').text(filterCount).data('count', filterCount);
         }
 
-        // Xử lý khi nhấn nút "Remove Filter"
         $(document).on('click', '.btn-remove-filter', function () {
             const $filterItem = $(this).closest('.filter-item');
-            const filterId = $filterItem.find('.filter-select').attr('id').split('-')[0];
+            const filterId = $filterItem.find('.filter-select').attr('id').split('-')[0]; // Lấy loại filter (geo, device, browser)
             const $funnel = $(this).closest('.item-funnel');
 
+            // Tìm và xóa giá trị từ select2
             const $addFilterSelect = $funnel.find('.add-filter-select');
-            const currentValues = $addFilterSelect.val() || [];
-            const updatedValues = currentValues.filter(value => value !== filterId);
-            $addFilterSelect.val(updatedValues).trigger('change');
+            const currentValues = $addFilterSelect.val() || []; // Lấy các giá trị hiện tại trong select2
+            const updatedValues = currentValues.filter(value => value !== filterId); // Loại bỏ filter vừa xóa
+            $addFilterSelect.val(updatedValues).trigger('change'); // Cập nhật lại select2 và kích hoạt sự kiện change
 
+            // Xóa filter khỏi selected-filters
             $filterItem.remove();
+
+            // Cập nhật lại số lượng filter
             updateFilterCount($funnel);
         });
 
-        // Xử lý khi xóa offer
+        // Xử lý khi nhấn nút "Delete Offer"
         $(document).on('click', '.btn-delete-offer', function () {
-            const $funnel = $(this).closest('.item-funnel');
             $(this).closest('.item-offer').remove();
-
-            updateOfferIndexes($funnel);
         });
 
-        // Cập nhật lại chỉ mục cho tất cả các funnel
-        function updateFunnelIndexes() {
-            $('.list-funnels .item-funnel').each(function (index) {
-                const funnelIndex = index + 1;
-
-                $(this).data('funnel-id', funnelIndex);
-                $(this).find('.card-title').text(`Funnel #${funnelIndex}`);
-
-                updateOfferIndexes($(this));
-            });
-        }
-
-        // Cập nhật lại chỉ mục cho tất cả các offers
-        function updateOfferIndexes($funnel) {
-            $funnel.find('.list-offers .item-offer').each(function (index) {
-                const offerIndex = index + 1;
-                const funnelId = $funnel.data('funnel-id');
-
-                $(this).find('.offer-number').text(offerIndex);
-                $(this).find('.offer-select').attr('id', `offer-select-${funnelId}-${offerIndex}`);
-                $(this).find('.offer-select').attr('name', `funnels[${funnelId}][offers][${offerIndex}][offer_id]`);
-                $(this).find('.ratio-input').attr('id', `ratio-${funnelId}-${offerIndex}`);
-                $(this).find('.ratio-input').attr('name', `funnels[${funnelId}][offers][${offerIndex}][ratio]`);
-            });
-        }
-
-        // Xóa funnel
+        // Xử lý khi nhấn nút "Delete Funnel"
         $(document).on('click', '.btn-delete-funnel', function () {
-            const $funnel = $(this).closest('.item-funnel');
-            $funnel.remove();
-            updateFunnelIndexes();
+            $(this).closest('.item-funnel').remove();
+            updateFunnelIndexes();  // Cập nhật lại chỉ mục sau khi xóa
         });
 
         // Thêm Funnel mới
@@ -643,11 +817,11 @@
             const funnelCount = $('.list-funnels .item-funnel').length + 1;
             const html = createFunnelHtml(funnelCount);
             const $newFunnel = $(html);
-
             $('.list-funnels').append($newFunnel);
-            initializeSelect2($newFunnel);
-            updateFunnelIndexes();
+            initializeSelect2($newFunnel); // Khởi tạo Select2 cho funnel mới
+            updateFunnelIndexes();  // Cập nhật chỉ mục cho tất cả các funnels
         });
+
 
         // Thêm Offer mới
         $(document).on('click', '.btn-add-offer', function () {
@@ -655,64 +829,52 @@
             const funnelIndex = $funnel.data('funnel-id');
             const offerCount = $funnel.find('.list-offers .item-offer').length + 1;
             const offerHtml = createOfferHtml(funnelIndex, offerCount);
-
             $funnel.find('.list-offers').append(offerHtml);
-            initializeSelect2($funnel);
-            updateOfferIndexes($funnel);
+            initializeSelect2($funnel); // Khởi tạo Select2 cho offer mới
         });
 
-        $(document).on('click', '.btn-add-filters', function () {
-            const $currentFunnel = $(this).closest('.item-funnel');
-            const $filterContainer = $currentFunnel.find('.filter-container');
-            const $icon = $(this).find('.fa');
-
-            $('.filter-container').not($filterContainer).slideUp();
-            $('.fa').not($icon).removeClass('rotate-up').addClass('rotate-down');
-
-            // Hiển thị/ẩn filter container
-            $filterContainer.slideToggle();
-            $icon.toggleClass('rotate-up rotate-down');
-
-            const $selectFilter = $currentFunnel.find('.add-filter-select');
-            if (!$selectFilter.hasClass("select2-initialized")) {
-                $selectFilter.select2({
-                    placeholder: "Select filters",
-                    allowClear: true,
-                    multiple: true
-                }).on('change', function () {
-                    const selectedValues = $(this).val() || [];
-
-                    const $selectedFilters = $currentFunnel.find('.selected-filters');
-                    // Hiển thị các filter đã được chọn
-                    $.each(selectedValues, function (index, value) {
-                        if (!$(`#${value}-select-${$currentFunnel.data('funnel-id')}`, $selectedFilters).length) {
-                            appendFilterSelect(value, $selectedFilters, $currentFunnel);
-                        }
-                    });
-
-                    updateFilterCount($currentFunnel);  // Cập nhật số lượng filters
-                }).addClass("select2-initialized"); // Đảm bảo select2 chỉ khởi tạo 1 lần
-            }
-
-            // Nếu đã có các giá trị được chọn từ trước, hiển thị các filter trong phần selected-filters
-            const selectedValues = $selectFilter.val() || [];
-            const $selectedFilters = $currentFunnel.find('.selected-filters');
-
-
-
-            $.each(selectedValues, function (index, value) {
-                if (!$(`#${value}-select-${$currentFunnel.data('funnel-id')}`, $selectedFilters).length) {
-                    appendFilterSelect(value, $selectedFilters, $currentFunnel);
-                }
+        // Khởi tạo cho Funnel 1 khi trang tải lần đầu
+        $(document).ready(function () {
+            initializeSelect2($('.item-funnel').first());
+            $('.select2-search-filter-select').select2({
+                placeholder: 'Select an option',
+                allowClear: true,
+                width: '100%',
+                multiple: true
             });
-
-            updateFilterCount($currentFunnel);
         });
+
+        // Toggle hiển thị bộ lọc khi nhấn nút Filter
+        $(document).on('click', '.btn-add-filters', function () {
+            const $filterContainer = $(this).closest('.item-funnel').find('.filter-container');
+            $filterContainer.toggle();
+        });
+
+        function updateOfferIndexes($funnel) {
+            // Lặp qua tất cả các offer trong funnel hiện tại
+            $funnel.find('.list-offers .item-offer').each(function (index) {
+                const offerIndex = index + 1; // Chỉ số mới cho offer (bắt đầu từ 1)
+                const funnelId = $funnel.data('funnel-id'); // Lấy funnel-id từ funnel hiện tại
+
+                // Cập nhật số thứ tự hiển thị của offer
+                $(this).find('.offer-number').text(offerIndex);
+
+                // Cập nhật id và name cho select offer
+                $(this).find('.offer-select').attr('id', `offer-select-${funnelId}-${offerIndex}`);
+                $(this).find('.offer-select').attr('name', `funnels[${funnelId}][offers][${offerIndex}][offer_id]`);
+
+                // Cập nhật id và name cho input ratio
+                $(this).find('.ratio-input').attr('id', `ratio-${funnelId}-${offerIndex}`);
+                $(this).find('.ratio-input').attr('name', `funnels[${funnelId}][offers][${offerIndex}][ratio]`);
+            });
+        }
 
 
         // Khi trang được load
         $(document).ready(function () {
             const $funnels = $('.list-funnels .item-funnel');
+
+
             $funnels.each(function () {
                 initializeSelect2($(this));
                 updateOfferIndexes($(this));

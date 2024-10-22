@@ -153,22 +153,22 @@ class CampaignController extends Controller
             'funnels.offers' => function ($query) {
                 $query->with('offer:id,direct_link,name'); // Retrieve the related offer details
             },
-            'funnels.countries',
-            'funnels.devices',
+            'funnels.countries',  // Load countries relation for the funnel
+            'funnels.devices',    // Load devices relation for the funnel
+            'funnels.browsers'    // Ensure you also load the browsers relation
         ])->findOrFail($id);
 
         $title = "Edit Campaign: {$campaign->name}" . " #{$campaign->code}";
         $timeUnits = TimeUnit::all();
 
-        $countries = Country::all();
+        // Fetch all available devices, browsers, and countries for select fields
         $devices = Device::all();
         $browsers = Browser::all();
+        $countries = Country::all();
 
-
-
-
-        return view('admin.campaigns.edit', compact('title', 'campaign', 'timeUnits', 'countries', 'devices', 'browsers'));
+        return view('admin.campaigns.edit', compact('title', 'campaign', 'timeUnits', 'devices', 'browsers', 'countries'));
     }
+
 
     public function getSelectedFilters(string $funnelId)
     {
@@ -194,8 +194,15 @@ class CampaignController extends Controller
             'funnels.offers' => function ($query) {
                 $query->with('offer:id,direct_link,name'); // Retrieve the related offer details
             },
-            'funnels.countries',
-            'funnels.devices',
+            'funnels.countries' => function ($query) {
+                $query->with('country:id,name'); // Load the name of the country
+            },
+            'funnels.devices' => function ($query) {
+                $query->with('device:id,name'); // Load the name of the device
+            },
+            'funnels.browsers' => function ($query) {
+                $query->with('browser:id,name'); // Load the name of the browser
+            }
         ])->findOrFail($id)->toArray();
 
         return response()->json([

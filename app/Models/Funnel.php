@@ -23,14 +23,19 @@ class Funnel extends Model
         return $this->hasMany(FunnelOffer::class);
     }
 
+    public function browsers()
+    {
+        return $this->hasMany(FunnelBrowser::class); // Adjust this based on your model structure
+    }
+
     public function countries()
     {
-        return $this->hasMany(FunnelCountry::class);
+        return $this->hasMany(FunnelCountry::class); // Adjust this based on your model structure
     }
 
     public function devices()
     {
-        return $this->hasMany(FunnelDevice::class);
+        return $this->hasMany(FunnelDevice::class); // Adjust this based on your model structure
     }
 
     // A funnel has one setting (delay, frequency, etc.)
