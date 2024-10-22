@@ -368,8 +368,15 @@ class CampaignController extends Controller
             'funnels.offers' => function ($query) {
                 $query->with('offer:id,direct_link,name'); // Retrieve the related offer details
             },
-            'funnels.countries',
-            'funnels.devices',
+            'funnels.countries' => function ($query) {
+                $query->with('country:id,name'); // Load the name of the country
+            },
+            'funnels.devices' => function ($query) {
+                $query->with('device:id,name'); // Load the name of the device
+            },
+            'funnels.browsers' => function ($query) {
+                $query->with('browser:id,name'); // Load the name of the browser
+            }
         ])->where('code', $campaignCode)->firstOrFail()->toArray();
 
         $redisKey = "{$campaignCode}";

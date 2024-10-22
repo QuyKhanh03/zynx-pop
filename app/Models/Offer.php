@@ -14,4 +14,10 @@ class Offer extends Model
     {
         return $this->hasMany(FunnelOffer::class);
     }
+
+    public function stats()
+    {
+        return $this->hasMany(OfferStat::class);
+    }
+
 }

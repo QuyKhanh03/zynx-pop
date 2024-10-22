@@ -23,4 +23,9 @@ class Campaign extends Model
 
         return $code;
     }
+
+    public function stats()
+    {
+        return $this->hasMany(CampaignStat::class);
+    }
 }

@@ -541,8 +541,6 @@
 
 @push('scripts')
     <script>
-
-
         function initializeSelect2($funnel) {
             $funnel.find('.offer-select').select2({
                 ajax: {
@@ -823,15 +821,52 @@
         });
 
 
-        // Thêm Offer mới
         $(document).on('click', '.btn-add-offer', function () {
             const $funnel = $(this).closest('.item-funnel');
             const funnelIndex = $funnel.data('funnel-id');
             const offerCount = $funnel.find('.list-offers .item-offer').length + 1;
+
+            // Append the new offer HTML
             const offerHtml = createOfferHtml(funnelIndex, offerCount);
             $funnel.find('.list-offers').append(offerHtml);
-            initializeSelect2($funnel); // Khởi tạo Select2 cho offer mới
+
+            // Initialize select2 ONLY for the new offer added
+            initializeSelect2ForNewOffer($funnel, offerCount);
         });
+
+        function initializeSelect2ForNewOffer($funnel, offerCount) {
+            const $newOfferSelect = $funnel.find(`#offer-select-${$funnel.data('funnel-id')}-${offerCount}`);
+
+            // Ensure this newly added select element gets initialized
+            $newOfferSelect.select2({
+                ajax: {
+                    url: '{{ route('admin.offers.list') }}',
+                    dataType: 'json',
+                    delay: 0,
+                    data: function (params) {
+                        return {
+                            search: params.term || '',
+                            limit: 10
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    id: item.id,
+                                    text: item.name
+                                };
+                            })
+                        };
+                    },
+                    cache: true
+                },
+                placeholder: "Select an offer",
+                minimumInputLength: 0,
+                allowClear: true
+            });
+        }
+
 
         // Khởi tạo cho Funnel 1 khi trang tải lần đầu
         $(document).ready(function () {
