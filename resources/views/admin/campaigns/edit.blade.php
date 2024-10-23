@@ -110,6 +110,16 @@
                                                     </select>
                                                     <span class="text-danger error-text status_error"></span>
                                                 </div>
+                                                <div class="col mb-5">
+                                                    <label for="website_id" class="form-label ">Website</label>
+                                                    <select class="form-select select2-search" id="website_id" name="website_id">
+                                                            @if(isset($campaign->website_id) && $campaign->website_id)
+                                                                <option value="{{ $campaign->website_id }}" selected>
+                                                                    {{ $campaign->website->url }}
+                                                                </option>
+                                                            @endif
+                                                    </select>
+                                                </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col mb-5">
@@ -158,7 +168,7 @@
                                                             name="every_unit">
                                                         @foreach($timeUnits as $value)
                                                             <option
-                                                                value="{{ $value->abbreviation }}" {{ $campaign->abbreviation == $value->abbreviation ? 'selected' : '' }}>{{ $value->name }}</option>
+                                                                value="{{ $value->abbreviation }}" {{ $campaign->every_unit == $value->abbreviation ? 'selected' : '' }}>{{ $value->name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -179,7 +189,7 @@
                                                             name="interval_unit">
                                                         @foreach($timeUnits as $value)
                                                             <option
-                                                                {{ $campaign->abbreviation == $value->abbreviation ? 'selected' : '' }} value="{{ $value->abbreviation }}">{{ $value->name }}</option>
+                                                                {{ $campaign->interval_unit == $value->abbreviation ? 'selected' : '' }} value="{{ $value->abbreviation }}">{{ $value->name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -330,14 +340,14 @@
                                                                                         value="geo" {{ count($funnel->countries) ? 'selected' : '' }}>
                                                                                         Geo
                                                                                     </option>
-                                                                                    <option
-                                                                                        value="device" {{ count($funnel->devices) ? 'selected' : '' }}>
-                                                                                        Device
-                                                                                    </option>
-                                                                                    <option
-                                                                                        value="browser" {{ count($funnel->browsers ?? []) ? 'selected' : '' }}>
-                                                                                        Browser
-                                                                                    </option>
+{{--                                                                                    <option--}}
+{{--                                                                                        value="device" {{ count($funnel->devices) ? 'selected' : '' }}>--}}
+{{--                                                                                        Device--}}
+{{--                                                                                    </option>--}}
+{{--                                                                                    <option--}}
+{{--                                                                                        value="browser" {{ count($funnel->browsers ?? []) ? 'selected' : '' }}>--}}
+{{--                                                                                        Browser--}}
+{{--                                                                                    </option>--}}
                                                                                 </select>
                                                                             </div>
                                                                         </div>
@@ -914,6 +924,33 @@
                 initializeSelect2($(this));
                 updateOfferIndexes($(this));
             });
+
+            $('#website_id').select2({
+                placeholder: 'Select a website',
+                ajax: {
+                    url: '{{ route('admin.websites.list') }}',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            search: params.term, // search term
+                            page: params.page || 1
+                        };
+                    },
+                    processResults: function (data, params) {
+                        params.page = params.page || 1;
+                        return {
+                            results: data.results, // results from the server
+                            pagination: {
+                                more: (params.page * 10) < data.total_count // Check if more results are available
+                            }
+                        };
+                    },
+                    cache: true
+                },
+                minimumInputLength: 0 // Allow showing results without typing
+            });
+
         });
 
 

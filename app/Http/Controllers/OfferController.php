@@ -92,6 +92,7 @@ class OfferController extends Controller
         $limit = $request->input('limit', 10); // Mặc định là 10 bản ghi nếu không có limit
 
         $offers = Offer::query()
+            ->where('status', 'active')
             ->when($search, function ($query, $search) {
                 return $query->where('name', 'like', "%{$search}%");
             })

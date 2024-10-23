@@ -13,6 +13,7 @@
     <link rel="shortcut icon" href="{{ asset('theme/assets/media/logos/favicon.ico') }}" />
     @include('layouts.partials.head')
     @stack('styles')
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
 </head>
 <body id="kt_body"
       class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed toolbar-tablet-and-mobile-fixed aside-enabled aside-fixed"
@@ -36,7 +37,7 @@
         document.documentElement.setAttribute("data-bs-theme", themeMode);
     }
 </script>
-<div class="d-flex flex-column flex-root">
+<div class="d-flex flex-column flex-root" id="app">
     <div class="page d-flex flex-row flex-column-fluid">
         <div id="kt_aside" class="aside aside-dark " data-kt-drawer="true" data-kt-drawer-name="aside"
              data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true"
@@ -171,5 +172,18 @@
 </div>
 @include('layouts.partials.footer')
 @stack('scripts')
+
+<script >
+    const { createApp, ref } = Vue
+    console.log('Hello from Vue 3')
+    createApp({
+        setup() {
+            return {
+            }
+        }
+    }).mount('#app')
+</script>
+
+
 </body>
 </html>

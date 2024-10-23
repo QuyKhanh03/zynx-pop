@@ -99,6 +99,11 @@
                                                     </select>
                                                     <span class="text-danger error-text status_error"></span>
                                                 </div>
+                                                <div class="col mb-5">
+                                                    <label for="website_id" class="form-label ">Website</label>
+                                                    <select class="form-select select2-search" id="website_id" name="website_id">
+                                                    </select>
+                                                </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col mb-5">
@@ -263,8 +268,8 @@
                                                                                 id="add-filter" name="funnels[1][filters][]"
                                                                                 multiple>
                                                                                 <option value="geo">Geo</option>
-                                                                                <option value="device">Device</option>
-                                                                                <option value="browser">Browser</option>
+{{--                                                                                <option value="device">Device</option>--}}
+{{--                                                                                <option value="browser">Browser</option>--}}
                                                                             </select>
                                                                         </div>
                                                                     </div>
@@ -666,6 +671,32 @@
         // Khởi tạo cho Funnel 1 khi trang tải lần đầu
         $(document).ready(function () {
             initializeSelect2($('.item-funnel').first());
+            $('#website_id').select2({
+                placeholder: 'Select a website',
+                ajax: {
+                    url: '{{ route('admin.websites.list') }}',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            search: params.term, // search term
+                            page: params.page || 1
+                        };
+                    },
+                    processResults: function (data, params) {
+                        params.page = params.page || 1;
+                        return {
+                            results: data.results, // results from the server
+                            pagination: {
+                                more: (params.page * 10) < data.total_count // Check if more results are available
+                            }
+                        };
+                    },
+                    cache: true
+                },
+                minimumInputLength: 0 // Allow showing results without typing
+            });
+
         });
 
         // Toggle hiển thị bộ lọc khi nhấn nút Filter

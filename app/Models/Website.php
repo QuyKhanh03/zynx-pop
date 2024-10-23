@@ -9,4 +9,10 @@ class Website extends Model
 {
     use HasFactory;
     protected $fillable = ['url', 'status'];
+
+    public function campaigns()
+    {
+        return $this->hasMany(Campaign::class);
+    }
+
 }

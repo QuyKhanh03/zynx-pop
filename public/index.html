@@ -1,84 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Movie Website</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
-<!--<script>-->
 
-<!--    const urls = [-->
-<!--        "https://ak.aimukreegee.net/4/7929521", "https://suitedeatercrutch.com/r9i22iht?key=d650e254b83e0f36d9c01cc170be806b", "https://highmanapts.com/iZncPX84FBeVr/105324"-->
-<!--    ];-->
 
-<!--    let currentIndex = parseInt(localStorage.getItem('currentIndexUD')) || 0;-->
-<!--    let lastPopupTime = parseInt(localStorage.getItem('lastPopupTimeUD')) || 0;-->
-<!--    const delay = 0;-->
-<!--    const numberOfPopups = 3;-->
-<!--    const every = 3600000;-->
-<!--    const popInterval = 10000;-->
+<div id="adContainer">
+    <script  src='https://api-pop.diveinthebluesky.biz/pop?zoneId=113459'></script>
+</div>
+<!-- Header -->
+<header class="bg-dark text-white text-center py-3">
+    <h1>MovieZone</h1>
+</header>
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg " style="background: #ececf6">
+    <div class="container">
+        <a class="navbar-brand" href="#"><img src="https://bidgear.com/images/logo.png" alt="logo" width="100px"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Now Showing</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Top Rated</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Upcoming</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Genres</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
-<!--    let popupsShown = parseInt(localStorage.getItem('popupsShownUD')) || 0;-->
-<!--    let popupsInSession = parseInt(localStorage.getItem('popupsInSessionUD')) || 0;-->
-<!--    let popupReady = false;-->
+<!-- Featured Section -->
+<section class="container my-5">
+    <h2 class="text-center mb-4">Featured Movies</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <img style="max-height: 580px" src="https://image.motchilltv.my/motchill/love-next-door-x350.webp" class="card-img-top" alt="Movie 1">
+                <div class="card-body">
+                    <h5 class="card-title">Movie Title 1</h5>
+                    <p class="card-text">Short description of the movie.</p>
+                    <a href="#" class="btn btn-primary">Watch Now</a>
+                </div>
+            </div>
+        </div>
 
-<!--    function openPopup() {-->
-<!--        if (popupReady && popupsInSession < numberOfPopups && popupsShown < numberOfPopups) {-->
-<!--            const mainPageUrl = window.location.href;-->
-<!--            const popupUrl = urls[currentIndex];-->
-<!--            const newWindow = window.open(mainPageUrl, '_blank');-->
+        <div class="col-md-4">
+            <div class="card">
+                <img style="max-height: 580px" src="https://image.motchilltv.my/motchill/nu-hoang-nuoc-mat-x350.webp" class="card-img-top" alt="Movie 2">
+                <div class="card-body">
+                    <h5 class="card-title">Movie Title 2</h5>
+                    <p class="card-text">Short description of the movie.</p>
+                    <a href="#" class="btn btn-primary">Watch Now</a>
+                </div>
+            </div>
+        </div>
 
-<!--            if (newWindow) {-->
-<!--                window.location.href = popupUrl;-->
-<!--            }-->
+        <div class="col-md-4">
+            <div class="card">
+                <img style="max-height: 580px" src="https://image.motchilltv.my/motchill/vung-trom-khong-the-giau-x350.webp" class="card-img-top" alt="Movie 3">
+                <div class="card-body">
+                    <h5 class="card-title">Movie Title 3</h5>
+                    <p class="card-text">Short description of the movie.</p>
+                    <a href="#" class="btn btn-primary">Watch Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-<!--            currentIndex = (currentIndex + 1) % urls.length;-->
-<!--            popupsInSession++;-->
-<!--            popupsShown++;-->
-<!--            lastPopupTime = Date.now();-->
-<!--            popupReady = false;-->
+<!-- Now Showing Section -->
+<section class="container my-5">
+    <h2 class="text-center mb-4">Now Showing</h2>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <img src="https://via.placeholder.com/200x300" class="card-img-top" alt="Now Showing 1">
+                <div class="card-body">
+                    <h5 class="card-title">Now Showing 1</h5>
+                    <a href="#" class="btn btn-secondary">Details</a>
+                </div>
+            </div>
+        </div>
 
-<!--            localStorage.setItem('currentIndexUD', currentIndex);-->
-<!--            localStorage.setItem('lastPopupTimeUD', lastPopupTime);-->
-<!--            localStorage.setItem('popupsShownUD', popupsShown);-->
-<!--            localStorage.setItem('popupsInSessionUD', popupsInSession);-->
+        <div class="col-md-3">
+            <div class="card">
+                <img src="https://via.placeholder.com/200x300" class="card-img-top" alt="Now Showing 2">
+                <div class="card-body">
+                    <h5 class="card-title">Now Showing 2</h5>
+                    <a href="#" class="btn btn-secondary">Details</a>
+                </div>
+            </div>
+        </div>
 
-<!--            setTimeout(() => {-->
-<!--                popupReady = true;-->
-<!--            }, popInterval);-->
-<!--        }-->
-<!--    }-->
+        <div class="col-md-3">
+            <div class="card">
+                <img src="https://via.placeholder.com/200x300" class="card-img-top" alt="Now Showing 3">
+                <div class="card-body">
+                    <h5 class="card-title">Now Showing 3</h5>
+                    <a href="#" class="btn btn-secondary">Details</a>
+                </div>
+            </div>
+        </div>
 
-<!--    function handleClick(event) {-->
-<!--        const currentTime = Date.now();-->
-<!--        const timeSinceLastPopup = currentTime - lastPopupTime;-->
+        <div class="col-md-3">
+            <div class="card">
+                <img src="https://via.placeholder.com/200x300" class="card-img-top" alt="Now Showing 4">
+                <div class="card-body">
+                    <h5 class="card-title">Now Showing 4</h5>
+                    <a href="#" class="btn btn-secondary">Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-<!--        if ((lastPopupTime === 0 || timeSinceLastPopup >= every) && popupsShown < numberOfPopups) {-->
-<!--            popupsInSession = 0;-->
-<!--            openPopup();-->
-<!--        } else if (popupReady) {-->
-<!--            openPopup();-->
-<!--        }-->
-<!--    }-->
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-3">
+    <p>&copy; 2024 MovieZone. All Rights Reserved.</p>
+</footer>
 
-<!--    window.onload = function() {-->
-<!--        const currentTime = Date.now();-->
-<!--        const timeSinceLastPopup = currentTime - lastPopupTime;-->
 
-<!--        if (timeSinceLastPopup >= popInterval) {-->
-<!--            popupReady = true;-->
-<!--        } else {-->
-<!--            setTimeout(() => {-->
-<!--                popupReady = true;-->
-<!--            }, popInterval - timeSinceLastPopup);-->
-<!--        }-->
-<!--    }-->
-
-<!--    setTimeout(() => {-->
-<!--        document.addEventListener('click', handleClick);-->
-<!--    }, delay);-->
-
-<!--</script>-->
-<script  src='https://api-pop.diveinthebluesky.biz/pop?zoneId=523839'></script>
+<!-- Bootstrap JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

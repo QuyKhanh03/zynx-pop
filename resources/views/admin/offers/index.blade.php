@@ -1,5 +1,36 @@
 @extends('layouts.main')
 @section('title', 'Offers')
+@push('styles')
+    <style>
+        #table-offers td {
+            padding: 5px !important;
+            line-height: 1.2 !important;
+            vertical-align: middle !important;
+        }
+        .offer-name {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .offer-name .action-column {
+            display: none; /* Initially hidden */
+            position: absolute;
+            right: 10px;
+            background: transparent;
+            bottom: 5px;
+        }
+
+        .offer-row:hover .offer-name .action-column {
+            display: block; /* Show on row hover */
+        }
+        .stats {
+            min-width: 145px;
+            width: 100%;
+            max-width: 145px;
+        }
+
+    </style>
+@endpush
 @section('content')
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <div class="toolbar" id="kt_toolbar">
@@ -28,50 +59,78 @@
 
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-striped table-row-bordered gy-7 gs-7" id="table-offers">
+                        <table class="table table-striped table-bordered gy-7 gs-7" id="table-offers">
                             <thead>
-                            <tr class="fw-bolder fs-6 text-gray-800" >
+                            <tr class="fw-bolder fs-6 text-center text-gray-800">
                                 <th>#</th>
-                                <th>Direct Link Name</th>
-                                <th>URL</th>
+                                <th style="min-width: 280px">Direct Link Name</th>
                                 <th>Partner</th>
-                                <th>Offer Status</th>
-                                <th>Actions</th>
+                                <th>Status</th>
+                                <th class="stats" >Impressions</th>
+                                <th class="stats"  >Clicks</th>
+                                <th class="stats"  >Cost</th>
+                                <th class="stats"  >CTR</th>
+                                <th class="stats"  >CPM</th>
+                                <th class="stats"  >eCPM</th>
+                                <th class="stats"  >Revenue</th>
                             </tr>
                             </thead>
                             <tbody>
                             @if(count($data) > 0)
                                 @foreach($data as $key => $value)
-                                    <tr>
-                                        <td>{{ $key + 1 }}</td>
-                                        <td>
+                                    <tr class="offer-row">
+                                        <td class="text-center">{{ $key + 1 }}</td>
+                                        <td class="offer-name">
                                             <b>{{ $value->name }}</b>
+                                            <span class="action-column" >
+                                                <a href="#" class="text-blue-600 me-2" title="View Report">
+                                                    <i class="fa fa-line-chart" style="color:#0a6aa1;"></i>
+                                                </a>
+                                                <a href="{{ route('admin.offers.edit', $value->id) }}" class="text-blue-600" title="Edit Offer">
+                                                    <i class="fa fa-edit" style="color:#0a6aa1;"></i>
+                                                </a>
+                                                <form action="{{ route('admin.offers.destroy', $value->id) }}" method="post" class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn-delete" title="Delete Offer" style="background: transparent; border: none; color: #e63757;">
+                                                       <i class="fa fa-trash" style="color: #0a6aa1"></i>
+                                                    </button>
+                                                </form>
+                                            </span>
                                         </td>
-                                        <td>
-                                            <a href="{{ $value->direct_link }}" target="_blank">{{ $value->direct_link }}</a>
-                                        </td>
-                                        <td>
+
+                                        <td class="text-center">
                                             {{ $value->partner }}
                                         </td>
-                                        <td >
+                                        <td class="text-center">
                                             @if($value->status == 'active')
                                                 <i class="fas fa-check-circle text-success fs-3" title="Active"></i>
                                             @else
                                                 <i class="fas fa-times-circle text-danger fs-3" title="Inactive"></i>
                                             @endif
                                         </td>
-                                        <td>
-                                            <a href="{{ route('admin.offers.edit', $value->id) }}" class="btn btn-sm btn-success" title="Edit">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-                                            <form action="{{ route('admin.offers.destroy', $value->id) }}" method="POST" class="d-inline" title="Delete">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger btn-delete" title="Delete" >
-                                                    <i class="fa fa-trash"></i>
-                                                </button>
-                                            </form>
+                                        <td class="text-end">
+                                            <span>{{ $value->impressions ?? 0 }}</span>
                                         </td>
+                                        <td class="text-end">
+                                            <span>{{ $value->clicks ?? 0 }}</span>
+                                        </td>
+                                        <td class="text-end">
+                                            <b>{{ $value->cost ?? 0 }}</b>
+                                        </td>
+                                        <td class="text-end">
+                                            <b>{{ $value->ctr ?? 0 }}</b>
+                                        </td>
+                                        <td class="text-end">
+                                            <b>{{ $value->cpm ?? 0 }}</b>
+                                        </td>
+                                        <td class="text-end">
+                                            <b>{{ $value->ecpm ?? 0 }}</b>
+                                        </td>
+                                        <td class="text-end">
+                                            <b>{{ $value->revenue ?? 0 }}</b>
+                                        </td>
+
                                     </tr>
                                 @endforeach
                             @else

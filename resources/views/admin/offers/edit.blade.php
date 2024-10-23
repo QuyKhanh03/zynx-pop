@@ -24,7 +24,7 @@
                 <div class="d-flex align-items-center py-1">
                     <div class="me-4">
                     </div>
-                    <a href="" class="btn btn-sm btn-primary btn-back"
+                    <a href="{{ route('admin.offers.index') }}" class="btn btn-sm btn-primary btn-back"
                        id="kt_toolbar_primary_button"
                        title="Back to Offers">
                         <i class="fa fa-arrow-left"></i>

@@ -64,4 +64,39 @@ class WebsiteController extends Controller
     {
         //
     }
+    public function listWebsites(Request $request)
+    {
+        $search = $request->input('search', '');
+        $limit = $request->input('limit', 10); // Default limit to 10 if not provided
+        $page = $request->input('page', 1); // Default to page 1 if not provided
+        $offset = ($page - 1) * $limit;
+
+        // Query websites with optional search term
+        $query = Website::select('id', 'url')
+            ->where('status', 'active')
+            ->when($search, function ($query, $search) {
+                return $query->where('url', 'like', "%{$search}%");
+            });
+
+        // Get the total count for pagination
+        $totalCount = $query->count();
+
+        // Fetch the websites for the current page with the specified limit
+        $websites = $query->offset($offset)->limit($limit)->get();
+
+        // Format the results for Select2 (Select2 expects `id` and `text`)
+        $formattedResults = $websites->map(function ($website) {
+            return [
+                'id' => $website->id,
+                'text' => $website->url
+            ];
+        });
+
+        return response()->json([
+            'results' => $formattedResults, // Renamed 'items' to 'results' to match Select2's expectations
+            'total_count' => $totalCount,  // Total number of results for pagination
+        ]);
+    }
+
+
 }

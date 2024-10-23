@@ -25,6 +25,7 @@ Route::as('admin.')->group(function () {
     Route::get('list-devices', [App\Http\Controllers\DeviceController::class, 'listDevices'])->name('devices.list');
     Route::get('list-browsers', [App\Http\Controllers\BrowserController::class, 'listBrowsers'])->name('browsers.list');
     Route::get('list-countries', [App\Http\Controllers\CountryController::class, 'listCountries'])->name('countries.list');
+    Route::get('list-websites', [App\Http\Controllers\WebsiteController::class, 'listWebsites'])->name('websites.list');
 });
 
 

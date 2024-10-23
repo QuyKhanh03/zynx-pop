@@ -9,7 +9,7 @@ class Campaign extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['code','name', 'budget','content', 'description', 'status', 'delay', 'delay_unit', 'number_of_popups', 'every', 'every_unit', 'pop_interval','interval_unit'];
+    protected $fillable = ['code','name', 'budget','content', 'description', 'status', 'delay', 'delay_unit', 'number_of_popups', 'every', 'every_unit', 'pop_interval','interval_unit', 'website_id'];
 
     public function funnels()
     {
@@ -27,5 +27,10 @@ class Campaign extends Model
     public function stats()
     {
         return $this->hasMany(CampaignStat::class);
+    }
+
+    public function website()
+    {
+        return $this->belongsTo(Website::class);
     }
 }

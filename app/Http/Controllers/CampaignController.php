@@ -13,6 +13,7 @@ use App\Models\FunnelDevice;
 use App\Models\FunnelOffer;
 use App\Models\FunnelSetting;
 use App\Models\TimeUnit;
+use App\Models\Website;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -84,7 +85,7 @@ class CampaignController extends Controller
                 'every_unit' => $request->input('every_unit'), //
                 'pop_interval' => $request->input('pop_interval'), //
                 'interval_unit' => $request->input('interval_unit'), //
-
+                'website_id' => $request->input('website_id'), //
             ]);
             $zoneId = $campaign->code;
             $backendUrl = env('URL_BACKEND', 'https://api-pop.diveinthebluesky.biz'); //
@@ -139,10 +140,6 @@ class CampaignController extends Controller
     }
 
 
-
-
-
-
     /**
      * Show the form for editing the specified resource.
      */
@@ -169,24 +166,6 @@ class CampaignController extends Controller
         return view('admin.campaigns.edit', compact('title', 'campaign', 'timeUnits', 'devices', 'browsers', 'countries'));
     }
 
-
-    public function getSelectedFilters(string $funnelId)
-    {
-        // Tìm funnel dựa trên ID của funnel được gửi
-        $funnel = Funnel::with(['countries', 'devices'])->findOrFail($funnelId);
-
-        $selectedFilters = [
-            'geo' => $funnel->countries->pluck('id')->toArray(),
-            'device' => $funnel->devices->pluck('id')->toArray()
-        ];
-
-        // Trả về dưới dạng JSON
-        return response()->json($selectedFilters);
-    }
-
-
-
-
     public function test($id)
     {
         $formattedCampaign = Campaign::with([
@@ -202,6 +181,9 @@ class CampaignController extends Controller
             },
             'funnels.browsers' => function ($query) {
                 $query->with('browser:id,name'); // Load the name of the browser
+            },
+            'website' => function ($query) {
+                $query->select('id', 'url'); // Load the website URL
             }
         ])->findOrFail($id)->toArray();
 
@@ -210,6 +192,22 @@ class CampaignController extends Controller
             'data' => $formattedCampaign,
         ]);
     }
+
+
+    public function getSelectedFilters(string $funnelId)
+    {
+        // Tìm funnel dựa trên ID của funnel được gửi
+        $funnel = Funnel::with(['countries', 'devices'])->findOrFail($funnelId);
+
+        $selectedFilters = [
+            'geo' => $funnel->countries->pluck('id')->toArray(),
+            'device' => $funnel->devices->pluck('id')->toArray()
+        ];
+
+        // Trả về dưới dạng JSON
+        return response()->json($selectedFilters);
+    }
+
 
     /**
      * Update the specified resource in storage.
@@ -255,6 +253,7 @@ class CampaignController extends Controller
                 'every_unit' => $request->input('every_unit'), //
                 'pop_interval' => $request->input('pop_interval'), //
                 'interval_unit' => $request->input('interval_unit'), //
+                'website_id' => $request->input('website_id'), //
             ]);
 
             $this->deleteExistingFunnels($campaign);
@@ -347,8 +346,6 @@ class CampaignController extends Controller
     }
 
 
-
-
     private function deleteExistingFunnels(Campaign $campaign)
     {
         foreach ($campaign->funnels as $funnel) {
@@ -376,14 +373,19 @@ class CampaignController extends Controller
             },
             'funnels.browsers' => function ($query) {
                 $query->with('browser:id,name'); // Load the name of the browser
+            },
+            'website' => function ($query) {
+                $query->select('id', 'url'); // Load the website URL
             }
         ])->where('code', $campaignCode)->firstOrFail()->toArray();
 
         $redisKey = "{$campaignCode}";
         Redis::set($redisKey, json_encode($formattedCampaign)); // Ghi đè toàn bộ dữ liệu trong Redis
+
+
+
+
     }
-
-
 
 
     /**
@@ -408,7 +410,7 @@ class CampaignController extends Controller
             $campaign->delete();
 
             $redisKey = "{$campaign->code}";
-            if(Redis::exists($redisKey)) {
+            if (Redis::exists($redisKey)) {
                 Redis::del($redisKey);
             }
 
