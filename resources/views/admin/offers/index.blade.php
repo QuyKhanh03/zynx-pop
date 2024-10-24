@@ -25,7 +25,6 @@
         }
         .stats {
             min-width: 145px;
-            width: 100%;
             max-width: 145px;
         }
 
@@ -59,7 +58,7 @@
 
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered gy-7 gs-7" id="table-offers">
+                        <table class="table table-striped table-bordered gy-7 gs-7" id="table-offers" >
                             <thead>
                             <tr class="fw-bolder fs-6 text-center text-gray-800">
                                 <th>#</th>
@@ -68,28 +67,24 @@
                                 <th>Status</th>
                                 <th class="stats" >Impressions</th>
                                 <th class="stats"  >Clicks</th>
-                                <th class="stats"  >Cost</th>
                                 <th class="stats"  >CTR</th>
-                                <th class="stats"  >CPM</th>
-                                <th class="stats"  >eCPM</th>
-                                <th class="stats"  >Revenue</th>
                             </tr>
                             </thead>
                             <tbody>
                             @if(count($data) > 0)
-                                @foreach($data as $key => $value)
+                                @foreach($data as $key => $offer)
                                     <tr class="offer-row">
                                         <td class="text-center">{{ $key + 1 }}</td>
                                         <td class="offer-name">
-                                            <b>{{ $value->name }}</b>
+                                            <b>{{ $offer->name }}</b>
                                             <span class="action-column" >
                                             <a href="#" class="text-blue-600 me-2" title="View Report">
                                                 <i class="fa fa-line-chart" style="color:#0a6aa1;"></i>
                                             </a>
-                                            <a href="{{ route('admin.offers.edit', $value->id) }}" class="text-blue-600" title="Edit Offer">
+                                            <a href="{{ route('admin.offers.edit', $offer->id) }}" class="text-blue-600" title="Edit Offer">
                                                 <i class="fa fa-edit" style="color:#0a6aa1;"></i>
                                             </a>
-                                            <form action="{{ route('admin.offers.destroy', $value->id) }}" method="post" class="d-inline">
+                                            <form action="{{ route('admin.offers.destroy', $offer->id) }}" method="post" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn-delete" title="Delete Offer" style="background: transparent; border: none; color: #e63757;">
@@ -99,11 +94,12 @@
                                         </span>
                                         </td>
 
+
                                         <td class="text-center">
-                                            {{ $value->partner }}
+                                            {{ $offer->partner }}
                                         </td>
                                         <td class="text-center">
-                                            @if($value->status == 'active')
+                                            @if($offer->status == 'active')
                                                 <i class="fas fa-check-circle text-success fs-3" title="Active"></i>
                                             @else
                                                 <i class="fas fa-times-circle text-danger fs-3" title="Inactive"></i>
@@ -111,30 +107,13 @@
                                         </td>
 
                                         @php
-                                            $stat = $value->stats->first();
+                                            $totalImpressions = $offer->stats->sum('impressions');
+                                            $totalClicks = $offer->stats->sum('clicks');
+                                            $ctr = $totalImpressions > 0 ? ($totalClicks / $totalImpressions) * 100 : 0;
                                         @endphp
-
-                                        <td class="text-end">
-                                            <span>{{ $stat->impressions ?? 0 }}</span>
-                                        </td>
-                                        <td class="text-end">
-                                            <span>{{ $stat->clicks ?? 0 }}</span>
-                                        </td>
-                                        <td class="text-end">
-                                            <b>{{ $stat->cost ?? 0 }}</b>
-                                        </td>
-                                        <td class="text-end">
-                                            <b>{{ $stat->ctr ?? 0 }}</b>
-                                        </td>
-                                        <td class="text-end">
-                                            <b>{{ $stat->cpm ?? 0 }}</b>
-                                        </td>
-                                        <td class="text-end">
-                                            <b>{{ $stat->ecpm ?? 0 }}</b>
-                                        </td>
-                                        <td class="text-end">
-                                            <b>{{ $stat->revenue ?? 0 }}</b>
-                                        </td>
+                                        <td class="text-end">{{ $totalImpressions > 0 ? number_format($totalImpressions) : '-' }}</td>
+                                        <td class="text-end">{{ $totalClicks > 0 ? number_format($totalClicks) : '-' }}</td>
+                                        <td class="text-end">{{ $ctr > 0 ? number_format($ctr) .'%' : '-' }}</td>
                                     </tr>
                                 @endforeach
                             @else
