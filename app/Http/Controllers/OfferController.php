@@ -14,7 +14,7 @@ class OfferController extends Controller
     public function index()
     {
         $title = 'Offers';
-        $data = Offer::orDerBy('id', 'desc')->paginate(10);
+        $data = Offer::orDerBy('id', 'desc')->paginate(20);
         return view('admin.offers.index', compact('title','data'));
     }
 

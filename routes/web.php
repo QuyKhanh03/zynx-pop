@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::as('admin.')->group(function () {
+Route::middleware(['auth','check.access'])->as('admin.')->group(function () {
     Route::get('/', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
     Route::resource('zones', App\Http\Controllers\ZoneController::class);
     Route::resource('offers', App\Http\Controllers\OfferController::class);
@@ -26,6 +26,9 @@ Route::as('admin.')->group(function () {
     Route::get('list-browsers', [App\Http\Controllers\BrowserController::class, 'listBrowsers'])->name('browsers.list');
     Route::get('list-countries', [App\Http\Controllers\CountryController::class, 'listCountries'])->name('countries.list');
     Route::get('list-websites', [App\Http\Controllers\WebsiteController::class, 'listWebsites'])->name('websites.list');
+
+    Route::resource('users', App\Http\Controllers\UserController::class);
+    Route::match(['get', 'post'], 'update-profile', [App\Http\Controllers\UserController::class, 'updateProfile'])->name('users.update-profile');
 });
 
 

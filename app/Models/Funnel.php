@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Funnel extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'campaign_id',
@@ -42,5 +43,10 @@ class Funnel extends Model
     public function settings()
     {
         return $this->hasOne(FunnelSetting::class);
+    }
+
+    public function stats()
+    {
+        return $this->hasMany(Stat::class);
     }
 }

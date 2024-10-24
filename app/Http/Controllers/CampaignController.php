@@ -146,7 +146,9 @@ class CampaignController extends Controller
     public function edit(string $id)
     {
         $campaign = Campaign::with([
-            'funnels',
+            'funnels' => function ($query) {
+                $query->withoutTrashed();  // Exclude soft-deleted funnels
+            },
             'funnels.offers' => function ($query) {
                 $query->with('offer:id,direct_link,name'); // Retrieve the related offer details
             },
@@ -361,7 +363,9 @@ class CampaignController extends Controller
     private function storeCampaignInRedis($campaignCode)
     {
         $formattedCampaign = Campaign::with([
-            'funnels',
+            'funnels' => function ($query) {
+                $query->withoutTrashed();  // Exclude soft-deleted funnels
+            },
             'funnels.offers' => function ($query) {
                 $query->with('offer:id,direct_link,name'); // Retrieve the related offer details
             },
@@ -380,9 +384,7 @@ class CampaignController extends Controller
         ])->where('code', $campaignCode)->firstOrFail()->toArray();
 
         $redisKey = "{$campaignCode}";
-        Redis::set($redisKey, json_encode($formattedCampaign)); // Ghi đè toàn bộ dữ liệu trong Redis
-
-
+        Redis::set($redisKey, json_encode($formattedCampaign)); // overwrite the existing value
 
 
     }

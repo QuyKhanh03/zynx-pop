@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -48,6 +49,26 @@ class LoginRequest extends FormRequest
                 'email' => trans('auth.failed'),
             ]);
         }
+        if(Auth::user()->status === 'inactive'){
+            Auth::logout();
+
+            Toastr::error('Your account is inactive');
+            throw ValidationException::withMessages([
+                'email' => 'Your account is inactive',
+            ]);
+        }
+        if(Auth::user()->role_name !== 'admin'){
+            Auth::logout();
+
+            Toastr::error('You are not authorized to access this page');
+            throw ValidationException::withMessages([
+                'email' => 'You are not authorized to access this page',
+            ]);
+        }
+
+
+
+
 
         RateLimiter::clear($this->throttleKey());
     }

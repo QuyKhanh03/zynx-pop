@@ -268,8 +268,8 @@
                                                                                 id="add-filter" name="funnels[1][filters][]"
                                                                                 multiple>
                                                                                 <option value="geo">Geo</option>
-{{--                                                                                <option value="device">Device</option>--}}
-{{--                                                                                <option value="browser">Browser</option>--}}
+                                                                                <option value="device">Device</option>
+                                                                                <option value="browser">Browser</option>
                                                                             </select>
                                                                         </div>
                                                                     </div>

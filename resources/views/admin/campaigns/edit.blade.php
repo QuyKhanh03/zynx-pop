@@ -340,14 +340,14 @@
                                                                                         value="geo" {{ count($funnel->countries) ? 'selected' : '' }}>
                                                                                         Geo
                                                                                     </option>
-{{--                                                                                    <option--}}
-{{--                                                                                        value="device" {{ count($funnel->devices) ? 'selected' : '' }}>--}}
-{{--                                                                                        Device--}}
-{{--                                                                                    </option>--}}
-{{--                                                                                    <option--}}
-{{--                                                                                        value="browser" {{ count($funnel->browsers ?? []) ? 'selected' : '' }}>--}}
-{{--                                                                                        Browser--}}
-{{--                                                                                    </option>--}}
+                                                                                    <option
+                                                                                        value="device" {{ count($funnel->devices) ? 'selected' : '' }}>
+                                                                                        Device
+                                                                                    </option>
+                                                                                    <option
+                                                                                        value="browser" {{ count($funnel->browsers ?? []) ? 'selected' : '' }}>
+                                                                                        Browser
+                                                                                    </option>
                                                                                 </select>
                                                                             </div>
                                                                         </div>

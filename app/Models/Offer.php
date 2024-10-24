@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Offer extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'direct_link','partner', 'description', 'status'];
+    use SoftDeletes;
+    protected $fillable = ['name', 'direct_link','partner', 'description', 'status','cost'];
 
     public function funnels()
     {
@@ -17,7 +19,7 @@ class Offer extends Model
 
     public function stats()
     {
-        return $this->hasMany(OfferStat::class);
+        return $this->hasMany(Stat::class);
     }
 
 }

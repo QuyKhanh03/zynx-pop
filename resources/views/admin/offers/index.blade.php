@@ -83,20 +83,20 @@
                                         <td class="offer-name">
                                             <b>{{ $value->name }}</b>
                                             <span class="action-column" >
-                                                <a href="#" class="text-blue-600 me-2" title="View Report">
-                                                    <i class="fa fa-line-chart" style="color:#0a6aa1;"></i>
-                                                </a>
-                                                <a href="{{ route('admin.offers.edit', $value->id) }}" class="text-blue-600" title="Edit Offer">
-                                                    <i class="fa fa-edit" style="color:#0a6aa1;"></i>
-                                                </a>
-                                                <form action="{{ route('admin.offers.destroy', $value->id) }}" method="post" class="d-inline">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn-delete" title="Delete Offer" style="background: transparent; border: none; color: #e63757;">
-                                                       <i class="fa fa-trash" style="color: #0a6aa1"></i>
-                                                    </button>
-                                                </form>
-                                            </span>
+                                            <a href="#" class="text-blue-600 me-2" title="View Report">
+                                                <i class="fa fa-line-chart" style="color:#0a6aa1;"></i>
+                                            </a>
+                                            <a href="{{ route('admin.offers.edit', $value->id) }}" class="text-blue-600" title="Edit Offer">
+                                                <i class="fa fa-edit" style="color:#0a6aa1;"></i>
+                                            </a>
+                                            <form action="{{ route('admin.offers.destroy', $value->id) }}" method="post" class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn-delete" title="Delete Offer" style="background: transparent; border: none; color: #e63757;">
+                                                    <i class="fa fa-trash" style="color: #0a6aa1"></i>
+                                                </button>
+                                            </form>
+                                        </span>
                                         </td>
 
                                         <td class="text-center">
@@ -109,28 +109,32 @@
                                                 <i class="fas fa-times-circle text-danger fs-3" title="Inactive"></i>
                                             @endif
                                         </td>
-                                        <td class="text-end">
-                                            <span>{{ $value->impressions ?? 0 }}</span>
-                                        </td>
-                                        <td class="text-end">
-                                            <span>{{ $value->clicks ?? 0 }}</span>
-                                        </td>
-                                        <td class="text-end">
-                                            <b>{{ $value->cost ?? 0 }}</b>
-                                        </td>
-                                        <td class="text-end">
-                                            <b>{{ $value->ctr ?? 0 }}</b>
-                                        </td>
-                                        <td class="text-end">
-                                            <b>{{ $value->cpm ?? 0 }}</b>
-                                        </td>
-                                        <td class="text-end">
-                                            <b>{{ $value->ecpm ?? 0 }}</b>
-                                        </td>
-                                        <td class="text-end">
-                                            <b>{{ $value->revenue ?? 0 }}</b>
-                                        </td>
 
+                                        @php
+                                            $stat = $value->stats->first();
+                                        @endphp
+
+                                        <td class="text-end">
+                                            <span>{{ $stat->impressions ?? 0 }}</span>
+                                        </td>
+                                        <td class="text-end">
+                                            <span>{{ $stat->clicks ?? 0 }}</span>
+                                        </td>
+                                        <td class="text-end">
+                                            <b>{{ $stat->cost ?? 0 }}</b>
+                                        </td>
+                                        <td class="text-end">
+                                            <b>{{ $stat->ctr ?? 0 }}</b>
+                                        </td>
+                                        <td class="text-end">
+                                            <b>{{ $stat->cpm ?? 0 }}</b>
+                                        </td>
+                                        <td class="text-end">
+                                            <b>{{ $stat->ecpm ?? 0 }}</b>
+                                        </td>
+                                        <td class="text-end">
+                                            <b>{{ $stat->revenue ?? 0 }}</b>
+                                        </td>
                                     </tr>
                                 @endforeach
                             @else
@@ -138,6 +142,7 @@
                                     <td colspan="5" class="text-center">No offers found.</td>
                                 </tr>
                             @endif
+
                             </tbody>
                         </table>
                     </div>
